@@ -1,0 +1,392 @@
+---
+description: ' '
+layout: about
+comments: false
+sidebar: false
+---
+<article>
+
+
+# Paxton **GAN**
+
+<div id="contact-info">
+<i class="icon icon-link" style="margin-left:1em"><a href="http://shizhonggan.github.io" style="margin-left:0.5em">shizhongan.github.io</a></i>
+<i class="icon icon-phone" style="margin-left:1em"><a  style="margin-left:0.5em">15822523657</a></i>
+<i class="icon icon-email" style="margin-left:1em"><a  style="margin-left:0.5em">gan_shizhong@163.com</a></i>
+</div>
+
+
+## Education
+
+### **Carnegie Mellon University** `2018.9 -`
+- Ph.D. in Software Engineering
+- Co-advised by [Ken Koedinger](http://pact.cs.cmu.edu/koedinger.html) and [Josh Sunshine](http://www.cs.cmu.edu/~jssunshi/)
+
+### **Columbia University** `2016.9 - 2018.5`
+- B.S. in Computer Science, _Magna Cum Laude_
+- Vision, Graphics track
+
+### **Dickinson College** `2013.9 - 2016.5`
+- B.S. in Computer Science, _Summa Cum Laude_
+- Computer Science Departmental Honors
+
+## Publications
+
+### [**Penrose: From Mathematical Notation to Beautiful Diagrams**](http://penrose.ink/media/Penrose_SIGGRAPH2020.pdf)
+
+Katherine Ye, **Wode Ni**, Max Krieger, Dor Ma'ayan, Joshua Sunshine, Jonathan Aldrich, and Keenan Crane.  
+_ACM Transactions on Graphics (SIGGRAPH'20)._  
+[[PDF](http://penrose.ink/media/Penrose_SIGGRAPH2020.pdf)][[BibTeX]()][[www](http://penrose.ink/siggraph20.html)][[repo](https://github.com/penrose/penrose)]
+
+### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]()
+
+Dor Ma'ayan\*, **Wode Ni\***, Katherine Ye, Chinmay Kulkarni, and Joshua Sunshine.  
+<i class="fas fa-award"></i> <strong>Best Paper Honourable Mention</strong>  
+_In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems (CHI'20)._  
+[[PDF]()][[BibTeX]()]
+
+### [**Defining Visual Narratives for Mathematics Declaratively**](http://plateau-workshop.org/assets/papers-2019/9.pdf)
+
+Max Krieger, **Wode Ni**, and Joshua Sunshine.  
+_Evaluation and Usability of Programming Languages and Tools (PLATEAU 2019), co-located with UIST._  
+[[PDF](http://plateau-workshop.org/assets/papers-2019/9.pdf)][[slides]()]
+
+### [**Designing Declarative Language Tutorials: a Guided and Individualized Approach**](http://plateau-workshop.org/assets/papers-2019/2.pdf)
+
+Anael Kuperwajs Cohen, **Wode Ni**, and Joshua Sunshine.  
+_Evaluation and Usability of Programming Languages and Tools (PLATEAU 2019), co-located with UIST._  
+[[PDF](http://plateau-workshop.org/assets/papers-2019/2.pdf)][[slides]()]
+
+### [**Substance and Style: domain-specific languages for mathematical diagrams**](https://2017.splashcon.org/event/dsldi-2017-substance-and-style-domain-specific-languages-for-mathematical-diagrams)
+
+**Wode Ni\***, Katherine Ye\*, Joshua Sunshine, Jonathan Aldrich, and Keenan Crane.  _Domain-Specific Language Design and Implementation (DSLDI 2017), co-located with SPLASH._  
+[[PDF]()][[slides]()][[www](http://penrose.ink)][[repo](https://github.com/penrose/penrose)]
+
+---
+
+### [**Whiteboard Scanning Using Super-Resolution**](http://scholar.dickinson.edu/student_honors/221/)
+
+**Wode Ni**.  
+_Dickinson College Honors Theses. Paper 221._  
+[[PDF]()]
+
+## Experience
+
+### **Microsoft Research** `2020.5 -`
+
+_Research Intern_  
+
+### **Carnegie Mellon University, Research Experiences for Undergraduate** `2017.5 - 2017.8`
+
+_Research Assistant_  
+**Penrose** is a system that automatically visualizes mathematics using two domain-specific languages: **Substance** and **Style**. Co-advised by [Jonathan Aldrich](https://www.cs.cmu.edu/~./aldrich/), [Keenan Crane](https://www.cs.cmu.edu/~kmcrane/), [Joshua Sunshine](http://www.cs.cmu.edu/~jssunshi/), and [Katherine Ye](https://www.cs.cmu.edu/~kqy/), I designed and implemented the Style language, and extended the Substance language to support functions and logically quantified statements.
+
+### **Columbia University, Computer Graphics and User Interfaces Lab** `2017.1 - 2017.5`
+
+_Research Assistant_  
+Worked with prof. Steven Feiner, on **Cyber Affordance Visualization in Augumented Reality** project. Developed a Microsoft Hololens application that visualizes the Columbia campus in AR environment.
+
+### **AsiaInfo** `2015.6 - 2015.8`
+
+_Software Engineering Intern_  
+Worked on server-side web applications and server deployment tools.
+
+## Mentoring
+
+Max Krieger (CMU, independent research & [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2018 - Now`  
+Courtney Miller (New College of Florida, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019`  
+Anael Kuperwajs Cohen (Macalester College, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019`  
+
+## Honors & Awards
+
+CHI'20 Best Paper Honourable Mention Award `CMU, 2020`  
+Phi Beta Kappa `Dickinson, 2018`  
+Excellence in Computer Science Award `Columbia, 2018`  
+Travel Award PL Mentoring Workshop (PLMW) `SPLASH, 2018`  
+Tau Beta Pi, Engineering Honor Society `Columbia, 2017`  
+Computer Science Departmental Honors `Dickinson, 2016`  
+Pi Mu Epsilon, Mathematics Honor Society `Dickinson, 2016`  
+Upsilon Pi Epsilon, Computer Science Honor Society `Dickinson, 2016`  
+Alpha Lambda Delta, First year Honor Society `Dickinson, 2013`  
+John Montgomery Scholarship `Dickinson, 2013`   
+
+
+---
+
+## Teaching
+
+Teaching Assistant, **Programming Languages and Translators (COMS 4115)** `Columbia, 2017 - 2018`  
+Teaching Assistant, **Introduction to Java II (COMP 132)** `Dickinson, 2016`  
+Peer Tutor, **Data Structures and Problem Solving (COMP 232)** `Dickinson, 2016`  
+Computer Lab Consultant `Dickinson, 2014 - 2016`  
+
+
+## Service
+
+Reviewer `CHI 2021`  
+Research Experiences for Undergraduates in Software Engineering Admission Committee `CMU, 2019 - 2020`
+
+</article>
+
+
+<style>
+/* table th:first-of-type {
+    width: 20%;
+}
+table th:nth-of-type(2) {
+    width: 30%;
+}
+table th:nth-of-type(3) {
+    width: 50%;
+} */
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* html, */
+article body,
+article main,
+article div,
+article span,
+article applet,
+article object,
+article iframe,
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6,
+article p,
+article blockquote,
+article pre,
+article a,
+article abbr,
+article acronym,
+article address,
+article big,
+article cite,
+article code,
+article del,
+article dfn,
+article em,
+article img,
+article ins,
+article kbd,
+article q,
+article s,
+article samp,
+article small,
+article strike,
+article strong,
+article sub,
+article sup,
+article tt,
+article var,
+article b,
+article u,
+article i,
+article center,
+article dl,
+article dt,
+article dd,
+article ol,
+article ul,
+article li,
+article fieldset,
+article form,
+article label,
+article legend,
+article table,
+article caption,
+article tbody,
+article tfoot,
+article thead,
+article tr,
+article th,
+article td,
+article article,
+article aside,
+article canvas,
+article details,
+article embed,
+article figure,
+article figcaption,
+article footer,
+/* article header, */
+article hgroup,
+article menu,
+article nav,
+article output,
+article ruby,
+article section,
+article summary,
+article time,
+article mark,
+article audio,
+article video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article article,
+article aside,
+article details,
+article figcaption,
+article figure,
+article footer,
+article header,
+article hgroup,
+article menu,
+article nav,
+article section {
+  display: block;
+}
+article body {
+  line-height: 1;
+}
+article ol,
+article ul {
+  list-style: none;
+}
+article blockquote,
+article q {
+  quotes: none;
+}
+article blockquote:before,
+article blockquote:after,
+article q:before,
+article q:after {
+  content: "";
+  content: none;
+}
+article table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+article br {
+    margin-bottom: 0em;    /*  设定<br /> 与下面间距1个字符， 1em也可以设为16px等  */
+}
+/* end of reset */
+article pre {
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0px;
+}
+article{
+  font: normal normal 400;
+  font-size: 120%;
+  line-height: 1.5em;
+  /*also written as...  font: normal normal 400 100%/1.5em;*/
+  font-family: "Helvetica", sans-serif;
+  margin: 0.5in 0.5in 0.5in 0.5in;
+  /* margin-top: 1em;
+	margin-left: 1em; */
+}
+
+article strong {
+  font-weight: bold;
+}
+
+p strong {
+  font-weight: bold;
+}
+
+article em {
+  font-style: italic;
+}
+
+article h1 {
+  font-family: "Avenir Next", sans-serif;
+  text-align: center;
+  /* font-size: 50pt; */
+  font-size: 300%;
+  font-weight: lighter;
+  position: relative;
+  line-height: 1.2em;
+  position: relative;
+  /* left: 28%; */
+}
+
+h1 strong {
+  font-weight: normal !important;
+  line-height: 1em;
+}
+
+/* Section headers */
+article h2 {
+  font-family: "Avenir Next", sans-serif;
+  /* font-size: 20pt; */
+  font-size: 200%;
+  text-align: center;
+  font-weight: normal;
+  display: flex;
+  /* line-height: 1.5em; */
+  margin-top: 0.7em;
+  margin-bottom: 0.5em;
+  width: 100%;
+}
+article h2:after {
+  border-bottom: 1.7px dashed #d3d3d3;
+  /* height: 0.8em; */
+  margin-left: 10px;
+  content: "";
+  flex: 1;
+}
+
+h3 strong {
+  /* line-height: 2.5em; */
+}
+
+article h3 {
+  margin-top: 10px;
+}
+
+article code {
+  font-family: "Palatino";
+  font-style: italic;
+  float: right;
+}
+
+article li:before {
+  content: "-";
+  position: relative;
+  left: -0.5em;
+}
+
+article li {
+  /*second line indent*/
+  padding-left: 2.25em;
+  text-indent: -1.25em;
+  /*color: #777;*/
+}
+
+#contact-info {
+  text-align: center;
+  position: relative;
+  font-weight: lighter;
+  color: #ccc;
+  /* font-family: Menlo,monospace,sans-serif; */
+  font-size: 80%;
+}
+
+article #contact-info a {
+  text-decoration: none;
+}
+
+article a {
+  text-decoration: none;
+  color: rgb(20, 116, 151);
+}
+
+article hr {
+  visibility: hidden;
+  height: 0mm;
+}
+</style>

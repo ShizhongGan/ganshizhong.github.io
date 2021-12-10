@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Ansible学习笔记 | 甘士忠个人博客</title>
+  <meta name="description" content="参考资料 https:&#x2F;&#x2F;www.w3cschool.cn&#x2F;automate_with_ansible&#x2F; https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18t411f7CN?from&#x3D;search&amp;seid&#x3D;5997156070713703834&amp;spm_id_from&#x3D;333.337.0.0  运维自动化发展历程及技术应用本地部署(On-Premises) -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible学习笔记">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/08/12/Ansible/install/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="参考资料 https:&#x2F;&#x2F;www.w3cschool.cn&#x2F;automate_with_ansible&#x2F; https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18t411f7CN?from&#x3D;search&amp;seid&#x3D;5997156070713703834&amp;spm_id_from&#x3D;333.337.0.0  运维自动化发展历程及技术应用本地部署(On-Premises) -">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-12T02:24:04.000Z">
+<meta property="article:modified_time" content="2021-12-09T09:00:47.814Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/08/12/Ansible/install/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Beats/" class="title">Beats信息采集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Kibana/" class="title">Kibana数据可视化</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Logstash/" class="title">Logstash</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/NgixLog/" class="title">Nginx日志分析系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Ansible/install" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ansible学习笔记
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/08/12/Ansible/install/" class="article-date">
+	  <time datetime="2021-08-12T02:24:04.000Z" itemprop="datePublished">2021-08-12</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Ansible/">Ansible</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/12/Ansible/install/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/automate_with_ansible/">https://www.w3cschool.cn/automate_with_ansible/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18t411f7CN?from=search&amp;seid=5997156070713703834&amp;spm_id_from=333.337.0.0">https://www.bilibili.com/video/BV18t411f7CN?from=search&amp;seid=5997156070713703834&amp;spm_id_from=333.337.0.0</a></li>
+</ul>
+<h2 id="运维自动化发展历程及技术应用"><a href="#运维自动化发展历程及技术应用" class="headerlink" title="运维自动化发展历程及技术应用"></a>运维自动化发展历程及技术应用</h2><p>本地部署(On-Premises) -&gt; 基础设施即服务(IaaS) -&gt; 平台即服务(PaaS) -&gt; 软件即服务(SaaS)</p>
+<h3 id="自动化运维应用场景"><a href="#自动化运维应用场景" class="headerlink" title="自动化运维应用场景"></a>自动化运维应用场景</h3><ul>
+<li>文件传输</li>
+<li>命令执行<ul>
+<li>应用部署</li>
+<li>配置管理</li>
+<li>任务流编排</li>
+</ul>
+</li>
+</ul>
+<h3 id="企业实际应用场景分析"><a href="#企业实际应用场景分析" class="headerlink" title="企业实际应用场景分析"></a>企业实际应用场景分析</h3><ul>
+<li><p>1 Dev开发环境</p>
+<ul>
+<li>使用者：程序员</li>
+<li>功能：程序员开发软件，测试BUG的环境</li>
+<li>管理者：程序员</li>
+</ul>
+</li>
+<li><p>2 测试环境    </p>
+<ul>
+<li>使用者：QA测试工程师</li>
+<li>功能：测试经过Dev环境测试通过的软件的功能</li>
+<li>管理者：运维</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>说明：测试环境往往有多套,测试环境满足测试功能即可，不宜过多</p>
+<p>1、测试人员希望测试环境有多套,公司的产品多产品线并发，即多个版本，意味着多个版本同步测试</p>
+<p>2、通常测试环境有多少套和产品线数量保持一样</p>
+</blockquote>
+<ul>
+<li><p>3 发布环境：代码发布机，有些公司为堡垒机（安全屏障）</p>
+<ul>
+<li>使用者：运维</li>
+<li>功能：发布代码至生产环境</li>
+<li>管理者：运维（有经验）</li>
+<li>发布机：往往需要有2台（主备）</li>
+</ul>
+</li>
+<li><p>4 生产环境</p>
+<ul>
+<li>使用者：运维，少数情况开放权限给核心开发人员，极少数公司将权限完全</li>
+<li>开放给开发人员并其维护</li>
+<li>功能：对用户提供公司产品的服务</li>
+</ul>
+</li>
+<li><p>5 管理者：只能是运维</p>
+<ul>
+<li>生产环境服务器数量：一般比较多，且应用非常重要。往往需要自动工具协助部署配置应用</li>
+</ul>
+</li>
+<li><p>6 灰度环境（生产环境的一部分）</p>
+<ul>
+<li>使用者：运维</li>
+<li>功能：在全量发布代码前将代码的功能面向少量精准用户发布的环境,可基于主机或用户执行灰度发布</li>
+<li>案例：共100台生产服务器，先发布其中的10台服务器，这10台服务器就是灰度服务器</li>
+<li>管理者：运维</li>
+<li>灰度环境：往往该版本功能变更较大，为保险起见特意先让一部分用户优化体验该功能，待这部分用户使用没有重大问题的时候，再全量发布至所有服务器</li>
+</ul>
+</li>
+</ul>
+<h3 id="程序发布"><a href="#程序发布" class="headerlink" title="程序发布"></a>程序发布</h3><ul>
+<li>程序发布要求：<ul>
+<li>不能导致系统故障或造成系统完全不可用</li>
+<li>不能影响用户体验</li>
+</ul>
+</li>
+<li>预发布验证：<ul>
+<li>新版本的代码先发布到服务器（跟线上环境配置完全相同，只是未接入到调度器）</li>
+</ul>
+</li>
+<li>灰度发布：<ul>
+<li>基于主机，用户，业务</li>
+</ul>
+</li>
+<li>发布路径：<ul>
+<li>/webapp/tuangou</li>
+<li>/webapp/tuangou-1.1</li>
+<li>/webapp/tuangou-1.2</li>
+</ul>
+</li>
+<li>发布过程：在调度器上下线一批主机(标记为maintanance状态) –&gt; 关闭服务 –&gt;<pre><code>    部署新版本的应用程序 --&gt; 启动服务 --&gt; 在调度器上启用这一批服务器
+</code></pre>
+</li>
+<li>自动化灰度发布：脚本、发布平台</li>
+</ul>
+<h3 id="常用自动化运维工具"><a href="#常用自动化运维工具" class="headerlink" title="常用自动化运维工具"></a>常用自动化运维工具</h3><ul>
+<li>Ansible：python，Agentless，中小型应用环境，使用ssh协议</li>
+<li>Saltstack：python，一般需部署agent(麻烦)，执行效率更高</li>
+<li>Puppet：ruby, 功能强大，配置复杂，重型,适合大型环境，需要agent端配合</li>
+<li>Fabric：python，agentless</li>
+<li>Chef：ruby，国内应用少</li>
+<li>Cfengine</li>
+<li>func</li>
+</ul>
+<blockquote>
+<p>可以ansible部署saltstack；ansible无主无从架构，开箱即用，用完即扔。 </p>
+</blockquote>
+<h3 id="运维自动化场景："><a href="#运维自动化场景：" class="headerlink" title="运维自动化场景："></a>运维自动化场景：</h3><ul>
+<li>操作系统预备自动化：PXE, Kickstart, Cobbler</li>
+<li>配置自动化: Ansible</li>
+<li>监控自动化:<ul>
+<li>系统与应用监控: Zabbix</li>
+<li>日志监控: ELK</li>
+</ul>
+</li>
+<li>代码持续继承与代码持续发布自动化: git, Docker, Jenkins, github</li>
+</ul>
+<h3 id="Ansible-特性"><a href="#Ansible-特性" class="headerlink" title="Ansible 特性"></a>Ansible 特性</h3><ul>
+<li>模块化：调用特定的模块，完成特定任务</li>
+<li>Paramiko（python对ssh的实现），PyYAML，Jinja2（模板语言）三个关键模块</li>
+<li>支持自定义模块</li>
+<li>基于Python语言实现</li>
+<li>部署简单，基于python和SSH(默认已安装)，agentless<br>= 安全，基于OpenSSH</li>
+<li>支持playbook编排任务</li>
+<li>幂等性：一个任务执行1遍和执行n遍效果一样，不因重复执行带来意外情况</li>
+<li>无需代理不依赖PKI（无需ssl）</li>
+<li>可使用任何编程语言写模块</li>
+<li>YAML格式，编排任务，支持丰富的数据结构</li>
+<li> 较强大的多层解决方案</li>
+</ul>
+<h3 id="Ansible主要组成部分"><a href="#Ansible主要组成部分" class="headerlink" title="Ansible主要组成部分"></a>Ansible主要组成部分</h3><ul>
+<li>ANSIBLE PLAYBOOKS：任务剧本（任务集），编排定义Ansible任务集的配置文件，<pre><code>             由Ansible顺序依次执行，通常是JSON格式的YML文件
+</code></pre>
+</li>
+<li>INVENTORY：Ansible管理主机的清单  /etc/anaible/hosts</li>
+<li>MODULES：  Ansible执行命令的功能模块，多数为内置核心模块，也可自定义</li>
+<li>PLUGINS：  模块功能的补充，如连接类型插件、循环插件、变量插件、过滤插件等，该功能不常用</li>
+<li>API：      供第三方程序调用的应用程序编程接口 </li>
+<li>ANSIBLE：  组合INVENTORY、API、MODULES、PLUGINS的绿框，可以理解为是ansible命令工具，其为核心执行工具</li>
+</ul>
+<h3 id="Ansible命令执行来源："><a href="#Ansible命令执行来源：" class="headerlink" title="Ansible命令执行来源："></a>Ansible命令执行来源：</h3><ul>
+<li>USER，普通用户，即SYSTEM ADMINISTRATOR</li>
+<li>CMDB（配置管理数据库） API 调用</li>
+<li>PUBLIC/PRIVATE CLOUD API调用  (公有私有云的API接口调用)</li>
+<li>USER-&gt; Ansible Playbook -&gt; Ansibile<br>​<h3 id="利用ansible实现管理的方式："><a href="#利用ansible实现管理的方式：" class="headerlink" title="利用ansible实现管理的方式："></a>利用ansible实现管理的方式：</h3></li>
+<li>Ad-Hoc 即ansible单条命令，主要用于临时命令使用场景</li>
+<li>Ansible-playbook 主要用于长期规划好的，大型项目的场景，需要有前期的规划过程</li>
+</ul>
+<h3 id="Ansible-playbook（剧本）执行过程"><a href="#Ansible-playbook（剧本）执行过程" class="headerlink" title="Ansible-playbook（剧本）执行过程"></a>Ansible-playbook（剧本）执行过程</h3><ul>
+<li>将已有编排好的任务集写入Ansible-Playbook</li>
+<li>通过ansible-playbook命令分拆任务集至逐条ansible命令，按预定规则逐条执行<br>​<h3 id="Ansible主要操作对象"><a href="#Ansible主要操作对象" class="headerlink" title="Ansible主要操作对象"></a>Ansible主要操作对象</h3></li>
+<li>HOSTS主机</li>
+<li>NETWORKING网络设备<br>​<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h3></li>
+<li>执行ansible的主机一般称为主控端，中控，master或堡垒机</li>
+<li>主控端Python版本需要2.6或以上</li>
+<li>被控端Python版本小于2.4需要安装python-simplejson</li>
+<li>被控端如开启SELinux需要安装libselinux-python</li>
+<li>windows不能做为主控端</li>
+<li>ansible不是服务,不会一直启动,只是需要的时候启动<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## rpm包安装: EPEL源</span></span><br><span class="line">yum -y install epel-release</span><br><span class="line">yum install ansible</span><br><span class="line"></span><br><span class="line"><span class="comment">## 编译安装:</span></span><br><span class="line">yum -y install python-jinja2 PyYAML python-paramiko python-babel</span><br><span class="line">python-crypto</span><br><span class="line">tar xf ansible-1.5.4.tar.gz</span><br><span class="line"><span class="built_in">cd</span> ansible-1.5.4</span><br><span class="line">python setup.py build</span><br><span class="line">python setup.py install</span><br><span class="line">mkdir /etc/ansible</span><br><span class="line">cp -r examples/* /etc/ansible</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## Git方式:</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/ansible/ansible.git --recursive</span><br><span class="line"><span class="built_in">cd</span> ./ansible</span><br><span class="line"><span class="built_in">source</span> ./hacking/env-setup</span><br><span class="line"></span><br><span class="line"><span class="comment">## pip安装： pip是安装Python包的管理器，类似yum</span></span><br><span class="line">yum install python-pip python-devel</span><br><span class="line">yum install gcc glibc-devel zibl-devel rpm-bulid openssl-devel</span><br><span class="line">pip install --upgrade pip</span><br><span class="line">pip install ansible --upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment">## 确认安装：</span></span><br><span class="line">[root@master ec2-user]<span class="comment"># ansible --version</span></span><br><span class="line">ansible 2.9.25</span><br><span class="line">  config file = /etc/ansible/ansible.cfg</span><br><span class="line">  configured module search path = [u<span class="string">&#x27;/root/.ansible/plugins/modules&#x27;</span>, u<span class="string">&#x27;/usr/share/ansible/plugins/modules&#x27;</span>]</span><br><span class="line">  ansible python module location = /usr/lib/python2.7/site-packages/ansible</span><br><span class="line">  executable location = /bin/ansible</span><br><span class="line">  python version = 2.7.5 (default, Nov 16 2020, 22:23:17) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]</span><br><span class="line"></span><br><span class="line">[ec2-user@master ~]$ file /usr/bin/ansible</span><br><span class="line">/usr/bin/ansible: symbolic link to `/usr/bin/ansible-2.7<span class="string">&#x27;</span></span><br><span class="line"><span class="string">[ec2-user@master ~]$ ll /usr/bin/ansible</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 20 Nov 18 16:29 /usr/bin/ansible -&gt; /usr/bin/ansible-2.7</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rpm -ql ansible |less <span class="comment"># 查看详细路径</span></span><br><span class="line"><span class="comment">## 配置文件</span></span><br><span class="line">/etc/ansible/ansible.cfg  <span class="comment"># 主配置文件,配置ansible工作特性(一般无需修改)</span></span><br><span class="line">/etc/ansible/hosts        <span class="comment"># 主机清单(将被管理的主机放到此文件)</span></span><br><span class="line">/etc/ansible/roles/       <span class="comment"># 存放角色的目录</span></span><br><span class="line">​</span><br><span class="line"><span class="comment">## 程序</span></span><br><span class="line">/usr/bin/ansible          <span class="comment"># 主程序，临时命令执行工具</span></span><br><span class="line">/usr/bin/ansible-doc      <span class="comment"># 查看配置文档，模块功能查看工具</span></span><br><span class="line">/usr/bin/ansible-galaxy   <span class="comment"># 下载/上传优秀代码或Roles模块的官网平台</span></span><br><span class="line">/usr/bin/ansible-playbook <span class="comment"># 定制自动化任务，编排剧本工具</span></span><br><span class="line">/usr/bin/ansible-pull     <span class="comment"># 远程执行命令的工具</span></span><br><span class="line">/usr/bin/ansible-vault    <span class="comment"># 文件加密工具</span></span><br><span class="line">/usr/bin/ansible-console  <span class="comment"># 基于Console界面与用户交互的执行工具</span></span><br></pre></td></tr></table></figure>
+<h2 id="Ansible-简单应用案例"><a href="#Ansible-简单应用案例" class="headerlink" title="Ansible 简单应用案例"></a>Ansible 简单应用案例</h2><h3 id="使用ansible-ping-模块实现测试主机互通性"><a href="#使用ansible-ping-模块实现测试主机互通性" class="headerlink" title="使用ansible ping 模块实现测试主机互通性"></a>使用ansible ping 模块实现测试主机互通性</h3><p>集群免密登录方法：</p>
+<ul>
+<li>shell写个循环</li>
+<li>密码设置相同，然后-k 登录即可</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 第一步：实现多主机间免密登录</span></span><br><span class="line"><span class="comment"># 在ansible controller 生成密钥</span></span><br><span class="line">ssh-keygen -t rsa -f /root/.ssh/id_rsa -N <span class="string">&#x27;&#x27;</span> <span class="comment"># -N 免密操作</span></span><br><span class="line">ssh-copy-id IP <span class="comment"># 同用户下操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 第二部：修改/etc/ansible/hosts文件，添加需要操作的主机</span></span><br><span class="line"><span class="comment">## 第三步：使用ping模块</span></span><br><span class="line">ansible all -m ping <span class="comment"># 如果有hosts文件，首先识别该文件，其他host无效</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在使用ansible连接之前，必须首先登录一下，保持know_hosts有连接记录，负责无法连接</p>
+</blockquote>
+<blockquote>
+<p>ansible的ping不是基于ssh协议的  </p>
+</blockquote>
+<blockquote>
+<p>报错: ssh免密登录设置无法生效，具体如下：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ssh 192.169.0.13 -v <span class="comment"># 可查看具体报错原因</span></span><br><span class="line"><span class="comment">##### 返回如下############## </span></span><br><span class="line">debug1: key_load_public: No such file or directory</span><br><span class="line">debug1: identity file /home/ec2-user/.ssh/id_rsa-cert <span class="built_in">type</span> -1</span><br><span class="line">...</span><br><span class="line">debug1: No valid Key exchange context</span><br><span class="line">debug1: Next authentication method: gssapi-with-mic</span><br><span class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</span><br><span class="line">No Kerberos credentials available (default cache: KEYRING:persistent:1000)</span><br><span class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</span><br><span class="line">No Kerberos credentials available (default cache: KEYRING:persistent:1000)</span><br><span class="line"><span class="comment">##################</span></span><br><span class="line"><span class="comment"># 解决方法如下，修改文件权限</span></span><br><span class="line">su ec2-user</span><br><span class="line">chmod 700 /home/ec2-user/</span><br><span class="line">chmod 700 /home/ec2-user/.ssh</span><br><span class="line">chmod 644 /home/ec2-user/.ssh/authorized_keys</span><br><span class="line">chmod 600 /home/ec2-user/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<h3 id="使用ansible-cron-模块实现配置多主机时间同步"><a href="#使用ansible-cron-模块实现配置多主机时间同步" class="headerlink" title="使用ansible cron 模块实现配置多主机时间同步"></a>使用ansible cron 模块实现配置多主机时间同步</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 第一步：选择时钟源服务器</span></span><br><span class="line">- 国内建议使用阿里时钟源 time1.aliyun.com</span><br><span class="line">- 国际建议使用微软时钟源 time.windows.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># ntpdate -u ntp.aliyun.com</span></span><br><span class="line"><span class="comment"># mv /etc/localtime&#123;,.bak&#125;</span></span><br><span class="line"><span class="comment"># ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 第二步：cron模块应用</span></span><br><span class="line">sudo yum install ntpdate -y</span><br><span class="line">ansible 主机清单IP或分组名称 -m 模块 -a <span class="string">&quot;参数&quot;</span></span><br><span class="line">ansible 192.168.0.15 -m cron -a <span class="string">&#x27;name=&quot;test cron1&quot; job=&quot;sudo ntpdate ntp.aliyun.com&quot; minute=0 hour=*/1&#x27;</span> <span class="comment"># 每一小时更新一次</span></span><br><span class="line">  192.168.0.15 | CHANGED =&gt; &#123;</span><br><span class="line">      <span class="string">&quot;ansible_facts&quot;</span>: &#123;</span><br><span class="line">          <span class="string">&quot;discovered_interpreter_python&quot;</span>: <span class="string">&quot;/usr/bin/python&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">&quot;changed&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">&quot;envs&quot;</span>: [],</span><br><span class="line">      <span class="string">&quot;jobs&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;test cron1&quot;</span></span><br><span class="line">      ]</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">## 远程主机查看结果</span></span><br><span class="line">crontab -l</span><br><span class="line">ansible 192.168.0.15 -m <span class="built_in">command</span> -a <span class="string">&#x27;crontab -l&#x27;</span></span><br><span class="line">  192.168.0.15 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">  <span class="comment">#Ansible: test cron1</span></span><br><span class="line">  0 */1 * * * sudo ntpdate ntp.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用ansible-copy-模块实现多主机配置文件同步"><a href="#使用ansible-copy-模块实现多主机配置文件同步" class="headerlink" title="使用ansible copy 模块实现多主机配置文件同步"></a>使用ansible copy 模块实现多主机配置文件同步</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 第一步：准备本地域名解析文件</span></span><br><span class="line">119.255.249.177</span><br><span class="line"><span class="comment">## 第二部：copy模块应用</span></span><br><span class="line">ansible 192.168.0.15 -m copy -a <span class="string">&quot;src=/etc/hosts dest=/etc/hosts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果需要root权限，可以在root用户下执行操作，同时确保主机开启rootssh登录，方式如下：<strong>【此处是不成熟的解决办法，采用ansible -b参数，可以在连接后切换到root用户下】</strong></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 开启rootssh登录</span></span><br><span class="line">最近使用这个工具，普通用户可以登录root用户不可以登录。将vi /etc/ssh/sshd_config按照下述配置解决问题</span><br><span class="line"></span><br><span class="line">修改sshd配置文件：vi /etc/ssh/sshd_config</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PubkeyAuthentication no</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">UseLogin yes</span><br><span class="line"><span class="comment">## 两者命令都可以查看 是否开启</span></span><br><span class="line">cat /etc/ssh/sshd_config |grep PermitRootLogin |grep -Ev <span class="string">&#x27;^#&#x27;</span></span><br><span class="line">grep -Ev <span class="string">&#x27;^#|^$&#x27;</span> /etc/ssh/sshd_config |grep PermitRootLogin</span><br><span class="line"></span><br><span class="line">sudo sed -i <span class="string">&quot;s#PermitRootLogin no#PermitRootLogin yes#&quot;</span> /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&#x27;sudo cat /etc/ssh/sshd_config |grep PermitRootLogin |grep -Ev &quot;^#&quot;&#x27;</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&#x27;sudo sed -i &quot;s#PermitRootLogin no#PermitRootLogin yes#&quot; /etc/ssh/sshd_config&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Ansible-配置文件"><a href="#Ansible-配置文件" class="headerlink" title="Ansible 配置文件"></a>Ansible 配置文件</h2><p>Ansible 配置文件/etc/ansible/ansible.cfg （一般保持默认）</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">vim</span> <span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">defaults</span>]</span><br><span class="line"><span class="comment">#inventory     = /etc/ansible/hosts      # 主机列表配置文件</span></span><br><span class="line"><span class="comment">#library       = /usr/share/my_modules/  # 库文件存放目录</span></span><br><span class="line"><span class="comment">#remote_tmp    = $HOME/.ansible/tmp      # 临时py命令文件存放在远程主机目录</span></span><br><span class="line"><span class="comment">#local_tmp     = $HOME/.ansible/tmp      # 本机的临时命令执行目录  </span></span><br><span class="line"><span class="comment">#forks         = 5                       # 默认并发数,同时可以执行5次</span></span><br><span class="line"><span class="comment">#sudo_user     = root                    # 默认sudo 用户</span></span><br><span class="line"><span class="comment">#ask_sudo_pass = True                    # 每次执行ansible命令是否询问ssh密码</span></span><br><span class="line"><span class="comment">#ask_pass      = True                    # 每次执行ansible命令是否询问ssh口令</span></span><br><span class="line"><span class="comment">#remote_port   = 22                      # 远程主机的端口号(默认22)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 建议优化项： </span></span><br><span class="line"><span class="string">host_key_checking</span> <span class="string">=</span> <span class="literal">False</span>               <span class="comment"># 检查对应服务器的host_key，建议取消注释</span></span><br><span class="line"><span class="string">log_path=/var/log/ansible.log</span>           <span class="comment"># 日志文件,建议取消注释</span></span><br><span class="line"><span class="string">module_name</span>   <span class="string">=</span> <span class="string">command</span>                 <span class="comment"># 默认模块</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Ansible命令"><a href="#Ansible命令" class="headerlink" title="Ansible命令"></a>Ansible命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Ansible系列命令</span><br><span class="line">    ansible ansible-doc ansible-playbook ansible-vault ansible-console</span><br><span class="line">    ansible-galaxy ansible-pull</span><br><span class="line"></span><br><span class="line">ansible-doc: 显示模块帮助</span><br><span class="line">    ansible-doc [options] [module...]</span><br><span class="line">        -a            显示所有模块的文档</span><br><span class="line">        -l, --list    列出可用模块</span><br><span class="line">        -s, --snippet 显示指定模块的playbook片段(简化版,便于查找语法)</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">    ansible-doc -l      列出所有模块</span><br><span class="line">    ansible-doc ping    查看指定模块帮助用法</span><br><span class="line">    ansible-doc -s ping 查看指定模块帮助用法</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible-命令"><a href="#ansible-命令" class="headerlink" title="ansible 命令"></a>ansible 命令</h2><p>ansible通过ssh实现配置管理、应用部署、任务执行等功能，建议配置ansible端能基于密钥认证的方式联系各被管理节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ansible &lt;host-pattern&gt; [-m module_name] [-a args]</span><br><span class="line">ansible +被管理的主机(ALL) +模块  +参数</span><br><span class="line">    --version              显示版本</span><br><span class="line">    -m module              指定模块，默认为command</span><br><span class="line">    -v                     **详细过程 –vv -vvv更详细** </span><br><span class="line">    --list-hosts           显示主机列表，可简写 --list</span><br><span class="line">    -k, --ask-pass         提示输入ssh连接密码,默认Key验证</span><br><span class="line">    -C, --check            检查，并不执行</span><br><span class="line">    -T, --timeout&#x3D;TIMEOUT  执行命令的超时时间,默认10s</span><br><span class="line">    -u, --user&#x3D;REMOTE_USER 执行远程执行的用户</span><br><span class="line">    -b, --become           代替旧版的sudo切换</span><br><span class="line">        --become-user&#x3D;USERNAME 指定sudo的runas用户,默认为root</span><br><span class="line">    -K, --ask-become-pass  提示输入sudo时的口令</span><br><span class="line"></span><br><span class="line">ansible all --list  列出所有主机</span><br><span class="line">ping模块: 探测网络中被管理主机是否能够正常使用  走ssh协议</span><br><span class="line">          如果对方主机网络正常,返回pong</span><br><span class="line">ansible-doc -s ping   查看ping模块的语法 </span><br><span class="line"></span><br><span class="line">检测所有主机的网络状态</span><br><span class="line">1&gt;  默认情况下连接被管理的主机是ssh基于key验证,如果没有配置key,权限将会被拒绝</span><br><span class="line">    因此需要指定以谁的身份连接,输入用户密码,必须保证被管理主机用户密码一致</span><br><span class="line">    ansible all -m ping -k</span><br><span class="line"></span><br><span class="line">2&gt; 或者实现基于key验证 将公钥ssh-copy-id到被管理的主机上 , 实现免密登录</span><br><span class="line">   ansible all -m ping</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible的Host-pattern"><a href="#ansible的Host-pattern" class="headerlink" title="ansible的Host-pattern"></a>ansible的Host-pattern</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">匹配主机的列表</span><br><span class="line">    All ：表示所有Inventory中的所有主机</span><br><span class="line">        ansible all –m ping</span><br><span class="line">    * :通配符</span><br><span class="line">        ansible <span class="string">&quot;*&quot;</span> -m ping  (*表示所有主机)</span><br><span class="line">        ansible 192.168.1.* -m ping</span><br><span class="line">        ansible <span class="string">&quot;*srvs&quot;</span> -m ping</span><br><span class="line">    或关系 <span class="string">&quot;:&quot;</span></span><br><span class="line">        ansible <span class="string">&quot;websrvs:appsrvs&quot;</span> -m ping</span><br><span class="line">        ansible “192.168.1.10:192.168.1.20” -m ping</span><br><span class="line">    逻辑与 <span class="string">&quot;:&amp;&quot;</span></span><br><span class="line">        ansible <span class="string">&quot;websrvs:&amp;dbsrvs&quot;</span> –m ping</span><br><span class="line">        在websrvs组并且在dbsrvs组中的主机</span><br><span class="line">    逻辑非 <span class="string">&quot;:!&quot;</span></span><br><span class="line">        ansible <span class="string">&#x27;websrvs:!dbsrvs&#x27;</span> –m ping</span><br><span class="line">        在websrvs组，但不在dbsrvs组中的主机</span><br><span class="line">        注意：此处为单引号</span><br><span class="line">    综合逻辑</span><br><span class="line">        ansible <span class="string">&#x27;websrvs:dbsrvs:&amp;appsrvs:!ftpsrvs&#x27;</span> –m ping</span><br><span class="line">    正则表达式</span><br><span class="line">        ansible <span class="string">&quot;websrvs:&amp;dbsrvs&quot;</span> –m ping</span><br><span class="line">        ansible <span class="string">&quot;~(web|db).*\.magedu\.com&quot;</span> –m ping</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible命令执行过程"><a href="#ansible命令执行过程" class="headerlink" title="ansible命令执行过程"></a>ansible命令执行过程</h2><ol>
+<li>加载自己的配置文件 默认/etc/ansible/ansible.cfg</li>
+<li>加载自己对应的模块文件，如command</li>
+<li>通过ansible将模块或命令生成对应的临时py文件，<pre><code>并将该文件传输至远程服务器的对应执行用户$HOME/.ansible/tmp/ansible-tmp-数字/XXX.PY文件
+</code></pre>
+</li>
+<li>给文件+x执行</li>
+<li>执行并返回结果</li>
+<li>删除临时py文件，sleep 0退出</li>
+</ol>
+<p>执行状态：</p>
+<ul>
+<li>绿色：执行成功并且不需要做改变的操作</li>
+<li>黄色：执行成功并且对目标主机做变更</li>
+<li>红色：执行失败</li>
+</ul>
+<h2 id="Ansible常用模块详解"><a href="#Ansible常用模块详解" class="headerlink" title="Ansible常用模块详解"></a>Ansible常用模块详解</h2><p>模块文档：<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">https://docs.ansible.com/ansible/latest/modules/modules_by_category.html</a></p>
+<h3 id="command"><a href="#command" class="headerlink" title="command"></a>command</h3><p>在远程主机执行命令，默认模块，可忽略-m选项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&#x27;service vsftpd start&#x27;</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&#x27;echo adong |passwd --stdin 123456&#x27;</span></span><br><span class="line">ansible all -a <span class="string">&quot;removes=/home/aa/tt cat /home/aa/tt&quot;</span> -b <span class="comment"># remove表示如果不存在该文件，则不执行，反之执行</span></span><br><span class="line">ansible all -a <span class="string">&quot;creates=/home/aa/tt df -h&quot;</span> -b <span class="comment"># creates表示如果存在该文件，则不执行，反之执行</span></span><br><span class="line">ansible all -a <span class="string">&quot;chdir=/home/aa/ cat tt&quot;</span> <span class="comment"># chdir 表示切换到该目录下之后执行命令</span></span><br><span class="line">ansible all -a <span class="string">&quot;/data/f1.sh&quot;</span> -b <span class="comment"># 此处.sh脚本开头必须有“#!/bin/bash”，得规范</span></span><br><span class="line"><span class="comment">## 创建一个账号</span></span><br><span class="line">ansible all -a <span class="string">&quot;useradd test1&quot;</span> -b </span><br><span class="line">ansible all -a <span class="string">&quot;getent passwd test1&quot;</span> <span class="comment"># 查看用户是否存在</span></span><br><span class="line">ansible all -m shell -a <span class="string">&quot;echo magedu|passwd --stdin test1&quot;</span> <span class="comment"># 添加口令才能登陆，不能成功</span></span><br><span class="line">ansible all -m shell -a <span class="string">&quot;echo <span class="variable">$HOSTNAME</span>&quot;</span> </span><br><span class="line"><span class="comment">## 此命令不支持 $VARNAME &lt; &gt; | ; &amp; * 等特殊符号,用shell模块实现</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：ubuntu和centos的命令不尽一样，所以以下命令能在centos上运行成功，再ubuntu上不一定能成功</p>
+</blockquote>
+<h3 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h3><p>和command相似，用shell执行命令,上述无法执行的命令可以通过该模块执行。因此，使用shell模块即可。同时，针对不同的应用场景，尽量采用相应的模块进行处理，例如，“rm -rf /file” 删除文件命令可以采用 file 模块进行处理。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m shell  -a <span class="string">&#x27;getenforce&#x27;</span>  查看SELINUX状态</span><br><span class="line">ansible all -m shell  -a <span class="string">&quot;sed -i &#x27;s/SELINUX=.*/SELINUX=disabled&#x27; /etc/selinux/config&quot;</span></span><br><span class="line">ansible all -m shell -a <span class="string">&#x27;echo magedu|passwd --stdin test1&#x27;</span></span><br><span class="line">      </span><br><span class="line">    调用bash执行命令 类似 cat /tmp/stanley.md | awk -F<span class="string">&#x27;|&#x27;</span> <span class="string">&#x27;&#123;print $1,$2&#125;&#x27;</span> &amp;&gt; /tmp/example.txt     </span><br><span class="line">    这些复杂命令，即使使用shell也可能会失败，</span><br><span class="line">    解决办法：写到脚本时，copy到远程执行，再把需要的结果拉回执行命令的机器</span><br><span class="line"></span><br><span class="line">    修改配置文件,使shell作为默认模块    </span><br><span class="line">        vim /etc/ansible/ansible.cfg</span><br><span class="line">        module_name = shell</span><br></pre></td></tr></table></figure>
+
+<h3 id="Script"><a href="#Script" class="headerlink" title="Script"></a>Script</h3><p>在远程主机上运行ansible服务器上的脚本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m script -a /data/test.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Copy"><a href="#Copy" class="headerlink" title="Copy"></a>Copy</h3><p>从主控端复制文件到远程主机</p>
+<ul>
+<li>src : 源文件  指定拷贝文件的本地路径  (如果有/ 则拷贝目录内容,比拷贝目录本身)</li>
+<li>dest: 指定目标路径</li>
+<li>mode: 设置权限</li>
+<li>backup: 备份源文件</li>
+<li>content: 代替src  指定本机文件内容,生成目标主机文件</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m copy -a <span class="string">&quot;src=/root/test1.sh dest=/tmp/test2.sh owner=root mode=600 backup=yes&quot;</span> <span class="comment"># 如果目标存在，默认覆盖，此处指定先备份</span></span><br><span class="line">ansible all -m copy -a <span class="string">&quot;content=&#x27;test content\nxxx&#x27; dest=/tmp/test.txt&quot;</span> <span class="comment"># 指定内容，直接生成目标文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h3><p>从远程主机提取文件至主控端，copy相反，目前不支持目录,可以先打包,再提取文件</p>
+<p>File：设置文件属性</p>
+<ul>
+<li>path: 要管理的文件路径 (强制添加)</li>
+<li>recurse: 递归,文件夹要用递归</li>
+<li>src:  创建硬链接,软链接时,指定源目标,配合’state=link’ ‘state=hard’ 设置软链接,硬链接</li>
+<li>state: 状态<ul>
+<li>absent 缺席,删除</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m fetch -a <span class="string">&#x27;src=/root/test.sh dest=/data/scripts&#x27;</span> <span class="comment"># 会生成每个被管理主机不同编号的目录,不会发生文件名冲突     </span></span><br><span class="line"><span class="comment">## 对于抓多个文件，可以先压缩，再抓取</span></span><br><span class="line">ansible all -m shell -a <span class="string">&#x27;tar jxvf test.tar.gz /root/test.sh&#x27;</span></span><br><span class="line">ansible all -m fetch -a <span class="string">&#x27;src=/root/test.tar.gz dest=/data/&#x27;</span></span><br><span class="line"></span><br><span class="line">ansible all -m file -a <span class="string">&#x27;path=/app/test.txt state=touch&#x27;</span>       创建文件</span><br><span class="line">ansible all -m file -a <span class="string">&quot;path=/data/testdir state=directory&quot;</span>   创建目录</span><br><span class="line">ansible all -m file -a <span class="string">&quot;path=/data/testdir state=absent&quot;</span>   删除</span><br><span class="line">ansible all -m file -a <span class="string">&quot;path=/root/test.sh owner=wang mode=755&quot;</span>  设置权限755</span><br><span class="line">ansible all -m file -a <span class="string">&#x27;src=/data/testfile dest=/data/testfile-link state=link&#x27;</span> 创建软链接</span><br></pre></td></tr></table></figure>
+
+<h3 id="unarchive：解包解压缩，有两种用法："><a href="#unarchive：解包解压缩，有两种用法：" class="headerlink" title="unarchive：解包解压缩，有两种用法："></a>unarchive：解包解压缩，有两种用法：</h3><p>1、将ansible主机上的压缩包传到远程主机后解压缩至特定目录，设置copy=yes.<br>2、将远程主机上的某个压缩包解压缩到指定路径下，设置copy=no</p>
+<p>常见参数：</p>
+<ul>
+<li>copy：默认为yes，当copy=yes，拷贝的文件是从ansible主机复制到远程主机上，如果设置为copy=no，会在远程主机上寻找src源文件</li>
+<li>src： 源路径，可以是ansible主机上的路径，也可以是远程主机上的路径，如果是远程主机上的路径，则需要设置copy=no</li>
+<li>dest：远程主机上的目标路径</li>
+<li>mode：设置解压缩后的文件权限</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m unarchive -a <span class="string">&#x27;src=foo.tgz dest=/var/lib/foo&#x27;</span>  <span class="comment">#默认copy为yes ,将本机目录文件解压到目标主机对应目录下</span></span><br><span class="line">ansible all -m unarchive -a <span class="string">&#x27;src=/tmp/foo.zip dest=/data copy=no mode=0777&#x27;</span> <span class="comment"># 解压被管理主机的foo.zip到data目录下, 并设置权限777</span></span><br><span class="line">ansible all -m unarchive -a <span class="string">&#x27;src=https://example.com/example.zip dest=/data copy=no&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Archive：打包压缩"><a href="#Archive：打包压缩" class="headerlink" title="Archive：打包压缩"></a>Archive：打包压缩</h3><ul>
+<li>path:   指定路径</li>
+<li>dest:   指定目标文件</li>
+<li>format: 指定打包格式</li>
+<li>owner:  指定所属者</li>
+<li>mode:   设置权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m archive -a &#39;path&#x3D;&#x2F;etc&#x2F;sysconfig dest&#x3D;&#x2F;data&#x2F;sysconfig.tar.bz2 format&#x3D;bz2 owner&#x3D;wang mode&#x3D;0777&#39; #将远程主机目录打包 </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Hostname：管理主机名"><a href="#Hostname：管理主机名" class="headerlink" title="Hostname：管理主机名"></a>Hostname：管理主机名</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible group -m hostname -a <span class="string">&quot;name=app.adong.com&quot;</span>  更改一组的主机名</span><br><span class="line">ansible 192.168.38.103 -m hostname -a <span class="string">&quot;name=app2.adong.com&quot;</span> 更改单个主机名</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cron：计划任务"><a href="#Cron：计划任务" class="headerlink" title="Cron：计划任务"></a>Cron：计划任务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 支持时间：minute,hour,day,month,weekday</span></span><br><span class="line">ansible all -m cron -a <span class="string">&#x27;minute=*/5 job=&quot;/usr/sbin/ntpdate 172.16.0.1 &amp;&gt;/dev/null&quot; name=Synctime&#x27;</span> <span class="comment"># 创建任务</span></span><br><span class="line">ansible all -m cron -a <span class="string">&#x27;state=absent name=Synctime&#x27;</span> <span class="comment"># 删除任务</span></span><br><span class="line">ansible all -m cron -a <span class="string">&#x27;minute=*/10 job=&quot;/usr/sbin/ntpdate 172.30.0.100&quot; name=synctime disabled=true&#x27;</span> <span class="comment">#注释任务,不在生效，必须有 name, job,disabled=&quot;true/yes/false/no&quot; 三个参数 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Yum：管理包"><a href="#Yum：管理包" class="headerlink" title="Yum：管理包"></a>Yum：管理包</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m yum -a <span class="string">&#x27;list=httpd&#x27;</span>  <span class="comment"># 查看程序列表</span></span><br><span class="line">ansible all -m yum -a <span class="string">&#x27;name=httpd state=present&#x27;</span> <span class="comment"># 安装</span></span><br><span class="line">ansible all -m yum -a <span class="string">&#x27;name=httpd,vsftpd state=absent&#x27;</span>  <span class="comment"># 删除 可以同时安装多个程序包</span></span><br><span class="line"></span><br><span class="line">ansible all -m copy -a <span class="string">&#x27;src=/data/software.rpm dest=/dir/&#x27;</span> <span class="comment"># 拷贝软件</span></span><br><span class="line">ansible all -m yum -a <span class="string">&#x27;name=dstat update_cache=yes&#x27;</span> <span class="comment"># 避免缓存造成的影响</span></span><br><span class="line">ansible all -m yum -a <span class="string">&#x27;name=/dir/software.rpm disable_gpg_check=yes&#x27;</span> <span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Service：管理服务"><a href="#Service：管理服务" class="headerlink" title="Service：管理服务"></a>Service：管理服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m service -a <span class="string">&#x27;name=httpd state=stopped&#x27;</span>  停止服务</span><br><span class="line">ansible all -m service -a <span class="string">&#x27;name=httpd state=started enabled=yes&#x27;</span> 启动服务,并设为开机自启</span><br><span class="line">ansible all -m service -a <span class="string">&#x27;name=httpd state=reloaded&#x27;</span>  重新加载</span><br><span class="line">ansible all -m service -a <span class="string">&#x27;name=httpd state=restarted&#x27;</span> 重启服务</span><br></pre></td></tr></table></figure>
+
+<h3 id="User：管理用户"><a href="#User：管理用户" class="headerlink" title="User：管理用户"></a>User：管理用户</h3><ul>
+<li>home   指定家目录路径</li>
+<li>system 指定系统账号</li>
+<li>group  指定组</li>
+<li>remove 清除账户</li>
+<li>shell  指定shell类型</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m user -a <span class="string">&#x27;name=nginx shell=/sbin/nologin system=yes home=/var/nginx groups=root,bin uid=80 comment=&quot;nginx service&quot;&#x27;</span> <span class="comment"># 源码编译都需要创建用户，yum安装的就自动创建了</span></span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=nginx state=absent remove=yes&#x27;</span> <span class="comment"># 删除用户</span></span><br><span class="line">ansible all -a <span class="string">&#x27;ls /var/ -l&#x27;</span> <span class="comment"># 查看用户目录已经被删除</span></span><br><span class="line">ansible all -a <span class="string">&#x27;getent passwd nginx&#x27;</span> <span class="comment"># 账号也删除了</span></span><br><span class="line"></span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=user1 comment=&quot;test user&quot; uid=2048 home=/app/user1 group=root&#x27;</span></span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=sysuser1 system=yes home=/app/sysuser1&#x27;</span></span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=user1 state=absent remove=yes&#x27;</span>  清空用户所有数据</span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=app uid=88 system=yes home=/app groups=root shell=/sbin/nologin password=&quot;$1$zfVojmPy$ZILcvxnXljvTI2PhP2Iqv1&quot;&#x27;</span>  创建用户</span><br><span class="line">ansible all -m user -a <span class="string">&#x27;name=app state=absent&#x27;</span>  不会删除家目录</span><br></pre></td></tr></table></figure>
+<pre><code>安装mkpasswd 
+yum insatll expect 
+mkpasswd 生成口令
+openssl passwd -1  生成加密口令
+</code></pre>
+<p>删除用户及家目录等数据</p>
+<h3 id="Group：管理组"><a href="#Group：管理组" class="headerlink" title="Group：管理组"></a>Group：管理组</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m group -a <span class="string">&quot;name=testgroup system=yes&quot;</span>   创建组</span><br><span class="line">ansible all -m group -a <span class="string">&quot;name=testgroup state=absent&quot;</span> 删除组</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible系列命令"><a href="#Ansible系列命令" class="headerlink" title="Ansible系列命令"></a>Ansible系列命令</h2><p>ansible-galaxy</p>
+<ul>
+<li>连接 <a target="_blank" rel="noopener" href="https://galaxy.ansible.com/">https://galaxy.ansible.com</a><ul>
+<li>下载相应的roles(角色)</li>
+</ul>
+</li>
+<li>列出所有已安装的galaxy<ul>
+<li>ansible-galaxy list</li>
+</ul>
+</li>
+<li>安装galaxy<ul>
+<li>ansible-galaxy install geerlingguy.redis</li>
+</ul>
+</li>
+<li>删除galaxy<ul>
+<li>ansible-galaxy remove geerlingguy.redis</li>
+</ul>
+</li>
+</ul>
+<p>ansible-pull</p>
+<ul>
+<li>推送命令至远程，效率无限提升，对运维要求较高</li>
+</ul>
+<p>ansible-playbook  可以引用按照标准的yml语言写的脚本<br>    执行playbook</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 示例：ansible-playbook hello.yml</span></span><br><span class="line">cat hello.yml</span><br><span class="line"><span class="comment">#hello world yml file</span></span><br><span class="line"><span class="comment">##################### 开始</span></span><br><span class="line">--- <span class="comment"># 标准格式，可以没有，表示开始</span></span><br><span class="line">- hosts: internal</span><br><span class="line">  remote_user: ec2-user</span><br><span class="line">  tasks:</span><br><span class="line">    - name: hello world</span><br><span class="line">      <span class="built_in">command</span>: /usr/bin/wall hello world</span><br><span class="line"><span class="comment">################### 结束</span></span><br></pre></td></tr></table></figure>
+<p>ansible-vault  (了解)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 功能：管理加密解密yml文件</span></span><br><span class="line">ansible-vault [create|decrypt|edit|encrypt|rekey|view]</span><br><span class="line">ansible-vault encrypt hello.yml 加密</span><br><span class="line">ansible-vault view hello.yml    查看</span><br><span class="line">ansible-vault edit hello.yml    编辑加密文件</span><br><span class="line">ansible-vault rekey hello.yml   修改口令</span><br><span class="line">ansible-vault create new.yml    创建新文件</span><br></pre></td></tr></table></figure>
+
+<p>Ansible-console：2.0+新增，可交互执行命令，支持tab  (了解)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@master ~]$ ansible-console</span><br><span class="line">Welcome to the ansible console.</span><br><span class="line">Type <span class="built_in">help</span> or ? to list commands.</span><br><span class="line"></span><br><span class="line">ec2-user@all (3)[f:5]$ <span class="built_in">cd</span> internal <span class="comment"># 切换组</span></span><br><span class="line">ec2-user@internal (2)[f:5]$ forks 10 <span class="comment"># 设置并发数</span></span><br><span class="line">ec2-user@internal (2)[f:10]$ list <span class="comment"># 看主机清单</span></span><br><span class="line">ec2-user@internal (2)[f:10]$ ? 或 <span class="built_in">help</span> <span class="comment"># 列出所有内置命令，模块</span></span><br><span class="line">ec2-user@internal (2)[f:10]$ <span class="built_in">command</span> hostname</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook"><a href="#playbook" class="headerlink" title="playbook"></a>playbook</h2><ul>
+<li>playbook是由一个或多个”play”组成的列表</li>
+<li>play的主要功能在于将预定义的一组主机，装扮成事先通过ansible中的task定义好的角色。Task实际是调用ansible的一个module，将多个play组织在一个playbook中，即可以让它们联合起来，按事先编排的机制执行预定义的动作</li>
+<li>Playbook采用YAML语言编写</li>
+</ul>
+<h2 id="YAML语法简介"><a href="#YAML语法简介" class="headerlink" title="YAML语法简介"></a>YAML语法简介</h2><h2 id="Ansible"><a href="#Ansible" class="headerlink" title="Ansible"></a>Ansible</h2>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/08/12/Ansible/install/" title="Ansible学习笔记" target="_blank" rel="external">http://shizhonggan.github.io/2021/08/12/Ansible/install/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/08/12/SDN/mininet02/" title="Mininet MAC地址学习"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/08/12/SDN/mininet01/" title="Mininet安装与使用问题"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2021 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

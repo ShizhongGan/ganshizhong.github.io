@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>网络技术基础知识[持续更新] | 甘士忠个人博客</title>
+  <meta name="description" content="IPv4192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0广播地址 All Hosts&#x3D;1主机地址数量 2^n-2(n&#x3D;32-掩码)&lt;网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络技术基础知识[持续更新]">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/07/01/SDN/basicnetwork/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="IPv4192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0广播地址 All Hosts&#x3D;1主机地址数量 2^n-2(n&#x3D;32-掩码)&lt;网络">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/mask.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/maskfunc.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/5G/light.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/BGP/BGP.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ubuntuarp.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/winarp.png">
+<meta property="article:published_time" content="2021-07-01T08:18:00.000Z">
+<meta property="article:modified_time" content="2021-10-28T06:55:59.907Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/07/01/SDN/basicnetwork/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Beats/" class="title">Beats信息采集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Kibana/" class="title">Kibana数据可视化</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Logstash/" class="title">Logstash</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/NgixLog/" class="title">Nginx日志分析系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-SDN/basicnetwork" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网络技术基础知识[持续更新]
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/07/01/SDN/basicnetwork/" class="article-date">
+	  <time datetime="2021-07-01T08:18:00.000Z" itemprop="datePublished">2021-07-01</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/07/01/SDN/basicnetwork/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>192.168.1.1 由32位点分十进制表示，如下图所示：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png"></p>
+<p>IP地址由两部分组成： 网络ID和主机ID</p>
+<ul>
+<li>网络ID：用于区分不同的子网</li>
+<li>主机ID：用于区分同一子网得不同主机</li>
+</ul>
+<p>掩码：用于区分网络ID和主机ID,前24位是1可以表示为/24,如下图所示：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/mask.png"></p>
+<p>使用方法：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/maskfunc.png"></p>
+<p>网络地址 All Hosts=0<br>广播地址 All Hosts=1<br>主机地址数量 2^n-2(n=32-掩码)&lt;网络地址+1，广播地址-1&gt;</p>
+<p>IPv4即将枯竭，解决方法：</p>
+<ul>
+<li>VLSM可变长子网掩码</li>
+<li>私网IP</li>
+<li>NAT</li>
+<li>最终解决方法IPv6</li>
+</ul>
+<p>例题：10.102.22.9/22</p>
+<ul>
+<li>网络地址：10.102.20.0</li>
+<li>广播地址：10.102.23.255</li>
+<li>主机地址范围：&lt;10.102.20.1, 10.102.23.254&gt;</li>
+</ul>
+<h2 id="5G-技术特点"><a href="#5G-技术特点" class="headerlink" title="5G 技术特点"></a>5G 技术特点</h2><p>网络通信包括：无线通信（wifi, 2G-5G） 和 有线通信（双绞线, 光纤等）。由于不同的传播介质，有线的通信能力远远大于无线通信。</p>
+<p>光速=波长×频率</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/5G/light.png"></p>
+<p>5G特点</p>
+<ul>
+<li>高频段（毫米波）：频率越高，越趋向直线传播，传输过程衰减越大，覆盖范围越小，成本越高</li>
+<li>微基站：辐射更小，天线长度与波长成正比（天线长度 = 波长/10~波长/4），因此5G天线非常小。可以实现MASSIVE MIMO，5G天线阵列可以实现。</li>
+<li>波束赋形，将光源聚集到一个设备上的技术。波束赋形的物理学原理，其实就是波的干涉现象。百度百科上定义如下：频率相同的两列波叠加，使某些区域的振动加强，某些区域的振动减弱，而且振动加强的区域和振动减弱的区域相互隔开。</li>
+<li>D2D(device to device)以往信令包和数据包都是通过基站，5G是信令包通过基站数据再设备中间互相传输。</li>
+</ul>
+<h2 id="BGP协议-学了还是不懂啥玩意"><a href="#BGP协议-学了还是不懂啥玩意" class="headerlink" title="BGP协议[学了还是不懂啥玩意]"></a>BGP协议[学了还是不懂啥玩意]</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>BGP概述</p>
+<ul>
+<li>外部网关协议</li>
+<li>使用TCP作为传输层协议</li>
+<li>支持CIDR</li>
+<li>增量更新</li>
+<li>路径矢量路由协议</li>
+<li>无环路</li>
+<li>路由策略丰富</li>
+<li>可防止路由震荡</li>
+<li>易于扩展</li>
+</ul>
+<p>自治系统AS: 由同一个技术管理机构管理、使用统一选路策略的一些路由器的集合。</p>
+<p>工作原理-报文类型</p>
+<ul>
+<li>Open报文： 协商BGP参数</li>
+<li>Update报文： 交换路由信息</li>
+<li>Keepalive报文：保持邻居关系</li>
+<li>Notification报文：差错通知</li>
+<li>Route-Refresh报文：用于改变路由策略后请求对等体重新发送路由信息</li>
+</ul>
+<p>工作原理-状态机</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/BGP/BGP.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hK4y1L7Q8/?spm_id_from=trigger_reload">视频学习链接</a></p>
+<h2 id="SDN-Underlay-与-Overlay"><a href="#SDN-Underlay-与-Overlay" class="headerlink" title="SDN Underlay 与 Overlay"></a>SDN Underlay 与 Overlay</h2><p>Underlay: 现实的物理基础层网络设备。-数据中心基础转发架构的网络。</p>
+<ul>
+<li>以太网最初设计的时候就是一个分布式的网络架构，没有中心控制节点，网络中的节点通过协议传递学习网络的可达性信息。</li>
+<li>underlay就是数据中心场景的基础物理设施，保证任何两个点路由可达，其中包含了传统的网络技术。</li>
+</ul>
+<p>Overlay: 一个基于物理网络之上构建的逻辑网络。</p>
+<ul>
+<li>verlay是在网络技术领域指的是一种网络架构上叠加的虚拟化技术模式，Overlay网络也是一个网络，不过是建立在Underlay网络之上的网络。</li>
+<li>overlay网络节点通过虚拟或者逻辑链路进行通信，其实现基于ip技术的基础网络为主。</li>
+<li>Overlay网络技术多种多样，一般采用TRILL、VxLan、GRE、NVGRE等隧道技术。</li>
+</ul>
+<p>underlay和overlay是互相独立的，其中underlay为overlay提供基础承载；</p>
+<p>underlya和overlay是相对而言的，谁为对方提供基础网络架构，谁就是underlay，相反另外的一方则为overlay；</p>
+<p>提到overlay是近几年数据中心为网络兴起的概念，但是对于传统网络而言实际上早一些类似概念。</p>
+<p>传统网络：l2vpn、l3vpn、qinq、macinmac等隧道技术就是传统的overlay网络技术；<br>数据中心网络：以vxlan、gre、nvgre、trill等新兴隧道技术为基础构建出来的vpc网络；<br>2 当前网络架构主流技术对比<br>flexe是一种在ip传送网借鉴otn网络的一种无ip交换的更快的1层网络技术，可以理解成把多个节点调度打通看做一根光纤，无ip交换自然更快；<br>mpls和sr这些基于二三层之间的隧道技术，个人理解可以理解成逻辑接口，提供的是一个跨多个节点的专线管道；<br>vxlan、gre、nvgre、trill是基于ip技术打造新兴隧道技术，本质而言，他们对于每个具体的设备仍然是一个逻辑接口；<br>数据中心场景下基于vxlan、gre等不同底层承载新建的逻辑网络，也就是我们常说的vpc网络，是真正意义的逻辑network；<br>l2vpn和l3vpn网路构建出来的也是一个逻辑network,通常承载在mpls的运营商传统网络场景，但是sdwan的出现改变了这一个格局。</p>
+<h2 id="路由器硬件设计"><a href="#路由器硬件设计" class="headerlink" title="路由器硬件设计"></a>路由器硬件设计</h2><p>要考虑八个方面：</p>
+<ul>
+<li>FIB表容量</li>
+<li>协议特性</li>
+<li>高可靠性</li>
+<li>快速收敛</li>
+<li>QOS</li>
+<li>吞吐量</li>
+<li>低功耗</li>
+<li>带宽</li>
+</ul>
+<blockquote>
+<p>RFC1925: Good, fast, cheap, pick any two, but you can’t have all three</p>
+</blockquote>
+<h2 id="网络传输中的三张表，MAC地址表、ARP缓存表以及路由表"><a href="#网络传输中的三张表，MAC地址表、ARP缓存表以及路由表" class="headerlink" title="网络传输中的三张表，MAC地址表、ARP缓存表以及路由表"></a>网络传输中的三张表，MAC地址表、ARP缓存表以及路由表</h2><ul>
+<li>路由表：目的地址、网络掩码、下一条ip地址、出接口、优先级、cost路由开销</li>
+<li>arp表：ip地址、对应的mac地址、ip地址类型</li>
+<li>mac表：mac地址、出端口</li>
+</ul>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ubuntuarp.png"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/winarp.png"></p>
+<p>详细参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dapaitou2006/p/6391472.html">https://www.cnblogs.com/dapaitou2006/p/6391472.html</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/07/01/SDN/basicnetwork/" title="网络技术基础知识[持续更新]" target="_blank" rel="external">http://shizhonggan.github.io/2021/07/01/SDN/basicnetwork/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/08/12/SDN/mininet01/" title="Mininet安装与使用问题"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/06/03/SDN/SDN07_Floodlight/" title="软件定义网络（SDN）学习笔记(6)--Floodlight"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2021 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>软件定义网络（SDN）学习笔记(3)--OVS系统架构 | 甘士忠个人博客</title>
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 基本概念1.1 交换机交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件定义网络（SDN）学习笔记(3)--OVS系统架构">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/04/21/SDN/SDN03_ovs/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 基本概念1.1 交换机交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_odl.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_docker_odl.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs-ofctl-commands.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_actions.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_paramter.png">
+<meta property="article:published_time" content="2021-04-21T13:31:04.000Z">
+<meta property="article:modified_time" content="2021-10-28T06:55:59.905Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="网络架构">
+<meta property="article:tag" content="SDN">
+<meta property="article:tag" content="OVS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/04/21/SDN/SDN03_ovs/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.33px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Beats/" class="title">Beats信息采集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Kibana/" class="title">Kibana数据可视化</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/Logstash/" class="title">Logstash</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/ELK/">ELK</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/01/ELK/NgixLog/" class="title">Nginx日志分析系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-01T02:03:04.000Z" itemprop="datePublished">2021-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-SDN/SDN03_ovs" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      软件定义网络（SDN）学习笔记(3)--OVS系统架构
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/21/SDN/SDN03_ovs/" class="article-date">
+	  <time datetime="2021-04-21T13:31:04.000Z" itemprop="datePublished">2021-04-21</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/SDN/">SDN</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/OVS/" rel="tag">OVS</a>, <a class="article-tag-link-link" href="/tags/SDN/" rel="tag">SDN</a>, <a class="article-tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" rel="tag">网络架构</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/21/SDN/SDN03_ovs/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>SDN学习目录</p>
+<blockquote>
+<p><a href="/2021/04/09/SDN/SDN00_wireshark/">SDN学习笔记(0)–wireshark抓包分析</a></p>
+<p><a href="/2021/04/15/SDN/SDN01_iPerf_Netperf/">SDN学习笔记(1)–iPerf和Netperf性能测试</a></p>
+<p><a href="/2021/04/20/SDN/SDN02_Scapy_Postman/">SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试</a></p>
+<p><a href="/2021/04/21/SDN/SDN03_ovs/">SDN学习笔记(3)–OVS系统架构</a></p>
+<p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
+</blockquote>
+</blockquote>
+<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1 基本概念"></a>1 基本概念</h2><h3 id="1-1-交换机"><a href="#1-1-交换机" class="headerlink" title="1.1 交换机"></a>1.1 交换机</h3><p>交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可以为接入交换机的任意两个网络节点提供独享的电信号通路。最常见的交换机是以太网交换机。其他常见的还有电话语音交换机、光纤交换机等。目前，二层交换技术发展比较成熟，二层交换机（Layer 2 switches）是指只支持OSI第二层（数据链路层）交换技术的交换机。</p>
+<h3 id="1-2-工作原理"><a href="#1-2-工作原理" class="headerlink" title="1.2 工作原理"></a>1.2 工作原理</h3><p>交换机拥有一条很高带宽的背部总线和内部交换矩阵。交换机的所有的端口都挂接在这条背部总线上，控制电路收到数据包以后，处理端口会查找内存中的地址对照表以确定目的MAC（网卡的硬件地址）的NIC（网卡）挂接在哪个端口上，通过内部交换矩阵迅速将数据包传送到目的端口，目的MAC若不存在，广播到所有的端口，接收端口回应后交换机会“学习”新的MAC地址，并把它添加入内部MAC地址表中，并刷新CAM表，表中有MAC地址，对应的端口号，端口所属的VLAN信息，交换机在二层转发数据时根据CAM表查找出端口。使用交换机也可以把网络“分段”，通过对照IP地址表，交换机只允许必要的网络流量通过交换机。通过交换机的过滤和转发，可以有效的减少冲突域，但不能划分广播域。交换机在同一时刻可进行多个端口对之间的数据传输。每一端口都可视为独立的网段，连接在其上的网络设备独自享有全部的带宽，无须同其他设备竞争使用。当节点A向节点D发送数据时，节点B可同时向节点C发送数据，而且这两个传输都享有网络的全部带宽，有着自己的虚拟连接。</p>
+<h3 id="1-3-作用与功能"><a href="#1-3-作用与功能" class="headerlink" title="1.3 作用与功能"></a>1.3 作用与功能</h3><p>交换机的常见功能如下：</p>
+<ul>
+<li>MAC地址学习：以太网交换机了解每一端口相连设备的MAC地址，并将地址同相应的端口映射起来存放在交换机缓存中的MAC地址表中。</li>
+<li>转发/过滤：当一个数据帧的目的地址在MAC地址表中有映射时，它被转发到连接目的节点的端口而不是所有端口（如该数据帧为广播/组播帧则转发至所有端口）。</li>
+<li>消除回路：当交换机包括一个冗余回路时，以太网交换机通过生成树协议避免回路的产生，同时允许存在后备路径。</li>
+</ul>
+<h2 id="2-Open-vSwitch-OVS"><a href="#2-Open-vSwitch-OVS" class="headerlink" title="2 Open vSwitch (OVS)"></a>2 Open vSwitch (OVS)</h2><p>在网络中，交换机和桥概念类似，Open vSwitch是一个虚拟交换软件，也就是说，Open vSwitch实现了网桥的功能。学习Open vSwitch的第一步要弄清楚网桥的概念。网桥是连接两个局域网的设备，工作在数据链路层，根据MAC地址来转发帧。在Open vSwitch中创建一个网桥后，此时网络功能不受影响，但是会产生一个虚拟网卡，之所以会产生一个虚拟网卡，是为了实现接下来的网桥（交换机）功能。有了这个网桥以后，还需要为这个网桥增加端口（port），一个端口就是一个物理网卡，当网卡加入到这个网桥之后，其工作方式就和普通交换机的一个端口的工作方式类似了。以下是一个网桥的具体信息：</p>
+<p>Open vSwitch（OVS）是一个高质量的、多层虚拟交换机。OVS遵循开源Apache2.0许可，通过可编程扩展，OVS可以实现大规模网络的自动化（配置、管理、维护），同时支持现有标准管理接口和协议（比如NetFlow、sFlow、SPAN、RSPAN、CLI、LACP、802.1ag等）。此外OVS支持多种Linux虚拟化技术，包括Xen/XenServer，KVM，和VirtualBox等。虽然是虚拟交换机，但是其工作原理与物理交换机类似。在虚拟交换机的实现中，其两端分别连接着物理网卡和多块虚拟网卡，同时虚拟交换机内部会维护一张映射表，根据MAC地址寻找对应的虚拟机链路进而完成数据转发。</p>
+<p>OVS交换机有两种工作模式</p>
+<ul>
+<li>一种为SDN交换机，另一种为普通交换机。作为SDN交换机时，显示Fail_mode为Secure，在这种模式下OVS交换机需要控制器发送转发规则，指挥交换机去工作</li>
+<li>作为普通交换机时，显示Fail_mode是Standalone。其和物理交换机工作模式一样，记录端口号和MAC地址的对应关系，基于对应关系转发数据帧。交换机默认状态是SDN交换机。</li>
+</ul>
+<p>OVS 架构分为三个部分:</p>
+<ul>
+<li>内核空间：包含了流表（Flow Table）和Datapath模块（类似于网桥，主要负责对数据分组进行操作）。</li>
+<li>用户空间：运行着OVS的守护进程(Open vSwitch Daemon, vswitchd)和数据库(Open vSwitch Database, ovsdb)，他们是ovs的核心功能模块。<ul>
+<li>vswitchd类似于OVS的心脏，维持OVS的声明周期。可以配置一系列特性：<ul>
+<li>基于MAC地址学习的二层交换</li>
+<li>支持IEEE802.1Q VLAN</li>
+<li>sFlow监测</li>
+<li>连接OpenFlow控制器</li>
+<li>通过Netlink协议与内核模块Datapath直接通信</li>
+</ul>
+</li>
+<li>ovsdb相当于OVS的大脑，存储OVS的配置信息和数据流信息。</li>
+</ul>
+</li>
+<li>配置管理层：包括ovs-dpctl, ovs-ofctl, ovs-appctl, ovs-vsctl和ovsdb-tool等，主要用于和vswitchd,ovsdb之间进行交互操作以及ovs的安装配置和部署</li>
+</ul>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png" alt="ovs 系统架构"></p>
+<h2 id="3-OVS安装使用"><a href="#3-OVS安装使用" class="headerlink" title="3. OVS安装使用"></a>3. OVS安装使用</h2><p>OVS可以运行在任何基于Linux的虚拟化平台，包括KVM, VirtualBox, Xen等，其代码都是基于C编写，所以易于移植到其他环境。安装有两种方法：一种通过二进制文件安装apt-get；另外一种是源码安装。</p>
+<h3 id="3-1-ovs安装"><a href="#3-1-ovs安装" class="headerlink" title="3.1 ovs安装"></a>3.1 ovs安装</h3><p>docker 安装参见【<a href="/2021/04/26/Docker/docker_install">Ubuntu安装Docker与最常用配置</a>】</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it --name ovs1 ubuntu /bin/bash</span><br><span class="line">  </span><br><span class="line">apt install python</span><br><span class="line">apt install python-pip</span><br><span class="line">wget https://www.openvswitch.org/releases/openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line">参考：https://www.cnblogs.com/goldsunshine/p/10331606.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">apt list --upgradable <span class="comment"># 查看可以升级的包</span></span><br><span class="line"></span><br><span class="line">apt install python</span><br><span class="line"></span><br><span class="line">apt install python-pip </span><br><span class="line"></span><br><span class="line">wget https://www.openvswitch.org/releases/openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxf openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 以下需root用户下执行</span></span><br><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br><span class="line">make modules_install </span><br><span class="line">/sbin/modprobe openvswitch </span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl start </span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl --no-ovs-vswitchd start</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl --no--ovsdb-server start</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/openvswitch</span><br><span class="line">ovsdb-tool create /usr/<span class="built_in">local</span>/etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/var/run/openvswitch</span><br><span class="line">ovsdb-server --remote=punix:/usr/<span class="built_in">local</span>/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br><span class="line"></span><br><span class="line">ovs-vsctl --no-wait init</span><br><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>note:进入容器后，若发现无法联网请参见文章【<a href="/2021/04/27/Docker/netdisconnected/">Docker容器内网络无法连接</a>】</p>
+</blockquote>
+<h3 id="3-2-ovs-vsctl-命令使用"><a href="#3-2-ovs-vsctl-命令使用" class="headerlink" title="3.2 ovs-vsctl 命令使用"></a>3.2 ovs-vsctl 命令使用</h3><p>ovs-ovsctl命令是对交换机上网桥和端口等信息进行配置的命令。获取或者更改ovs-vswitchd的配置信息，此工具操作的时候会更新ovsdb-server中的数据库。下面的操作需要连接控制器，控制器的安装可以参考【<a href="/2021/05/31/SDN/SDN05_OpenDaylight/">OpenDaylight安装</a>】</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看网桥</span></span><br><span class="line">ovs-vsctl show</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 添加网桥</span></span><br><span class="line">ovs-vsctl add-br br-test</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 绑定网卡，创建网桥后会默认创建同名的port，可以绑定机器存在的网卡</span></span><br><span class="line">ovs-vsctl add-port br-test ens8</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Port ens8</span><br><span class="line">            Interface ens8</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 删除port绑定的网卡</span></span><br><span class="line">ovs-vsctl del-port br-test ens8</span><br><span class="line"><span class="comment">## 删除网桥</span></span><br><span class="line">ovs-vsctl add-br br-test</span><br><span class="line"><span class="comment">## 网桥连接控制器</span></span><br><span class="line">ovs-vsctl set-controller br-test tcp:x.x.x.x:6633</span><br><span class="line"><span class="comment">## 设置协议,否则web界面无法显示</span></span><br><span class="line">ovs-vsctl <span class="built_in">set</span> bridge br-test protocols=OpenFlow10</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Controller <span class="string">&quot;tcp:x.x.x.x:6633&quot;</span></span><br><span class="line">            is_connected: <span class="literal">true</span></span><br><span class="line">        Port ens8</span><br><span class="line">            Interface ens8</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网桥端开连接控制器</span></span><br><span class="line">ovs-vsctl del-controller br-test</span><br></pre></td></tr></table></figure>
+<p>ovs连接控制器成功后，可在opendaylight界面看到：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_odl.png" alt="ovs-odl"></p>
+<p>ovs连接本地docker容器后，可以在OpenDaylight界面看到：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_docker_odl.png" alt="ovs-odl"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看docker容器的网卡物理地址</span></span><br><span class="line">docker <span class="built_in">exec</span> -it h0 bash</span><br><span class="line">root@8cfaf3984bdf:/<span class="comment"># ifconfig</span></span><br><span class="line">eth0 flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 10.0.50.10  netmask 255.255.255.0  broadcast 10.0.50.255</span><br><span class="line">        ether 02:42:0a:00:32:0a  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 2873  bytes 319842 (319.8 KB)</span><br><span class="line">        RX errors 0  dropped 2736  overruns 0  frame 0</span><br><span class="line">        TX packets 29  bytes 1666 (1.6 KB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<p><strong>ovs连接容器方法有诸多坑存在，将单独整理一篇文章讲解</strong></p>
+<p>上面说到，创建桥的时候会创建一个和桥名字一样的接口，并自动作为该桥的一个端口，那么这个虚拟接口的作用，一方面是可以作为交换机的管理端口，另一方面也是基于这个虚拟接口实现了桥的功能。Open vSwitch的内核模块实现了多个“数据路径”，每个都可以有多个vports。每个数据路径也通过关联流表（flow table）来设置操作，而这些流表中的流都是用户空间在报文头和元数据的基础上映射的关键信息，一般的操作都是将数据包转发到另一个vport。当一个数据包到达一个vport，内核模块所做的处理是提取其流的关键信息并在流表中查找这些关键信息，当有一个匹配的流时它执行对应的操作，如果没有匹配，它会将数据包送到用户空间的处理队列中，作为处理的一部分，用户空间可能会设置一个流用于以后碰到相同类型的数据包可以在内核中执行操作。<br>ovs-vsctl关于网桥管理的常用命令如下：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>init</td>
+<td>初始化数据库（前提数据分组为空）</td>
+</tr>
+<tr>
+<td>show</td>
+<td>打印数据库信息摘要</td>
+</tr>
+<tr>
+<td>add-br BRIDGE</td>
+<td>添加新的网桥</td>
+</tr>
+<tr>
+<td>del-br BRIDGE</td>
+<td>删除网桥</td>
+</tr>
+<tr>
+<td>list-br</td>
+<td>打印网桥摘要信息</td>
+</tr>
+<tr>
+<td>list-ports BRIDGE</td>
+<td>打印网桥中所有port摘要信息</td>
+</tr>
+<tr>
+<td>add-port BRIDGE PORT</td>
+<td>向网桥中添加端口</td>
+</tr>
+<tr>
+<td>del-port [BRIDGE] PORT</td>
+<td>删除网桥上的端口</td>
+</tr>
+<tr>
+<td>get-controller BRIDGE</td>
+<td>获取网桥的控制器信息</td>
+</tr>
+<tr>
+<td>del-controller BRIDGE</td>
+<td>删除网桥的控制器信息</td>
+</tr>
+<tr>
+<td>set-controller BRIDGE TARGET</td>
+<td>向网桥添加控制器</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-ovs-ofctl-命令使用"><a href="#3-3-ovs-ofctl-命令使用" class="headerlink" title="3.3 ovs-ofctl 命令使用"></a>3.3 ovs-ofctl 命令使用</h3><p>ovs-ofctl 命令是对流表的操作，包括对流表的增，删，改，查等命令。简单来说流表类似于交换机的MAC地址表，路由器的路由表，是ovs交换机指挥流量转发的表。</p>
+<p>OpenFlow是用于管理交换机流表的协议，ovs-ofctl是Open vSwitch提供的命令行工具。在没有配置OpenFlow控制器的模式下，用户可以使用ovs-ofctl命令通过OpenFlow协议连接Open vSwitch来创建、修改或删除Open vSwitch中的流表项，并对Open vSwitch的运行状况进行动态监控。ovs-ofctl关于流表管理的常用命令如下表所示：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs-ofctl-commands.png" alt="ovs-ofctl命令"></p>
+<p>对于add-flow、add-flows和mod-flows这3个命令，还需要指定要执行的动作actions=[target],[target]…，一个流规则中可能有多个动作，按照指定的先后顺序执行。<br>常见的流表操作如下表所示</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_actions.png" alt="流表操作"></p>
+<p>在OpenFlow白皮书中，Flow被定义为某个特定的网络流量。例如，一个TCP连接就是一个Flow，或者从某个IP地址发出来的数据包，都可以被认为是一个Flow。支持OpenFlow协议的交换机应该包括一个或多个流表，流表中的条目包含：数据包头的信息、匹配成功后要执行的指令和统计信息。当数据包进入OVS后，会将数据包和流表中的流表项进行匹配，如果发现了匹配的流表项，则执行该流表项中的指令集。相反，如果数据包在流表中没有发现任何匹配，OVS会通过控制通道把数据包发到OpenFlow控制器中。在OVS中，流表项作为ovs-ofctl的参数，采用如下的格式：字段=值，如果有多个字段，可以用逗号或空格分开，一些常用的字段列举如下表所示。</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_paramter.png" alt="ovs-ofctl参数"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/04/21/SDN/SDN03_ovs/" title="软件定义网络（SDN）学习笔记(3)--OVS系统架构" target="_blank" rel="external">http://shizhonggan.github.io/2021/04/21/SDN/SDN03_ovs/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/26/Python/ObjectOrientedPrograming/" title="面向对象编程(python)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/21/SDN/SDN04_Mininet/" title="软件定义网络（SDN）学习笔记(4)--Mininet"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2021 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
