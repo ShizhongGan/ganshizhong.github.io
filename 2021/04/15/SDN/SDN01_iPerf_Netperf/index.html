@@ -18,12 +18,12 @@
   
   
   <title>软件定义网络（SDN）学习笔记(1)--iPerf和Netperf性能测试 | 甘士忠个人博客</title>
-  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1. iPerf and NetperfiPerf是网络性能测试工具，可以测试主机之间的吞吐量">
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1. iPerf and Netperf iPerf是网络性能测试工具，可以测试主机之间的吞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件定义网络（SDN）学习笔记(1)--iPerf和Netperf性能测试">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/15/SDN/SDN01_iPerf_Netperf/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1. iPerf and NetperfiPerf是网络性能测试工具，可以测试主机之间的吞吐量">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1. iPerf and Netperf iPerf是网络性能测试工具，可以测试主机之间的吞">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-15T08:15:22.000Z">
 <meta property="article:modified_time" content="2021-10-28T06:55:59.905Z">
@@ -442,21 +442,24 @@
 <p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
 </blockquote>
 </blockquote>
-<h2 id="1-iPerf-and-Netperf"><a href="#1-iPerf-and-Netperf" class="headerlink" title="1. iPerf and Netperf"></a>1. iPerf and Netperf</h2><p>iPerf是网络性能测试工具，可以测试主机之间的吞吐量。iPerf具有多种参数和特性，支持协议、定时、缓冲区等参数的配置调整，能够测试TCP/UDP的最大带宽、延迟抖动、数据包丢失等统计信息。iPerf基于Server/Client的工作模式,客户端向服务端发送一定量的数据，服务端统计并计算带宽、延时和抖动等信息。</p>
+<h2 id="1-iperf-and-netperf"><a class="markdownIt-Anchor" href="#1-iperf-and-netperf"></a> 1. iPerf and Netperf</h2>
+<p>iPerf是网络性能测试工具，可以测试主机之间的吞吐量。iPerf具有多种参数和特性，支持协议、定时、缓冲区等参数的配置调整，能够测试TCP/UDP的最大带宽、延迟抖动、数据包丢失等统计信息。iPerf基于Server/Client的工作模式,客户端向服务端发送一定量的数据，服务端统计并计算带宽、延时和抖动等信息。</p>
 <ul>
 <li>命令格式： iperf [-s|-c host] [options]</li>
 </ul>
 <p>Netperf也是网络性能测试工具，主要用于测试TCP或UDP和Berkeley套接字接口的批量数据传输(Bulk Data Transfer)和请求/应答(Request/Reponse)性能。Netperf工具以Client/Server方式工作，服务端是netServer，用来侦听来自客户端的连接，客户端时NetPerf，用来向服务发起网络测试。在客户端与服务端之间，首先建立一个控制连接，传递有关测试配置的信息，以及测试的结果。在控制连接建立并传递了测试配置信息以后，客户端与服务之间建立一个测试连接，用于来回传递特殊的流量，已测试网络性能。</p>
 <ul>
-<li>命令格式：netperf [global options] –[test-specific options]</li>
+<li>命令格式：netperf [global options] --[test-specific options]</li>
 </ul>
-<h2 id="2-性能测试指标"><a href="#2-性能测试指标" class="headerlink" title="2. 性能测试指标"></a>2. 性能测试指标</h2><ol>
+<h2 id="2-性能测试指标"><a class="markdownIt-Anchor" href="#2-性能测试指标"></a> 2. 性能测试指标</h2>
+<ol>
 <li>网络吞吐量：单位时间内通过某个网络(信道或接口)的数据量，吞吐量受网络的带宽或网络的额定速率限制，单位bit/s</li>
 <li>网络延时：一个数据包从用户的计算机发送到网站服务器，然后立即从网站服务器返回用户计算机的来回时间。影响网络演示的主要因素：路由的跳数和网络的流量。交换机延时(Latency)是指从交换机接收到数据包到开始向目的端口复制数据包之间的时间间隔。有许多因素会影响交换机演示大小，如转发技术等。</li>
 <li>抖动：用于描述包在网络中的传输延时变化，抖动越小，说明网络质量越稳定、越好。</li>
 <li>丢包率：理想状态下发送多少数据包就能接收到多少数据包。但由于信号衰减、网络质量等诸多因素的影响并不能达到理想状态。丢包率是指测试中多丢失的数据包数量占所有发送数据包的比率。</li>
 </ol>
-<h2 id="3-iPerf和Netperf比较"><a href="#3-iPerf和Netperf比较" class="headerlink" title="3. iPerf和Netperf比较"></a>3. iPerf和Netperf比较</h2><table>
+<h2 id="3-iperf和netperf比较"><a class="markdownIt-Anchor" href="#3-iperf和netperf比较"></a> 3. iPerf和Netperf比较</h2>
+<table>
 <thead>
 <tr>
 <th>比较项</th>
@@ -464,7 +467,8 @@
 <th>Netperf</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>支持多线程</td>
 <td>是</td>
 <td>是</td>
@@ -504,14 +508,22 @@
 <td>否</td>
 <td>是</td>
 </tr>
-</tbody></table>
-<h2 id="4-测试命令"><a href="#4-测试命令" class="headerlink" title="4. 测试命令"></a>4. 测试命令</h2><h3 id="4-1-iPerf"><a href="#4-1-iPerf" class="headerlink" title="4.1 iPerf"></a>4.1 iPerf</h3><h4 id="一、TCP测试"><a href="#一、TCP测试" class="headerlink" title="一、TCP测试"></a>一、TCP测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一 10.0.0.8</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -s <span class="comment"># 作为服务端</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机二</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -t 32 -i 8 <span class="comment"># 测试时间32s,输出频率8s</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -n 2000M -i 5 <span class="comment"># 数据包为2000M,输出频率5s</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机三 与主机二 分别执行上述命令，可以观察主机一的测试结果， 不同时段的带宽相差比较大</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="二、UDP测试"><a href="#二、UDP测试" class="headerlink" title="二、UDP测试"></a>二、UDP测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一 10.0.0.8 停止iPerf TCP服务</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -s -u <span class="comment"># UDP测试</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -u -b 2000M -i 5 -l 1380 <span class="comment"># -b 2000M 2000Mbit/s发送速率， -i 5 表示输出频率5s -l 1380表示数据包的大小为1380个字节</span></span></span><br></pre></td></tr></table></figure>
+</tbody>
+</table>
+<h2 id="4-测试命令"><a class="markdownIt-Anchor" href="#4-测试命令"></a> 4. 测试命令</h2>
+<h3 id="41-iperf"><a class="markdownIt-Anchor" href="#41-iperf"></a> 4.1 iPerf</h3>
+<h4 id="一-tcp测试"><a class="markdownIt-Anchor" href="#一-tcp测试"></a> 一、TCP测试</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一 10.0.0.8</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -s <span class="comment"># 作为服务端</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机二</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -t 32 -i 8 <span class="comment"># 测试时间32s,输出频率8s</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -n 2000M -i 5 <span class="comment"># 数据包为2000M,输出频率5s</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机三 与主机二 分别执行上述命令，可以观察主机一的测试结果， 不同时段的带宽相差比较大</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="二-udp测试"><a class="markdownIt-Anchor" href="#二-udp测试"></a> 二、UDP测试</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一 10.0.0.8 停止iPerf TCP服务</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -s -u <span class="comment"># UDP测试</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> iperf -c 10.0.0.8 -u -b 2000M -i 5 -l 1380 <span class="comment"># -b 2000M 2000Mbit/s发送速率， -i 5 表示输出频率5s -l 1380表示数据包的大小为1380个字节</span></span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>note: 若发现Server接收不到Client 端发来的包，即没有任何输出，请检查是不是Client 端发的数据包大小大于Server端网卡设置的MTU值。当不设置-l的时候，Client端默认发送的数据包大小为1470.</p>
 </blockquote>
-<h3 id="4-2-Netperf"><a href="#4-2-Netperf" class="headerlink" title="4.2 Netperf"></a>4.2 Netperf</h3><h4 id="一、TCP测试-1"><a href="#一、TCP测试-1" class="headerlink" title="一、TCP测试"></a>一、TCP测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netserver -p 9991 <span class="comment"># 指定端口</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机二</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netperf -H 10.0.0.8 -p 9991 <span class="comment"># 缺省TCP批量传输，即 -t TCP_STREAM</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netperf -H 10.0.0.8 -p 9991 -- -m 1024</span></span><br></pre></td></tr></table></figure>
-<h4 id="二、UDP-测试"><a href="#二、UDP-测试" class="headerlink" title="二、UDP 测试"></a>二、UDP 测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> netperf -t UDP_STREAM -H 10.0.0.8 -p 9991 -- -m 1024</span></span><br></pre></td></tr></table></figure>
+<h3 id="42-netperf"><a class="markdownIt-Anchor" href="#42-netperf"></a> 4.2 Netperf</h3>
+<h4 id="一-tcp测试-2"><a class="markdownIt-Anchor" href="#一-tcp测试-2"></a> 一、TCP测试</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机一</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netserver -p 9991 <span class="comment"># 指定端口</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 主机二</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netperf -H 10.0.0.8 -p 9991 <span class="comment"># 缺省TCP批量传输，即 -t TCP_STREAM</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netperf -H 10.0.0.8 -p 9991 -- -m 1024</span></span><br></pre></td></tr></table></figure>
+<h4 id="二-udp-测试"><a class="markdownIt-Anchor" href="#二-udp-测试"></a> 二、UDP 测试</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> netperf -t UDP_STREAM -H 10.0.0.8 -p 9991 -- -m 1024</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>note: 不同于iPerf, Netperf测试UDP数据包无需在服务器端指定参数，所以，不用重启服务器，只需要在客户端上加上 -t UDP_STREAM</p>
 </blockquote>

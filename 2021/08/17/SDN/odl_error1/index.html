@@ -18,12 +18,12 @@
   
   
   <title>opendaylight下发流表--想象不到的坑(1) | 甘士忠个人博客</title>
-  <meta name="description" content="这两天在云平台部署了Carbon版本的opendaylight, 通过界面下发流表过程中，万万没想到遇到了这样的坑，如下图所示。  讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的”+”图标。于是，反反复复、一步一步、仔仔细细地检">
+  <meta name="description" content="这两天在云平台部署了Carbon版本的opendaylight, 通过界面下发流表过程中，万万没想到遇到了这样的坑，如下图所示。  讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的&quot;+&quot;图标。于是，反反复复、一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="opendaylight下发流表--想象不到的坑(1)">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/08/17/SDN/odl_error1/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="这两天在云平台部署了Carbon版本的opendaylight, 通过界面下发流表过程中，万万没想到遇到了这样的坑，如下图所示。  讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的”+”图标。于是，反反复复、一步一步、仔仔细细地检">
+<meta property="og:description" content="这两天在云平台部署了Carbon版本的opendaylight, 通过界面下发流表过程中，万万没想到遇到了这样的坑，如下图所示。  讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的&quot;+&quot;图标。于是，反反复复、一">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/error.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display.png">
@@ -440,19 +440,19 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <p>这两天在云平台部署了Carbon版本的opendaylight, 通过界面下发流表过程中，万万没想到遇到了这样的坑，如下图所示。</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/error.png" alt="odl-error"></p>
-<p>讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。<strong>然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的”+”图标</strong>。于是，反反复复、一步一步、仔仔细细地检查了各个操作步骤是否准确，貌似并没有什么错误。</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/error.png" alt="odl-error" /></p>
+<p>讲道理，在填入正确的node id之后（table id 在openflow1.0版本设置为0），即可展开flow list，填写相关参数，然后发送请求。<strong>然而，如图上所示，无法展开，没有展开按钮，没有网上各种资料所说的&quot;+&quot;图标</strong>。于是，反反复复、一步一步、仔仔细细地检查了各个操作步骤是否准确，貌似并没有什么错误。</p>
 <p>这两天用谷歌搜索也不能解决问题，遍读官方文档也没有解决方法，苦苦盯着屏幕开始自我怀疑，是我环境没有部署好？是我操作不当？是我对网络的理解不够深刻？是我对计算机一窍不通？。。。。。。</p>
 <p>正当放弃的时候，突然灵光一现，我把鼠标轻轻地挪到了flow list 圆圈A后方这个位置，如下图所示，鼠标放在红色的箭头位置时，上方突然跳出一个add list iterm，这不就是我苦苦寻找的东西么！</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display.png" alt="odl-error"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display.png" alt="odl-error" /></p>
 <p>至此，这个隐藏的按钮终于被找到了，问题也就解决了。点击展开如下，flow[0]后的删除按钮也无法显示，显然这是软件的问题。</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display2.png" alt="odl-error"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display2.png" alt="odl-error" /></p>
 <p>下图是其他平台正常界面显示结果，如下所示，红色框框中的图标按钮是我这几天苦苦追寻的东西。此坑完结。。。。。</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display4.png" alt="odl-error"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/display4.png" alt="odl-error" /></p>
 <p>问题解决了，原因找到了，坑了我两天的问题，绝对不能这样放过，必须深究一下本质原因，查看界面html源码如下面三张图所示。先找到这个位置所需要的icon，找到icon对应的位置，发现该位置下貌似没有所需要的icon。这几天胸口郁结之气终于散了！</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/source.png" alt="odl-error"></p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/iconlink.png" alt="odl-error"></p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/imagesfile.png" alt="odl-error"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/source.png" alt="odl-error" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/iconlink.png" alt="odl-error" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/error1/imagesfile.png" alt="odl-error" /></p>
 
       
     </div>

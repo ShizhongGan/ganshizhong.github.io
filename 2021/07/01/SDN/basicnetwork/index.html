@@ -18,12 +18,12 @@
   
   
   <title>网络技术基础知识[持续更新] | 甘士忠个人博客</title>
-  <meta name="description" content="IPv4192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0广播地址 All Hosts&#x3D;1主机地址数量 2^n-2(n&#x3D;32-掩码)&lt;网络">
+  <meta name="description" content="IPv4 192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0 广播地址 All Hosts&#x3D;1 主机地址数量 2^n-2(n&#x3D;32-掩码)&amp;l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络技术基础知识[持续更新]">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/07/01/SDN/basicnetwork/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="IPv4192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0广播地址 All Hosts&#x3D;1主机地址数量 2^n-2(n&#x3D;32-掩码)&lt;网络">
+<meta property="og:description" content="IPv4 192.168.1.1 由32位点分十进制表示，如下图所示：  IP地址由两部分组成： 网络ID和主机ID  网络ID：用于区分不同的子网 主机ID：用于区分同一子网得不同主机  掩码：用于区分网络ID和主机ID,前24位是1可以表示为&#x2F;24,如下图所示：  使用方法：  网络地址 All Hosts&#x3D;0 广播地址 All Hosts&#x3D;1 主机地址数量 2^n-2(n&#x3D;32-掩码)&amp;l">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/mask.png">
@@ -438,18 +438,21 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>192.168.1.1 由32位点分十进制表示，如下图所示：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png"></p>
+        <h2 id="ipv4"><a class="markdownIt-Anchor" href="#ipv4"></a> IPv4</h2>
+<p>192.168.1.1 由32位点分十进制表示，如下图所示：</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/ip.png" alt="" /></p>
 <p>IP地址由两部分组成： 网络ID和主机ID</p>
 <ul>
 <li>网络ID：用于区分不同的子网</li>
 <li>主机ID：用于区分同一子网得不同主机</li>
 </ul>
 <p>掩码：用于区分网络ID和主机ID,前24位是1可以表示为/24,如下图所示：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/mask.png"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/mask.png" alt="" /></p>
 <p>使用方法：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/maskfunc.png"></p>
-<p>网络地址 All Hosts=0<br>广播地址 All Hosts=1<br>主机地址数量 2^n-2(n=32-掩码)&lt;网络地址+1，广播地址-1&gt;</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ipv4/maskfunc.png" alt="" /></p>
+<p>网络地址 All Hosts=0<br />
+广播地址 All Hosts=1<br />
+主机地址数量 2^n-2(n=32-掩码)&lt;网络地址+1，广播地址-1&gt;</p>
 <p>IPv4即将枯竭，解决方法：</p>
 <ul>
 <li>VLSM可变长子网掩码</li>
@@ -463,9 +466,10 @@
 <li>广播地址：10.102.23.255</li>
 <li>主机地址范围：&lt;10.102.20.1, 10.102.23.254&gt;</li>
 </ul>
-<h2 id="5G-技术特点"><a href="#5G-技术特点" class="headerlink" title="5G 技术特点"></a>5G 技术特点</h2><p>网络通信包括：无线通信（wifi, 2G-5G） 和 有线通信（双绞线, 光纤等）。由于不同的传播介质，有线的通信能力远远大于无线通信。</p>
+<h2 id="5g-技术特点"><a class="markdownIt-Anchor" href="#5g-技术特点"></a> 5G 技术特点</h2>
+<p>网络通信包括：无线通信（wifi, 2G-5G） 和 有线通信（双绞线, 光纤等）。由于不同的传播介质，有线的通信能力远远大于无线通信。</p>
 <p>光速=波长×频率</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/5G/light.png"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/5G/light.png" alt="" /></p>
 <p>5G特点</p>
 <ul>
 <li>高频段（毫米波）：频率越高，越趋向直线传播，传输过程衰减越大，覆盖范围越小，成本越高</li>
@@ -473,7 +477,9 @@
 <li>波束赋形，将光源聚集到一个设备上的技术。波束赋形的物理学原理，其实就是波的干涉现象。百度百科上定义如下：频率相同的两列波叠加，使某些区域的振动加强，某些区域的振动减弱，而且振动加强的区域和振动减弱的区域相互隔开。</li>
 <li>D2D(device to device)以往信令包和数据包都是通过基站，5G是信令包通过基站数据再设备中间互相传输。</li>
 </ul>
-<h2 id="BGP协议-学了还是不懂啥玩意"><a href="#BGP协议-学了还是不懂啥玩意" class="headerlink" title="BGP协议[学了还是不懂啥玩意]"></a>BGP协议[学了还是不懂啥玩意]</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>BGP概述</p>
+<h2 id="bgp协议学了还是不懂啥玩意"><a class="markdownIt-Anchor" href="#bgp协议学了还是不懂啥玩意"></a> BGP协议[学了还是不懂啥玩意]</h2>
+<h3 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h3>
+<p>BGP概述</p>
 <ul>
 <li>外部网关协议</li>
 <li>使用TCP作为传输层协议</li>
@@ -495,9 +501,10 @@
 <li>Route-Refresh报文：用于改变路由策略后请求对等体重新发送路由信息</li>
 </ul>
 <p>工作原理-状态机</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/BGP/BGP.png"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/BGP/BGP.png" alt="" /></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hK4y1L7Q8/?spm_id_from=trigger_reload">视频学习链接</a></p>
-<h2 id="SDN-Underlay-与-Overlay"><a href="#SDN-Underlay-与-Overlay" class="headerlink" title="SDN Underlay 与 Overlay"></a>SDN Underlay 与 Overlay</h2><p>Underlay: 现实的物理基础层网络设备。-数据中心基础转发架构的网络。</p>
+<h2 id="sdn-underlay-与-overlay"><a class="markdownIt-Anchor" href="#sdn-underlay-与-overlay"></a> SDN Underlay 与 Overlay</h2>
+<p>Underlay: 现实的物理基础层网络设备。-数据中心基础转发架构的网络。</p>
 <ul>
 <li>以太网最初设计的时候就是一个分布式的网络架构，没有中心控制节点，网络中的节点通过协议传递学习网络的可达性信息。</li>
 <li>underlay就是数据中心场景的基础物理设施，保证任何两个点路由可达，其中包含了传统的网络技术。</li>
@@ -511,8 +518,16 @@
 <p>underlay和overlay是互相独立的，其中underlay为overlay提供基础承载；</p>
 <p>underlya和overlay是相对而言的，谁为对方提供基础网络架构，谁就是underlay，相反另外的一方则为overlay；</p>
 <p>提到overlay是近几年数据中心为网络兴起的概念，但是对于传统网络而言实际上早一些类似概念。</p>
-<p>传统网络：l2vpn、l3vpn、qinq、macinmac等隧道技术就是传统的overlay网络技术；<br>数据中心网络：以vxlan、gre、nvgre、trill等新兴隧道技术为基础构建出来的vpc网络；<br>2 当前网络架构主流技术对比<br>flexe是一种在ip传送网借鉴otn网络的一种无ip交换的更快的1层网络技术，可以理解成把多个节点调度打通看做一根光纤，无ip交换自然更快；<br>mpls和sr这些基于二三层之间的隧道技术，个人理解可以理解成逻辑接口，提供的是一个跨多个节点的专线管道；<br>vxlan、gre、nvgre、trill是基于ip技术打造新兴隧道技术，本质而言，他们对于每个具体的设备仍然是一个逻辑接口；<br>数据中心场景下基于vxlan、gre等不同底层承载新建的逻辑网络，也就是我们常说的vpc网络，是真正意义的逻辑network；<br>l2vpn和l3vpn网路构建出来的也是一个逻辑network,通常承载在mpls的运营商传统网络场景，但是sdwan的出现改变了这一个格局。</p>
-<h2 id="路由器硬件设计"><a href="#路由器硬件设计" class="headerlink" title="路由器硬件设计"></a>路由器硬件设计</h2><p>要考虑八个方面：</p>
+<p>传统网络：l2vpn、l3vpn、qinq、macinmac等隧道技术就是传统的overlay网络技术；<br />
+数据中心网络：以vxlan、gre、nvgre、trill等新兴隧道技术为基础构建出来的vpc网络；<br />
+2 当前网络架构主流技术对比<br />
+flexe是一种在ip传送网借鉴otn网络的一种无ip交换的更快的1层网络技术，可以理解成把多个节点调度打通看做一根光纤，无ip交换自然更快；<br />
+mpls和sr这些基于二三层之间的隧道技术，个人理解可以理解成逻辑接口，提供的是一个跨多个节点的专线管道；<br />
+vxlan、gre、nvgre、trill是基于ip技术打造新兴隧道技术，本质而言，他们对于每个具体的设备仍然是一个逻辑接口；<br />
+数据中心场景下基于vxlan、gre等不同底层承载新建的逻辑网络，也就是我们常说的vpc网络，是真正意义的逻辑network；<br />
+l2vpn和l3vpn网路构建出来的也是一个逻辑network,通常承载在mpls的运营商传统网络场景，但是sdwan的出现改变了这一个格局。</p>
+<h2 id="路由器硬件设计"><a class="markdownIt-Anchor" href="#路由器硬件设计"></a> 路由器硬件设计</h2>
+<p>要考虑八个方面：</p>
 <ul>
 <li>FIB表容量</li>
 <li>协议特性</li>
@@ -526,13 +541,14 @@
 <blockquote>
 <p>RFC1925: Good, fast, cheap, pick any two, but you can’t have all three</p>
 </blockquote>
-<h2 id="网络传输中的三张表，MAC地址表、ARP缓存表以及路由表"><a href="#网络传输中的三张表，MAC地址表、ARP缓存表以及路由表" class="headerlink" title="网络传输中的三张表，MAC地址表、ARP缓存表以及路由表"></a>网络传输中的三张表，MAC地址表、ARP缓存表以及路由表</h2><ul>
+<h2 id="网络传输中的三张表mac地址表-arp缓存表以及路由表"><a class="markdownIt-Anchor" href="#网络传输中的三张表mac地址表-arp缓存表以及路由表"></a> 网络传输中的三张表，MAC地址表、ARP缓存表以及路由表</h2>
+<ul>
 <li>路由表：目的地址、网络掩码、下一条ip地址、出接口、优先级、cost路由开销</li>
 <li>arp表：ip地址、对应的mac地址、ip地址类型</li>
 <li>mac表：mac地址、出端口</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ubuntuarp.png"></p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/winarp.png"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/ubuntuarp.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/basicnetwork/winarp.png" alt="" /></p>
 <p>详细参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dapaitou2006/p/6391472.html">https://www.cnblogs.com/dapaitou2006/p/6391472.html</a></p>
 
       

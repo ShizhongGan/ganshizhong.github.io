@@ -18,12 +18,12 @@
   
   
   <title>Nginx日志分析系统 | 甘士忠个人博客</title>
-  <meta name="description" content="项目需求Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。 业务流程 说明：  通过Beats采集Nginx的指标数据和日志数据 Bea">
+  <meta name="description" content="项目需求 Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。  业务流程  说明：  通过Beats采集Nginx的指标数据和日志数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx日志分析系统">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/11/01/ELK/NgixLog/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="项目需求Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。 业务流程 说明：  通过Beats采集Nginx的指标数据和日志数据 Bea">
+<meta property="og:description" content="项目需求 Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。  业务流程  说明：  通过Beats采集Nginx的指标数据和日志数据">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/ElasticStack/nginxlogflow.png">
 <meta property="article:published_time" content="2021-11-01T02:03:04.000Z">
@@ -433,8 +433,10 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。</p>
-<h2 id="业务流程"><a href="#业务流程" class="headerlink" title="业务流程"></a>业务流程</h2><p><img src="https://ganshizhong.gitee.io/blogimages/ElasticStack/nginxlogflow.png" alt="nginxlogflow"></p>
+        <h2 id="项目需求"><a class="markdownIt-Anchor" href="#项目需求"></a> 项目需求</h2>
+<p>Nginx是一款非常优秀的web服务器，往往nginx服务会作为项目的访问入口，那么，nginx的性能保障就变得非常重要了，如果nginx的运行出现了问题就会对项目有较大的影响，所以，我们需要对nginx的运行有监控措施，实时掌握nginx的运行情况，那就需要收集nginx的运行指标和分析nginx的运行日志了。</p>
+<h2 id="业务流程"><a class="markdownIt-Anchor" href="#业务流程"></a> 业务流程</h2>
+<p><img src="https://ganshizhong.gitee.io/blogimages/ElasticStack/nginxlogflow.png" alt="nginxlogflow" /></p>
 <p>说明：</p>
 <ul>
 <li>通过Beats采集Nginx的指标数据和日志数据</li>
@@ -442,12 +444,11 @@
 <li>Kibana读取数据进行分析</li>
 <li>用户通过Kibana进行查看分析报表</li>
 </ul>
-<h2 id="Nginx部署安装"><a href="#Nginx部署安装" class="headerlink" title="Nginx部署安装"></a>Nginx部署安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 官网下载地址 http://nginx.org/download/</span></span><br><span class="line"><span class="comment">## ubuntu 安装</span></span><br><span class="line">sudo apt install nginx <span class="comment"># 80端口, 此处不要与gitlab的nginx冲突</span></span><br><span class="line">tail -f /var/<span class="built_in">log</span>/nginx/access.log</span><br><span class="line">tail -f gitlab/logs/nginx/gitlab_access.log</span><br><span class="line"><span class="comment">## centos 源码安装</span></span><br><span class="line">tar -xvf nginx-xxxx.tar.gz</span><br><span class="line">yum -y install pcre-devel zlib-devel</span><br><span class="line">./configure</span><br><span class="line">make install</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin/</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>
+<h2 id="nginx部署安装"><a class="markdownIt-Anchor" href="#nginx部署安装"></a> Nginx部署安装</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 官网下载地址 http://nginx.org/download/</span></span><br><span class="line"><span class="comment">## ubuntu 安装</span></span><br><span class="line">sudo apt install nginx <span class="comment"># 80端口, 此处不要与gitlab的nginx冲突</span></span><br><span class="line">tail -f /var/<span class="built_in">log</span>/nginx/access.log</span><br><span class="line">tail -f gitlab/logs/nginx/gitlab_access.log</span><br><span class="line"><span class="comment">## centos 源码安装</span></span><br><span class="line">tar -xvf nginx-xxxx.tar.gz</span><br><span class="line">yum -y install pcre-devel zlib-devel</span><br><span class="line">./configure</span><br><span class="line">make install</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin/</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://www.moguit.cn/#/info?blogUid=e8d3e38ba35b4765ae128256eb44e341">centos安装Nginx参考</a></p>
 <p><a href="/2021/11/01/ELK/Beats/">filebeat安装与使用参</a></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim best-nginx.yml <span class="comment"># 创建配置文件</span></span><br><span class="line"><span class="comment">#### 内容如下</span></span><br><span class="line">filebeat.inputs:</span><br><span class="line">- <span class="built_in">type</span>: <span class="built_in">log</span></span><br><span class="line">  enabled: <span class="literal">true</span></span><br><span class="line">  paths:</span><br><span class="line">    - /home/ec2-user/program/gitlab/logs/nginx/*.<span class="built_in">log</span></span><br><span class="line">  tags:[<span class="string">&quot;nginx&quot;</span>]</span><br><span class="line">  fields_under_root: <span class="literal">false</span></span><br><span class="line">setup.template.settings: </span><br><span class="line">  index.number_of_shards: 3</span><br><span class="line">output.elasticsearch:</span><br><span class="line">  hosts: [<span class="string">&quot;127.0.0.1:9200&quot;</span>]</span><br><span class="line"><span class="comment">#####################################</span></span><br><span class="line">./filebeat -e -c gszbeat.yml <span class="comment"># 启动</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;ganshizhong&quot;</span> &gt;&gt; a.log </span><br></pre></td></tr></table></figure>
-
-
 
       
     </div>

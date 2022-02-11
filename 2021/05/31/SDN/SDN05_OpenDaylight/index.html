@@ -18,12 +18,12 @@
   
   
   <title>软件定义网络（SDN）学习笔记(5)--OpenDaylight控制器 | 甘士忠个人博客</title>
-  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 OpenDaylight介绍控制器是给交换机下发流表的设备，最常见的控制器是OpenDay">
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1 OpenDaylight介绍 控制器是给交换机下发流表的设备，最常见的控制器是OpenD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件定义网络（SDN）学习笔记(5)--OpenDaylight控制器">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/05/31/SDN/SDN05_OpenDaylight/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 OpenDaylight介绍控制器是给交换机下发流表的设备，最常见的控制器是OpenDay">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1 OpenDaylight介绍 控制器是给交换机下发流表的设备，最常见的控制器是OpenD">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo_odl.png">
@@ -455,21 +455,22 @@
 <p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
 </blockquote>
 </blockquote>
-<h2 id="1-OpenDaylight介绍"><a href="#1-OpenDaylight介绍" class="headerlink" title="1 OpenDaylight介绍"></a>1 OpenDaylight介绍</h2><p>控制器是给交换机下发流表的设备，最常见的控制器是OpenDaylight，简称ODL，下面首先安装一个ODL控制器，看看控制器给交换机下发的原汁原味的流表是怎么样的。</p>
+<h2 id="1-opendaylight介绍"><a class="markdownIt-Anchor" href="#1-opendaylight介绍"></a> 1 OpenDaylight介绍</h2>
+<p>控制器是给交换机下发流表的设备，最常见的控制器是OpenDaylight，简称ODL，下面首先安装一个ODL控制器，看看控制器给交换机下发的原汁原味的流表是怎么样的。</p>
 <blockquote>
 <p>心得：控制器还是属ODL好安装啊…界面丰富，新手上路不需要担心太多东西，就是软件太大。</p>
 </blockquote>
-<h2 id="2-ODL控制器安装"><a href="#2-ODL控制器安装" class="headerlink" title="2 ODL控制器安装"></a>2 ODL控制器安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装JAVA</span></span><br><span class="line">apt install openjdk-8-jdk</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置环境</span></span><br><span class="line">vim /etc/environment <span class="comment"># 进入环境变量配置文件，在第二行加入java的环境变量。</span></span><br><span class="line">    JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 下载ODL编译好的文件</span></span><br><span class="line">wget https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.6.4-Carbon/distribution-karaf-0.6.4-Carbon.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 解压文件</span></span><br><span class="line">tar zvxf distribution-karaf-0.6.4-Carbon.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置文件</span></span><br><span class="line">/etc/org.apache.karaf.management.cfg</span><br><span class="line">    <span class="comment"># Host for RMI registry</span></span><br><span class="line">    rmiRegistryHost = 0.0.0.0</span><br><span class="line">    <span class="comment"># Port number for RMI server connection</span></span><br><span class="line">    rmiServerPort = 44444</span><br><span class="line">    <span class="comment"># Host for RMI server</span></span><br><span class="line">    rmiServerHost = 0.0.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment">## tmux 启动 odl</span></span><br><span class="line">tmux </span><br><span class="line"><span class="built_in">unset</span> TMOUT</span><br><span class="line"></span><br><span class="line">./bin/karaf</span><br><span class="line">feature:install odl-l2switch-switch-ui odl-openflowplugin-flow-services-ui odl-mdsal-apidocs odl-dluxapps-applications odl-faas-all</span><br><span class="line"></span><br><span class="line"><span class="comment">## 上面就行，下面这个或许也可以，同时要遵守顺序</span></span><br><span class="line">feature:install odl-restconf</span><br><span class="line">feature:install odl-l2switch-switch</span><br><span class="line">feature:install odl-openflowplugin-all</span><br><span class="line">feature:install odl-dlux-all</span><br><span class="line">feature:install odl-mdsal-all</span><br><span class="line">feature:install odl-adsal-northbound</span><br></pre></td></tr></table></figure>
-
+<h2 id="2-odl控制器安装"><a class="markdownIt-Anchor" href="#2-odl控制器安装"></a> 2 ODL控制器安装</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装JAVA</span></span><br><span class="line">apt install openjdk-8-jdk</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置环境</span></span><br><span class="line">vim /etc/environment <span class="comment"># 进入环境变量配置文件，在第二行加入java的环境变量。</span></span><br><span class="line">    JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 下载ODL编译好的文件</span></span><br><span class="line">wget https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.6.4-Carbon/distribution-karaf-0.6.4-Carbon.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 解压文件</span></span><br><span class="line">tar zvxf distribution-karaf-0.6.4-Carbon.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置文件</span></span><br><span class="line">/etc/org.apache.karaf.management.cfg</span><br><span class="line">    <span class="comment"># Host for RMI registry</span></span><br><span class="line">    rmiRegistryHost = 0.0.0.0</span><br><span class="line">    <span class="comment"># Port number for RMI server connection</span></span><br><span class="line">    rmiServerPort = 44444</span><br><span class="line">    <span class="comment"># Host for RMI server</span></span><br><span class="line">    rmiServerHost = 0.0.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment">## tmux 启动 odl</span></span><br><span class="line">tmux </span><br><span class="line"><span class="built_in">unset</span> TMOUT</span><br><span class="line"></span><br><span class="line">./bin/karaf</span><br><span class="line">feature:install odl-l2switch-switch-ui odl-openflowplugin-flow-services-ui odl-mdsal-apidocs odl-dluxapps-applications odl-faas-all</span><br><span class="line"></span><br><span class="line"><span class="comment">## 上面就行，下面这个或许也可以，同时要遵守顺序</span></span><br><span class="line">feature:install odl-restconf</span><br><span class="line">feature:install odl-l2switch-switch</span><br><span class="line">feature:install odl-openflowplugin-all</span><br><span class="line">feature:install odl-dlux-all</span><br><span class="line">feature:install odl-mdsal-all</span><br><span class="line">feature:install odl-adsal-northbound</span><br></pre></td></tr></table></figure>
 <p>ODL命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">log:display|more # 控制台查看日志</span><br><span class="line">feature:list # 列出所有组件</span><br><span class="line">feature:list -i # 列出已经安装的</span><br><span class="line">feature:list -i|grep odl-restconf # 确认某个组件安装</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> rm -rf data <span class="comment"># 删除data目录，并</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./bin/karaf clean  <span class="comment"># 清除组件重新进入karaf控制台</span></span></span><br></pre></td></tr></table></figure>
-
 <p>验证OpenDaylight基本功能</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mn --controller=remote,ip=119.255.243.31,port=6633</span></span><br><span class="line"><span class="meta">mininet&gt;</span><span class="bash">pingall</span> </span><br></pre></td></tr></table></figure>
-
-<p>登录web界面，查看是否有拓扑<br>http://<your-karaf-ip>:8181/index.html</p>
+<p>登录web界面，查看是否有拓扑<br />
+http://<your-karaf-ip>:8181/index.html</p>
 <p>用户名：admin 密码：admin</p>
-<h2 id="下发流表"><a href="#下发流表" class="headerlink" title="下发流表"></a>下发流表</h2><p>YANG UI是OpenDaylight中一款基于DLUX的应用，旨在简化、激励应用的开发与测试。YANG UI通过动态封装、调用YANG模型和相关REST APIs，生成并展示一个简单的UI界面。开发人员可以通过API请求获取交换机信息，并且以JSON格式展示。YANG UI主要面向上层应用开发，为应用开发人员提供了很多相关工具，有效的节约了开发人员的时间。</p>
+<h2 id="下发流表"><a class="markdownIt-Anchor" href="#下发流表"></a> 下发流表</h2>
+<p>YANG UI是OpenDaylight中一款基于DLUX的应用，旨在简化、激励应用的开发与测试。YANG UI通过动态封装、调用YANG模型和相关REST APIs，生成并展示一个简单的UI界面。开发人员可以通过API请求获取交换机信息，并且以JSON格式展示。YANG UI主要面向上层应用开发，为应用开发人员提供了很多相关工具，有效的节约了开发人员的时间。</p>
 <p>OpenFlow1.0协议处理数据包的流程相对简单，因为1.0版本只支持单流表。交换机接收到数据包后解析数据包，数据包解析后就开始匹配，从table 0 开始匹配，如果匹配成功则对该数据包执行相应的动作，更新相应的计数器。如果没有找到匹配项则将数据包交给控制器。</p>
 <p>OpenFlow1.3协议支持多流表匹配，即一个交换机只会有多个流表，因此数据包处理过程相对复杂。首先解析进入设备的报文，然后从table 0开始匹配，按照优先级高低依次匹配该流表中的流表项，一个报文在一个流表中只会匹配上一条流表项。通常根据报文的类型，报文头的字段例如源MAC地址、目的MAC地址、源IP地址、目的IP地址等进行匹配，大部分匹配还支持掩码进行更精确、灵活的匹配。也可以通过报文的入端口或元数据信息来进行报文的匹配，一个流表项中可以同时存在多个匹配项，一个报文需要同时匹配流表项中所有匹配项才能匹配该流表项。报文匹配按照现有的报文字段进行，比如前一个流表通过apply actions改变了该报文的某个字段，则下一个表项按修改后的字段进行匹配。如果匹配成功，则按照指令集里的动作更新动作集，或更新报文/匹配集字段，或更新元数据和计数器。根据指令是否继续前往下一个流表，不继续则终止匹配流程执行动作集，如果指令要求继续前往下一个流表则继续匹配，下一个流表的ID需要比当前流表ID大。当报文匹配失败了，如果存在无匹配流表项（table miss）就按照该表项执行指令，一般是将报文转发给控制器、丢弃或转发给其他流表。如果没有table miss表项则默认丢弃该报文。</p>
 <p>YANG UI是OpenDaylight中一款基于DLUX的应用，旨在简化、激励应用的开发与测试。YANG UI通过动态封装、调用YANG模型和相关REST APIs，生成并展示一个简单的UI界面。开发人员可以通过API请求获取交换机信息，并且以JSON格式展示。YANG UI主要面向上层应用开发，为应用开发人员提供了很多相关工具，有效的节约了开发人员的时间。</p>
@@ -483,7 +484,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>in_port=port</td>
 <td>传递数据包的端口的OpenFlow端口编号</td>
 </tr>
@@ -507,43 +509,46 @@
 <td>table=number</td>
 <td>指定要使用的流表的编号，范围是0-254。在不指定的情况下，默认值为0。通过使用流表编号，可以创建或者修改多个Table中的Flow。</td>
 </tr>
-</tbody></table>
-<h3 id="步骤一-通过miniedit-py-快速设计网络拓扑，并保存为topo1-1-3-py文件，如下图所示"><a href="#步骤一-通过miniedit-py-快速设计网络拓扑，并保存为topo1-1-3-py文件，如下图所示" class="headerlink" title="步骤一 通过miniedit.py 快速设计网络拓扑，并保存为topo1_1_3.py文件，如下图所示"></a>步骤一 通过miniedit.py 快速设计网络拓扑，并保存为topo1_1_3.py文件，如下图所示</h3><p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo.png" alt="mininet_topo"></p>
-<h3 id="步骤二-python3-topo1-1-3-py-执行文件，打开opendaylight-web页面，可查看网络拓扑图如下所示"><a href="#步骤二-python3-topo1-1-3-py-执行文件，打开opendaylight-web页面，可查看网络拓扑图如下所示" class="headerlink" title="步骤二 python3 topo1_1_3.py 执行文件，打开opendaylight web页面，可查看网络拓扑图如下所示"></a>步骤二 python3 topo1_1_3.py 执行文件，打开opendaylight web页面，可查看网络拓扑图如下所示</h3><p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo_odl.png" alt="odl_topo"></p>
-<h3 id="单机左侧，可查看Nodes-节点信息，-Node-id在下发流表过程中需要。点击Node-Connectors可查看具体节点连接信息"><a href="#单机左侧，可查看Nodes-节点信息，-Node-id在下发流表过程中需要。点击Node-Connectors可查看具体节点连接信息" class="headerlink" title="单机左侧，可查看Nodes 节点信息， Node id在下发流表过程中需要。点击Node Connectors可查看具体节点连接信息"></a>单机左侧，可查看Nodes 节点信息， <strong>Node id</strong>在下发流表过程中需要。点击Node Connectors可查看具体节点连接信息</h3><p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/nodes_odl.png" alt="nodes"></p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/node_connectors_odl.png" alt="node_connectors"></p>
-<h3 id="展开“opendaylight-inventory-rev-2013-08-19”-选择“config-gt-nodes-gt-node-id-gt-table-id-gt-flow-id-”"><a href="#展开“opendaylight-inventory-rev-2013-08-19”-选择“config-gt-nodes-gt-node-id-gt-table-id-gt-flow-id-”" class="headerlink" title="展开“opendaylight-inventory rev.2013-08-19”,选择“config-&gt;nodes-&gt;node{id}-&gt;table{id}-&gt;flow{id}”"></a>展开“opendaylight-inventory rev.2013-08-19”,选择“config-&gt;nodes-&gt;node{id}-&gt;table{id}-&gt;flow{id}”</h3><p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/yangui1.png" alt="YangUI1"></p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/yangui2.png" alt="YangUI2"></p>
-<h3 id="参数填写"><a href="#参数填写" class="headerlink" title="参数填写"></a>参数填写</h3><ul>
-<li>“match&gt;ethernet-match&gt;ethernet-type”, 填写”type”为”0x0800”; “layer-3-match”选择”ipv4=match”使用IP匹配; 展开”layer-3-match”填写源IP地址和目的IP地址，如下图：</li>
-</ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter1.png" alt="para1"></p>
+</tbody>
+</table>
+<h3 id="步骤一-通过minieditpy-快速设计网络拓扑并保存为topo1_1_3py文件如下图所示"><a class="markdownIt-Anchor" href="#步骤一-通过minieditpy-快速设计网络拓扑并保存为topo1_1_3py文件如下图所示"></a> 步骤一 <a target="_blank" rel="noopener" href="http://xn--miniedit-0q3yyx.py">通过miniedit.py</a> 快速设计网络拓扑，并保存为topo1_1_3.py文件，如下图所示</h3>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo.png" alt="mininet_topo" /></p>
+<h3 id="步骤二-python3-topo1_1_3py-执行文件打开opendaylight-web页面可查看网络拓扑图如下所示"><a class="markdownIt-Anchor" href="#步骤二-python3-topo1_1_3py-执行文件打开opendaylight-web页面可查看网络拓扑图如下所示"></a> 步骤二 python3 topo1_1_3.py 执行文件，打开opendaylight web页面，可查看网络拓扑图如下所示</h3>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/topo_odl.png" alt="odl_topo" /></p>
+<h3 id="单机左侧可查看nodes-节点信息-node-id在下发流表过程中需要-点击node-connectors可查看具体节点连接信息"><a class="markdownIt-Anchor" href="#单机左侧可查看nodes-节点信息-node-id在下发流表过程中需要-点击node-connectors可查看具体节点连接信息"></a> 单机左侧，可查看Nodes 节点信息， <strong>Node id</strong>在下发流表过程中需要。点击Node Connectors可查看具体节点连接信息</h3>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/nodes_odl.png" alt="nodes" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/node_connectors_odl.png" alt="node_connectors" /></p>
+<h3 id="展开opendaylight-inventory-rev2013-08-19选择config-nodes-nodeid-tableid-flowid"><a class="markdownIt-Anchor" href="#展开opendaylight-inventory-rev2013-08-19选择config-nodes-nodeid-tableid-flowid"></a> 展开“opendaylight-inventory rev.2013-08-19”,选择“config-&gt;nodes-&gt;node{id}-&gt;table{id}-&gt;flow{id}”</h3>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/yangui1.png" alt="YangUI1" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/yangui2.png" alt="YangUI2" /></p>
+<h3 id="参数填写"><a class="markdownIt-Anchor" href="#参数填写"></a> 参数填写</h3>
 <ul>
-<li>“instuctions”后单击添加，选择”apply-actions-case”; “apply-actions”后单击添加，选择“drop-action-case”; 以上两个order都设置为0，如下图所示：</li>
+<li>“match&gt;ethernet-match&gt;ethernet-type”, 填写&quot;type&quot;为&quot;0x0800&quot;; &quot;layer-3-match&quot;选择&quot;ipv4=match&quot;使用IP匹配; 展开&quot;layer-3-match&quot;填写源IP地址和目的IP地址，如下图：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter2.png" alt="para2"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter1.png" alt="para1" /></p>
 <ul>
-<li>设置”priority”为27, “idle-timeout”为0, “hard-timeout”为0, “cookie”为100000000, “table_id”为0，如下图所示：</li>
+<li>“instuctions&quot;后单击添加，选择&quot;apply-actions-case”; &quot;apply-actions&quot;后单击添加，选择“drop-action-case”; 以上两个order都设置为0，如下图所示：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter3.png" alt="para3"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter2.png" alt="para2" /></p>
+<ul>
+<li>设置&quot;priority&quot;为27, &quot;idle-timeout&quot;为0, &quot;hard-timeout&quot;为0, &quot;cookie&quot;为100000000, &quot;table_id&quot;为0，如下图所示：</li>
+</ul>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/pamameter3.png" alt="para3" /></p>
 <ul>
 <li>选择PUT，点击Send, 若发送成功，如下图所示：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/request.png" alt="put_send"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/request.png" alt="put_send" /></p>
 <ul>
 <li>执行命令查看流表</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ovs-ofctl dump-flows s1</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/flow-show.png" alt="flow-show"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/flow-show.png" alt="flow-show" /></p>
 <ul>
 <li>登录主机h1，执行如下命令向主机h2、h3发送数据包，测试连通性：</li>
 </ul>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scapy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result,unanswered=sr(IP(dst=<span class="string">&quot;10.0.0.2&quot;</span>,ttl=(<span class="number">3</span>,<span class="number">10</span>))/ICMP())</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result,unanswered=sr(IP(dst=<span class="string">&quot;10.0.0.3&quot;</span>,ttl=(<span class="number">3</span>,<span class="number">10</span>))/ICMP())</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/h1_scapy.png" alt="h1_scapy"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/odl/example_topo1_1_3/h1_scapy.png" alt="h1_scapy" /></p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scapy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result,unanswered=sr(IP(dst=<span class="string">&quot;10.0.0.1&quot;</span>,ttl=(<span class="number">3</span>,<span class="number">10</span>))/ICMP())</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ovs-ofctl del-flows s1 dl_type=0x0800,nw_src=10.0.0.1,nw_dst=10.0.0.2  <span class="comment"># 删除下发的流表</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ovs-ofctl dump-flows s1 <span class="comment"># 可以查看流表已被删除</span></span></span><br></pre></td></tr></table></figure>
 
       

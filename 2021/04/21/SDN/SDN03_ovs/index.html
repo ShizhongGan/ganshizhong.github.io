@@ -18,12 +18,12 @@
   
   
   <title>软件定义网络（SDN）学习笔记(3)--OVS系统架构 | 甘士忠个人博客</title>
-  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 基本概念1.1 交换机交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可">
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1 基本概念  1.1 交换机 交换机（Switch）是一种在通信系统中完成信息交换功能的设">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件定义网络（SDN）学习笔记(3)--OVS系统架构">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/21/SDN/SDN03_ovs/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   1 基本概念1.1 交换机交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    1 基本概念  1.1 交换机 交换机（Switch）是一种在通信系统中完成信息交换功能的设">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_odl.png">
@@ -449,15 +449,20 @@
 <p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
 </blockquote>
 </blockquote>
-<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1 基本概念"></a>1 基本概念</h2><h3 id="1-1-交换机"><a href="#1-1-交换机" class="headerlink" title="1.1 交换机"></a>1.1 交换机</h3><p>交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可以为接入交换机的任意两个网络节点提供独享的电信号通路。最常见的交换机是以太网交换机。其他常见的还有电话语音交换机、光纤交换机等。目前，二层交换技术发展比较成熟，二层交换机（Layer 2 switches）是指只支持OSI第二层（数据链路层）交换技术的交换机。</p>
-<h3 id="1-2-工作原理"><a href="#1-2-工作原理" class="headerlink" title="1.2 工作原理"></a>1.2 工作原理</h3><p>交换机拥有一条很高带宽的背部总线和内部交换矩阵。交换机的所有的端口都挂接在这条背部总线上，控制电路收到数据包以后，处理端口会查找内存中的地址对照表以确定目的MAC（网卡的硬件地址）的NIC（网卡）挂接在哪个端口上，通过内部交换矩阵迅速将数据包传送到目的端口，目的MAC若不存在，广播到所有的端口，接收端口回应后交换机会“学习”新的MAC地址，并把它添加入内部MAC地址表中，并刷新CAM表，表中有MAC地址，对应的端口号，端口所属的VLAN信息，交换机在二层转发数据时根据CAM表查找出端口。使用交换机也可以把网络“分段”，通过对照IP地址表，交换机只允许必要的网络流量通过交换机。通过交换机的过滤和转发，可以有效的减少冲突域，但不能划分广播域。交换机在同一时刻可进行多个端口对之间的数据传输。每一端口都可视为独立的网段，连接在其上的网络设备独自享有全部的带宽，无须同其他设备竞争使用。当节点A向节点D发送数据时，节点B可同时向节点C发送数据，而且这两个传输都享有网络的全部带宽，有着自己的虚拟连接。</p>
-<h3 id="1-3-作用与功能"><a href="#1-3-作用与功能" class="headerlink" title="1.3 作用与功能"></a>1.3 作用与功能</h3><p>交换机的常见功能如下：</p>
+<h2 id="1-基本概念"><a class="markdownIt-Anchor" href="#1-基本概念"></a> 1 基本概念</h2>
+<h3 id="11-交换机"><a class="markdownIt-Anchor" href="#11-交换机"></a> 1.1 交换机</h3>
+<p>交换机（Switch）是一种在通信系统中完成信息交换功能的设备。它可以为接入交换机的任意两个网络节点提供独享的电信号通路。最常见的交换机是以太网交换机。其他常见的还有电话语音交换机、光纤交换机等。目前，二层交换技术发展比较成熟，二层交换机（Layer 2 switches）是指只支持OSI第二层（数据链路层）交换技术的交换机。</p>
+<h3 id="12-工作原理"><a class="markdownIt-Anchor" href="#12-工作原理"></a> 1.2 工作原理</h3>
+<p>交换机拥有一条很高带宽的背部总线和内部交换矩阵。交换机的所有的端口都挂接在这条背部总线上，控制电路收到数据包以后，处理端口会查找内存中的地址对照表以确定目的MAC（网卡的硬件地址）的NIC（网卡）挂接在哪个端口上，通过内部交换矩阵迅速将数据包传送到目的端口，目的MAC若不存在，广播到所有的端口，接收端口回应后交换机会“学习”新的MAC地址，并把它添加入内部MAC地址表中，并刷新CAM表，表中有MAC地址，对应的端口号，端口所属的VLAN信息，交换机在二层转发数据时根据CAM表查找出端口。使用交换机也可以把网络“分段”，通过对照IP地址表，交换机只允许必要的网络流量通过交换机。通过交换机的过滤和转发，可以有效的减少冲突域，但不能划分广播域。交换机在同一时刻可进行多个端口对之间的数据传输。每一端口都可视为独立的网段，连接在其上的网络设备独自享有全部的带宽，无须同其他设备竞争使用。当节点A向节点D发送数据时，节点B可同时向节点C发送数据，而且这两个传输都享有网络的全部带宽，有着自己的虚拟连接。</p>
+<h3 id="13-作用与功能"><a class="markdownIt-Anchor" href="#13-作用与功能"></a> 1.3 作用与功能</h3>
+<p>交换机的常见功能如下：</p>
 <ul>
 <li>MAC地址学习：以太网交换机了解每一端口相连设备的MAC地址，并将地址同相应的端口映射起来存放在交换机缓存中的MAC地址表中。</li>
 <li>转发/过滤：当一个数据帧的目的地址在MAC地址表中有映射时，它被转发到连接目的节点的端口而不是所有端口（如该数据帧为广播/组播帧则转发至所有端口）。</li>
 <li>消除回路：当交换机包括一个冗余回路时，以太网交换机通过生成树协议避免回路的产生，同时允许存在后备路径。</li>
 </ul>
-<h2 id="2-Open-vSwitch-OVS"><a href="#2-Open-vSwitch-OVS" class="headerlink" title="2 Open vSwitch (OVS)"></a>2 Open vSwitch (OVS)</h2><p>在网络中，交换机和桥概念类似，Open vSwitch是一个虚拟交换软件，也就是说，Open vSwitch实现了网桥的功能。学习Open vSwitch的第一步要弄清楚网桥的概念。网桥是连接两个局域网的设备，工作在数据链路层，根据MAC地址来转发帧。在Open vSwitch中创建一个网桥后，此时网络功能不受影响，但是会产生一个虚拟网卡，之所以会产生一个虚拟网卡，是为了实现接下来的网桥（交换机）功能。有了这个网桥以后，还需要为这个网桥增加端口（port），一个端口就是一个物理网卡，当网卡加入到这个网桥之后，其工作方式就和普通交换机的一个端口的工作方式类似了。以下是一个网桥的具体信息：</p>
+<h2 id="2-open-vswitch-ovs"><a class="markdownIt-Anchor" href="#2-open-vswitch-ovs"></a> 2 Open vSwitch (OVS)</h2>
+<p>在网络中，交换机和桥概念类似，Open vSwitch是一个虚拟交换软件，也就是说，Open vSwitch实现了网桥的功能。学习Open vSwitch的第一步要弄清楚网桥的概念。网桥是连接两个局域网的设备，工作在数据链路层，根据MAC地址来转发帧。在Open vSwitch中创建一个网桥后，此时网络功能不受影响，但是会产生一个虚拟网卡，之所以会产生一个虚拟网卡，是为了实现接下来的网桥（交换机）功能。有了这个网桥以后，还需要为这个网桥增加端口（port），一个端口就是一个物理网卡，当网卡加入到这个网桥之后，其工作方式就和普通交换机的一个端口的工作方式类似了。以下是一个网桥的具体信息：</p>
 <p>Open vSwitch（OVS）是一个高质量的、多层虚拟交换机。OVS遵循开源Apache2.0许可，通过可编程扩展，OVS可以实现大规模网络的自动化（配置、管理、维护），同时支持现有标准管理接口和协议（比如NetFlow、sFlow、SPAN、RSPAN、CLI、LACP、802.1ag等）。此外OVS支持多种Linux虚拟化技术，包括Xen/XenServer，KVM，和VirtualBox等。虽然是虚拟交换机，但是其工作原理与物理交换机类似。在虚拟交换机的实现中，其两端分别连接着物理网卡和多块虚拟网卡，同时虚拟交换机内部会维护一张映射表，根据MAC地址寻找对应的虚拟机链路进而完成数据转发。</p>
 <p>OVS交换机有两种工作模式</p>
 <ul>
@@ -467,8 +472,10 @@
 <p>OVS 架构分为三个部分:</p>
 <ul>
 <li>内核空间：包含了流表（Flow Table）和Datapath模块（类似于网桥，主要负责对数据分组进行操作）。</li>
-<li>用户空间：运行着OVS的守护进程(Open vSwitch Daemon, vswitchd)和数据库(Open vSwitch Database, ovsdb)，他们是ovs的核心功能模块。<ul>
-<li>vswitchd类似于OVS的心脏，维持OVS的声明周期。可以配置一系列特性：<ul>
+<li>用户空间：运行着OVS的守护进程(Open vSwitch Daemon, vswitchd)和数据库(Open vSwitch Database, ovsdb)，他们是ovs的核心功能模块。
+<ul>
+<li>vswitchd类似于OVS的心脏，维持OVS的声明周期。可以配置一系列特性：
+<ul>
 <li>基于MAC地址学习的二层交换</li>
 <li>支持IEEE802.1Q VLAN</li>
 <li>sFlow监测</li>
@@ -481,22 +488,26 @@
 </li>
 <li>配置管理层：包括ovs-dpctl, ovs-ofctl, ovs-appctl, ovs-vsctl和ovsdb-tool等，主要用于和vswitchd,ovsdb之间进行交互操作以及ovs的安装配置和部署</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png" alt="ovs 系统架构"></p>
-<h2 id="3-OVS安装使用"><a href="#3-OVS安装使用" class="headerlink" title="3. OVS安装使用"></a>3. OVS安装使用</h2><p>OVS可以运行在任何基于Linux的虚拟化平台，包括KVM, VirtualBox, Xen等，其代码都是基于C编写，所以易于移植到其他环境。安装有两种方法：一种通过二进制文件安装apt-get；另外一种是源码安装。</p>
-<h3 id="3-1-ovs安装"><a href="#3-1-ovs安装" class="headerlink" title="3.1 ovs安装"></a>3.1 ovs安装</h3><p>docker 安装参见【<a href="/2021/04/26/Docker/docker_install">Ubuntu安装Docker与最常用配置</a>】</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png" alt="ovs 系统架构" /></p>
+<h2 id="3-ovs安装使用"><a class="markdownIt-Anchor" href="#3-ovs安装使用"></a> 3. OVS安装使用</h2>
+<p>OVS可以运行在任何基于Linux的虚拟化平台，包括KVM, VirtualBox, Xen等，其代码都是基于C编写，所以易于移植到其他环境。安装有两种方法：一种通过二进制文件安装apt-get；另外一种是源码安装。</p>
+<h3 id="31-ovs安装"><a class="markdownIt-Anchor" href="#31-ovs安装"></a> 3.1 ovs安装</h3>
+<p>docker 安装参见【<a href="/2021/04/26/Docker/docker_install">Ubuntu安装Docker与最常用配置</a>】</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it --name ovs1 ubuntu /bin/bash</span><br><span class="line">  </span><br><span class="line">apt install python</span><br><span class="line">apt install python-pip</span><br><span class="line">wget https://www.openvswitch.org/releases/openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line">参考：https://www.cnblogs.com/goldsunshine/p/10331606.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">apt list --upgradable <span class="comment"># 查看可以升级的包</span></span><br><span class="line"></span><br><span class="line">apt install python</span><br><span class="line"></span><br><span class="line">apt install python-pip </span><br><span class="line"></span><br><span class="line">wget https://www.openvswitch.org/releases/openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxf openvswitch-2.13.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 以下需root用户下执行</span></span><br><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br><span class="line">make modules_install </span><br><span class="line">/sbin/modprobe openvswitch </span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl start </span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl --no-ovs-vswitchd start</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span><br><span class="line">ovs-ctl --no--ovsdb-server start</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/openvswitch</span><br><span class="line">ovsdb-tool create /usr/<span class="built_in">local</span>/etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/var/run/openvswitch</span><br><span class="line">ovsdb-server --remote=punix:/usr/<span class="built_in">local</span>/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br><span class="line"></span><br><span class="line">ovs-vsctl --no-wait init</span><br><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>note:进入容器后，若发现无法联网请参见文章【<a href="/2021/04/27/Docker/netdisconnected/">Docker容器内网络无法连接</a>】</p>
 </blockquote>
-<h3 id="3-2-ovs-vsctl-命令使用"><a href="#3-2-ovs-vsctl-命令使用" class="headerlink" title="3.2 ovs-vsctl 命令使用"></a>3.2 ovs-vsctl 命令使用</h3><p>ovs-ovsctl命令是对交换机上网桥和端口等信息进行配置的命令。获取或者更改ovs-vswitchd的配置信息，此工具操作的时候会更新ovsdb-server中的数据库。下面的操作需要连接控制器，控制器的安装可以参考【<a href="/2021/05/31/SDN/SDN05_OpenDaylight/">OpenDaylight安装</a>】</p>
+<h3 id="32-ovs-vsctl-命令使用"><a class="markdownIt-Anchor" href="#32-ovs-vsctl-命令使用"></a> 3.2 ovs-vsctl 命令使用</h3>
+<p>ovs-ovsctl命令是对交换机上网桥和端口等信息进行配置的命令。获取或者更改ovs-vswitchd的配置信息，此工具操作的时候会更新ovsdb-server中的数据库。下面的操作需要连接控制器，控制器的安装可以参考【<a href="/2021/05/31/SDN/SDN05_OpenDaylight/">OpenDaylight安装</a>】</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看网桥</span></span><br><span class="line">ovs-vsctl show</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 添加网桥</span></span><br><span class="line">ovs-vsctl add-br br-test</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 绑定网卡，创建网桥后会默认创建同名的port，可以绑定机器存在的网卡</span></span><br><span class="line">ovs-vsctl add-port br-test ens8</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Port ens8</span><br><span class="line">            Interface ens8</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 删除port绑定的网卡</span></span><br><span class="line">ovs-vsctl del-port br-test ens8</span><br><span class="line"><span class="comment">## 删除网桥</span></span><br><span class="line">ovs-vsctl add-br br-test</span><br><span class="line"><span class="comment">## 网桥连接控制器</span></span><br><span class="line">ovs-vsctl set-controller br-test tcp:x.x.x.x:6633</span><br><span class="line"><span class="comment">## 设置协议,否则web界面无法显示</span></span><br><span class="line">ovs-vsctl <span class="built_in">set</span> bridge br-test protocols=OpenFlow10</span><br><span class="line"></span><br><span class="line">393b60ce-7d82-41e0-bd78-2aa47e54c8d5</span><br><span class="line">    Bridge br-test</span><br><span class="line">        Controller <span class="string">&quot;tcp:x.x.x.x:6633&quot;</span></span><br><span class="line">            is_connected: <span class="literal">true</span></span><br><span class="line">        Port ens8</span><br><span class="line">            Interface ens8</span><br><span class="line">        Port br-test</span><br><span class="line">            Interface br-test</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">&quot;2.13.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网桥端开连接控制器</span></span><br><span class="line">ovs-vsctl del-controller br-test</span><br></pre></td></tr></table></figure>
 <p>ovs连接控制器成功后，可在opendaylight界面看到：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_odl.png" alt="ovs-odl"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_odl.png" alt="ovs-odl" /></p>
 <p>ovs连接本地docker容器后，可以在OpenDaylight界面看到：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_docker_odl.png" alt="ovs-odl"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs_docker_odl.png" alt="ovs-odl" /></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看docker容器的网卡物理地址</span></span><br><span class="line">docker <span class="built_in">exec</span> -it h0 bash</span><br><span class="line">root@8cfaf3984bdf:/<span class="comment"># ifconfig</span></span><br><span class="line">eth0 flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 10.0.50.10  netmask 255.255.255.0  broadcast 10.0.50.255</span><br><span class="line">        ether 02:42:0a:00:32:0a  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 2873  bytes 319842 (319.8 KB)</span><br><span class="line">        RX errors 0  dropped 2736  overruns 0  frame 0</span><br><span class="line">        TX packets 29  bytes 1666 (1.6 KB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
 <p><strong>ovs连接容器方法有诸多坑存在，将单独整理一篇文章讲解</strong></p>
-<p>上面说到，创建桥的时候会创建一个和桥名字一样的接口，并自动作为该桥的一个端口，那么这个虚拟接口的作用，一方面是可以作为交换机的管理端口，另一方面也是基于这个虚拟接口实现了桥的功能。Open vSwitch的内核模块实现了多个“数据路径”，每个都可以有多个vports。每个数据路径也通过关联流表（flow table）来设置操作，而这些流表中的流都是用户空间在报文头和元数据的基础上映射的关键信息，一般的操作都是将数据包转发到另一个vport。当一个数据包到达一个vport，内核模块所做的处理是提取其流的关键信息并在流表中查找这些关键信息，当有一个匹配的流时它执行对应的操作，如果没有匹配，它会将数据包送到用户空间的处理队列中，作为处理的一部分，用户空间可能会设置一个流用于以后碰到相同类型的数据包可以在内核中执行操作。<br>ovs-vsctl关于网桥管理的常用命令如下：</p>
+<p>上面说到，创建桥的时候会创建一个和桥名字一样的接口，并自动作为该桥的一个端口，那么这个虚拟接口的作用，一方面是可以作为交换机的管理端口，另一方面也是基于这个虚拟接口实现了桥的功能。Open vSwitch的内核模块实现了多个“数据路径”，每个都可以有多个vports。每个数据路径也通过关联流表（flow table）来设置操作，而这些流表中的流都是用户空间在报文头和元数据的基础上映射的关键信息，一般的操作都是将数据包转发到另一个vport。当一个数据包到达一个vport，内核模块所做的处理是提取其流的关键信息并在流表中查找这些关键信息，当有一个匹配的流时它执行对应的操作，如果没有匹配，它会将数据包送到用户空间的处理队列中，作为处理的一部分，用户空间可能会设置一个流用于以后碰到相同类型的数据包可以在内核中执行操作。<br />
+ovs-vsctl关于网桥管理的常用命令如下：</p>
 <table>
 <thead>
 <tr>
@@ -504,7 +515,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>init</td>
 <td>初始化数据库（前提数据分组为空）</td>
 </tr>
@@ -548,14 +560,17 @@
 <td>set-controller BRIDGE TARGET</td>
 <td>向网桥添加控制器</td>
 </tr>
-</tbody></table>
-<h3 id="3-3-ovs-ofctl-命令使用"><a href="#3-3-ovs-ofctl-命令使用" class="headerlink" title="3.3 ovs-ofctl 命令使用"></a>3.3 ovs-ofctl 命令使用</h3><p>ovs-ofctl 命令是对流表的操作，包括对流表的增，删，改，查等命令。简单来说流表类似于交换机的MAC地址表，路由器的路由表，是ovs交换机指挥流量转发的表。</p>
+</tbody>
+</table>
+<h3 id="33-ovs-ofctl-命令使用"><a class="markdownIt-Anchor" href="#33-ovs-ofctl-命令使用"></a> 3.3 ovs-ofctl 命令使用</h3>
+<p>ovs-ofctl 命令是对流表的操作，包括对流表的增，删，改，查等命令。简单来说流表类似于交换机的MAC地址表，路由器的路由表，是ovs交换机指挥流量转发的表。</p>
 <p>OpenFlow是用于管理交换机流表的协议，ovs-ofctl是Open vSwitch提供的命令行工具。在没有配置OpenFlow控制器的模式下，用户可以使用ovs-ofctl命令通过OpenFlow协议连接Open vSwitch来创建、修改或删除Open vSwitch中的流表项，并对Open vSwitch的运行状况进行动态监控。ovs-ofctl关于流表管理的常用命令如下表所示：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs-ofctl-commands.png" alt="ovs-ofctl命令"></p>
-<p>对于add-flow、add-flows和mod-flows这3个命令，还需要指定要执行的动作actions=[target],[target]…，一个流规则中可能有多个动作，按照指定的先后顺序执行。<br>常见的流表操作如下表所示</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_actions.png" alt="流表操作"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/ovs-ofctl-commands.png" alt="ovs-ofctl命令" /></p>
+<p>对于add-flow、add-flows和mod-flows这3个命令，还需要指定要执行的动作actions=[target],[target]…，一个流规则中可能有多个动作，按照指定的先后顺序执行。<br />
+常见的流表操作如下表所示</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_actions.png" alt="流表操作" /></p>
 <p>在OpenFlow白皮书中，Flow被定义为某个特定的网络流量。例如，一个TCP连接就是一个Flow，或者从某个IP地址发出来的数据包，都可以被认为是一个Flow。支持OpenFlow协议的交换机应该包括一个或多个流表，流表中的条目包含：数据包头的信息、匹配成功后要执行的指令和统计信息。当数据包进入OVS后，会将数据包和流表中的流表项进行匹配，如果发现了匹配的流表项，则执行该流表项中的指令集。相反，如果数据包在流表中没有发现任何匹配，OVS会通过控制通道把数据包发到OpenFlow控制器中。在OVS中，流表项作为ovs-ofctl的参数，采用如下的格式：字段=值，如果有多个字段，可以用逗号或空格分开，一些常用的字段列举如下表所示。</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_paramter.png" alt="ovs-ofctl参数"></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/ovs/flow_paramter.png" alt="ovs-ofctl参数" /></p>
 
       
     </div>

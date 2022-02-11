@@ -18,12 +18,12 @@
   
   
   <title>Docker 常用命令方法 | 甘士忠个人博客</title>
-  <meta name="description" content="镜像搜索、拉取和使用123456docker search ubuntudocker pull ubuntudocker run -it --name test ubuntu &#x2F;bin&#x2F;bashdocker start testdocker restart testdocker stop test 将容器保存为镜像，便于重复使用12345apt-get install net-toolsapt-">
+  <meta name="description" content="镜像搜索、拉取和使用  123456docker search ubuntudocker pull ubuntudocker run -it --name test ubuntu &#x2F;bin&#x2F;bashdocker start testdocker restart testdocker stop test  将容器保存为镜像，便于重复使用  12345apt-get install net-tool">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 常用命令方法">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/28/Docker/basic_method/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="镜像搜索、拉取和使用123456docker search ubuntudocker pull ubuntudocker run -it --name test ubuntu &#x2F;bin&#x2F;bashdocker start testdocker restart testdocker stop test 将容器保存为镜像，便于重复使用12345apt-get install net-toolsapt-">
+<meta property="og:description" content="镜像搜索、拉取和使用  123456docker search ubuntudocker pull ubuntudocker run -it --name test ubuntu &#x2F;bin&#x2F;bashdocker start testdocker restart testdocker stop test  将容器保存为镜像，便于重复使用  12345apt-get install net-tool">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-28T03:03:04.000Z">
 <meta property="article:modified_time" content="2021-10-28T06:55:59.899Z">
@@ -431,8 +431,14 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <ol>
-<li>镜像搜索、拉取和使用<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker search ubuntu</span><br><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it --name test ubuntu /bin/bash</span><br><span class="line">docker start test</span><br><span class="line">docker restart test</span><br><span class="line">docker stop test</span><br></pre></td></tr></table></figure></li>
-<li>将容器保存为镜像，便于重复使用<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install net-tools</span><br><span class="line">apt-get install -y inetutils-ping</span><br><span class="line">apt-get install iproute2</span><br><span class="line">docker commit -a &quot;作者名&quot; -m &quot;镜像描述&quot; 容器ID 新镜像命名</span><br><span class="line">docker commit -a &quot;paxton&quot; -m &quot;ubuntu with modified apt source.list&quot; ovs1 mdubuntu</span><br></pre></td></tr></table></figure></li>
+<li>镜像搜索、拉取和使用</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker search ubuntu</span><br><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it --name test ubuntu /bin/bash</span><br><span class="line">docker start test</span><br><span class="line">docker restart test</span><br><span class="line">docker stop test</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>将容器保存为镜像，便于重复使用</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install net-tools</span><br><span class="line">apt-get install -y inetutils-ping</span><br><span class="line">apt-get install iproute2</span><br><span class="line">docker commit -a &quot;作者名&quot; -m &quot;镜像描述&quot; 容器ID 新镜像命名</span><br><span class="line">docker commit -a &quot;paxton&quot; -m &quot;ubuntu with modified apt source.list&quot; ovs1 mdubuntu</span><br></pre></td></tr></table></figure>
+<ol start="3">
 <li>自定义网络</li>
 </ol>
 <ul>
@@ -445,9 +451,8 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## h0</span></span><br><span class="line">docker network create --subnet=10.0.30.0/24 --opt com.docker.network.driver.mtu=1450 docker-br0 </span><br><span class="line">docker run -itd --net docker-br0 --ip 10.0.30.10 --name h0 mdubuntu /bin/bash</span><br><span class="line"><span class="comment">## h1</span></span><br><span class="line">docker network create --subnet=10.0.50.0/24 --opt com.docker.network.driver.mtu=1450 docker-br1 </span><br><span class="line">docker run -itd --net docker-br1 --ip 10.0.50.10 --name h1 ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
 <p>此时，新建的两个虚拟机相互无法ping通。可以通过增加路由的方式解决：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route show <span class="comment"># 查看一下当前路由</span></span><br><span class="line"></span><br><span class="line">docker network connect docker-br0 h1 <span class="comment"># 将h1加入到h0所在的自定义网络docker-br0中，进入h1可ping通h0，h0不可ping通h1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tengj/p/5357879.html">https://www.cnblogs.com/tengj/p/5357879.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Silvester123/article/details/80867168">https://blog.csdn.net/Silvester123/article/details/80867168</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tengj/p/5357879.html">https://www.cnblogs.com/tengj/p/5357879.html</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/Silvester123/article/details/80867168">https://blog.csdn.net/Silvester123/article/details/80867168</a></p>
 
       
     </div>

@@ -18,12 +18,12 @@
   
   
   <title>Python 自动化运维(2) | 甘士忠个人博客</title>
-  <meta name="description" content="SaltStack概念 一个配置管理系统，能够维护预定义状态的远程节点 一个分布式远程执行系统，用来在远程节点上执行命令和查询数据  SaltStack特点 简单(相对于Puppet) 并行执行 基于成熟技术(ZeroMQ, AES) Python API 灵活开放  SaltStack服务架构 Master – 负责管理所有节点(可以有多个) Minion – 节点服务(客户端) ZeroMQ">
+  <meta name="description" content="SaltStack概念  一个配置管理系统，能够维护预定义状态的远程节点 一个分布式远程执行系统，用来在远程节点上执行命令和查询数据   SaltStack特点  简单(相对于Puppet) 并行执行 基于成熟技术(ZeroMQ, AES) Python API 灵活开放   SaltStack服务架构  Master – 负责管理所有节点(可以有多个) Minion – 节点服务(客户端) Z">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 自动化运维(2)">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/09/16/DevOps/SaltStack/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SaltStack概念 一个配置管理系统，能够维护预定义状态的远程节点 一个分布式远程执行系统，用来在远程节点上执行命令和查询数据  SaltStack特点 简单(相对于Puppet) 并行执行 基于成熟技术(ZeroMQ, AES) Python API 灵活开放  SaltStack服务架构 Master – 负责管理所有节点(可以有多个) Minion – 节点服务(客户端) ZeroMQ">
+<meta property="og:description" content="SaltStack概念  一个配置管理系统，能够维护预定义状态的远程节点 一个分布式远程执行系统，用来在远程节点上执行命令和查询数据   SaltStack特点  简单(相对于Puppet) 并行执行 基于成熟技术(ZeroMQ, AES) Python API 灵活开放   SaltStack服务架构  Master – 负责管理所有节点(可以有多个) Minion – 节点服务(客户端) Z">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/saltstackframe.png">
 <meta property="article:published_time" content="2021-09-16T03:03:04.000Z">
@@ -432,29 +432,34 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="SaltStack概念"><a href="#SaltStack概念" class="headerlink" title="SaltStack概念"></a>SaltStack概念</h2><ol>
+        <h2 id="saltstack概念"><a class="markdownIt-Anchor" href="#saltstack概念"></a> SaltStack概念</h2>
+<ol>
 <li>一个配置管理系统，能够维护预定义状态的远程节点</li>
 <li>一个分布式远程执行系统，用来在远程节点上执行命令和查询数据</li>
 </ol>
-<h2 id="SaltStack特点"><a href="#SaltStack特点" class="headerlink" title="SaltStack特点"></a>SaltStack特点</h2><ol>
+<h2 id="saltstack特点"><a class="markdownIt-Anchor" href="#saltstack特点"></a> SaltStack特点</h2>
+<ol>
 <li>简单(相对于Puppet)</li>
 <li>并行执行</li>
 <li>基于成熟技术(ZeroMQ, AES)</li>
 <li>Python API</li>
 <li>灵活开放</li>
 </ol>
-<h2 id="SaltStack服务架构"><a href="#SaltStack服务架构" class="headerlink" title="SaltStack服务架构"></a>SaltStack服务架构</h2><ol>
+<h2 id="saltstack服务架构"><a class="markdownIt-Anchor" href="#saltstack服务架构"></a> SaltStack服务架构</h2>
+<ol>
 <li>Master – 负责管理所有节点(可以有多个)</li>
 <li>Minion – 节点服务(客户端)</li>
 <li>ZeroMQ – 通信服务</li>
 <li>AES – 数据加密方法</li>
 </ol>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/saltstackframe.png" alt="saltstack"></p>
-<h2 id="SaltStack-缺点"><a href="#SaltStack-缺点" class="headerlink" title="SaltStack 缺点"></a>SaltStack 缺点</h2><ol>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/saltstackframe.png" alt="saltstack" /></p>
+<h2 id="saltstack-缺点"><a class="markdownIt-Anchor" href="#saltstack-缺点"></a> SaltStack 缺点</h2>
+<ol>
 <li>需要单独安装客户端</li>
 <li>安全隐患大</li>
 </ol>
-<h2 id="ZeroMQ-简述"><a href="#ZeroMQ-简述" class="headerlink" title="ZeroMQ 简述"></a>ZeroMQ 简述</h2><p>ZeroMQ以嵌入式网络变成库的形式实现了一个并行开发框架，能够提供进程内、进程间、网络和广播方式的消息信道，并支持扇出、发布-订阅、任务分发、请求/相应等通信模式。【入门不需要深入了解】</p>
+<h2 id="zeromq-简述"><a class="markdownIt-Anchor" href="#zeromq-简述"></a> ZeroMQ 简述</h2>
+<p>ZeroMQ以嵌入式网络变成库的形式实现了一个并行开发框架，能够提供进程内、进程间、网络和广播方式的消息信道，并支持扇出、发布-订阅、任务分发、请求/相应等通信模式。【入门不需要深入了解】</p>
 
       
     </div>
@@ -509,12 +514,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2021/09/18/DevOps/Nagios2/" title="Python 自动化运维(3)--Nagios配置"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2021/09/16/DevOps/JumpServer/" title="JumpServer堡垒机"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2021/09/16/DevOps/JumpServer/" title="JumpServer堡垒机"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/09/15/DevOps/Nagios/" title="Python 自动化运维(3)--Nagios安装"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     

@@ -18,12 +18,12 @@
   
   
   <title>软件定义网络（SDN）学习笔记(3)--Scapy交互式数据处理与Postman HTTP请求测试 | 甘士忠个人博客</title>
-  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   ScapyScapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作为命">
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    Scapy Scapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件定义网络（SDN）学习笔记(3)--Scapy交互式数据处理与Postman HTTP请求测试">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/20/SDN/SDN02_Scapy_Postman/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   ScapyScapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作为命">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    Scapy Scapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-20T01:15:22.000Z">
 <meta property="article:modified_time" content="2021-10-28T06:55:59.905Z">
@@ -441,12 +441,14 @@
 <p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
 </blockquote>
 </blockquote>
-<h2 id="Scapy"><a href="#Scapy" class="headerlink" title="Scapy"></a>Scapy</h2><p>Scapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作为命令面板。可以用来发送、嗅探、解析和伪造网络数据包，通常用于网络攻击和测试。</p>
+<h2 id="scapy"><a class="markdownIt-Anchor" href="#scapy"></a> Scapy</h2>
+<p>Scapy 是基于python编写的交互式数据包处理程序，使用pyhon解释器作为命令面板。可以用来发送、嗅探、解析和伪造网络数据包，通常用于网络攻击和测试。</p>
 <p>Scapy 不仅可以实现扫描、路由跟踪、探测、单元测试、攻击和发现网络等传统功能，也可以代替hping、arpspoof、arp-sk、arping、p0f,实现部分Namp、Tcpdump和tshark的功能。</p>
 <p>它能够伪造或解码大量的网络协议数据包，能够发送、捕捉、匹配请求和回复包等。</p>
 <p>它还可以发送无效数据帧、诸如修改的802.11数据帧、在WEP熵解码加密通道(VOIP)、ARP缓存攻击(VLAN)等，这是其他工具无法完成的。</p>
 <p>Scapy主要负责定义、发送和接收报文。</p>
-<h2 id="Postman-进行SDN流表下发任务"><a href="#Postman-进行SDN流表下发任务" class="headerlink" title="Postman 进行SDN流表下发任务"></a>Postman 进行SDN流表下发任务</h2><p>Postman是google开发的一款强大的王爷调试、发送网页HTTP请求，并能运行测试用例的Chrome插件。</p>
+<h2 id="postman-进行sdn流表下发任务"><a class="markdownIt-Anchor" href="#postman-进行sdn流表下发任务"></a> Postman 进行SDN流表下发任务</h2>
+<p>Postman是google开发的一款强大的王爷调试、发送网页HTTP请求，并能运行测试用例的Chrome插件。</p>
 
       
     </div>
