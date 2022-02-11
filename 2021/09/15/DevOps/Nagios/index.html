@@ -18,12 +18,12 @@
   
   
   <title>Python 自动化运维(3)--Nagios安装 | 甘士忠个人博客</title>
-  <meta name="description" content="Nagios 一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。 结构上分为两个部分：  核心功能 轻量化 插件   Nagios特性  监控网络服务(HTTP,) 监控主机资源(CPU负载、CPU使用率、进程状态等) 主动通知 web页面（发现异常报警功能） 可扩展   Nagios优点">
+  <meta name="description" content="Nagios一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。 结构上分为两个部分：  核心功能 轻量化 插件  Nagios特性 监控网络服务(HTTP,) 监控主机资源(CPU负载、CPU使用率、进程状态等) 主动通知 web页面（发现异常报警功能） 可扩展  Nagios优点 轻量级，架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 自动化运维(3)--Nagios安装">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/09/15/DevOps/Nagios/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="Nagios 一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。 结构上分为两个部分：  核心功能 轻量化 插件   Nagios特性  监控网络服务(HTTP,) 监控主机资源(CPU负载、CPU使用率、进程状态等) 主动通知 web页面（发现异常报警功能） 可扩展   Nagios优点">
+<meta property="og:description" content="Nagios一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。 结构上分为两个部分：  核心功能 轻量化 插件  Nagios特性 监控网络服务(HTTP,) 监控主机资源(CPU负载、CPU使用率、进程状态等) 主动通知 web页面（发现异常报警功能） 可扩展  Nagios优点 轻量级，架构">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagios.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagiosinstalled.png">
@@ -435,52 +435,49 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="nagios"><a class="markdownIt-Anchor" href="#nagios"></a> Nagios</h2>
-<p>一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。</p>
+        <h2 id="Nagios"><a href="#Nagios" class="headerlink" title="Nagios"></a>Nagios</h2><p>一款免费的开源IT基础设施监控系统，其功能强大，灵活性强，能够监控windows、linux、VMware和Unix主机状态，交换机、路由器等网络设置等。</p>
 <p>结构上分为两个部分：</p>
 <ol>
 <li>核心功能 <strong>轻量化</strong></li>
 <li>插件</li>
 </ol>
-<h2 id="nagios特性"><a class="markdownIt-Anchor" href="#nagios特性"></a> Nagios特性</h2>
-<ol>
+<h2 id="Nagios特性"><a href="#Nagios特性" class="headerlink" title="Nagios特性"></a>Nagios特性</h2><ol>
 <li>监控网络服务(HTTP,)</li>
 <li>监控主机资源(CPU负载、CPU使用率、进程状态等)</li>
 <li>主动通知</li>
 <li>web页面（发现异常报警功能）</li>
 <li>可扩展</li>
 </ol>
-<h2 id="nagios优点"><a class="markdownIt-Anchor" href="#nagios优点"></a> Nagios优点</h2>
-<ol>
+<h2 id="Nagios优点"><a href="#Nagios优点" class="headerlink" title="Nagios优点"></a>Nagios优点</h2><ol>
 <li>轻量级，架构简单</li>
 <li>容易部署</li>
 <li>文档健全</li>
 <li>灵活、全面（插件安装方便，可随时安装卸载，即插即用）</li>
 </ol>
-<h2 id="nagios-缺点"><a class="markdownIt-Anchor" href="#nagios-缺点"></a> Nagios 缺点</h2>
-<ol>
+<h2 id="Nagios-缺点"><a href="#Nagios-缺点" class="headerlink" title="Nagios 缺点"></a>Nagios 缺点</h2><ol>
 <li>修改配置麻烦(只能改配置文件，不能再web页面改)</li>
 <li>太灵活、学习成本高</li>
 <li>监控报警缺乏历史数据(可以通过插件解决 )</li>
 <li>严重依赖外部插件</li>
 </ol>
-<h2 id="nagios-原理"><a class="markdownIt-Anchor" href="#nagios-原理"></a> Nagios 原理</h2>
-<p>简而言之，主机给客户机发了指令，让客户机收集相关信息，客户机把信息收集后发送给主机。</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagios.png" alt="nagios" /></p>
+<h2 id="Nagios-原理"><a href="#Nagios-原理" class="headerlink" title="Nagios 原理"></a>Nagios 原理</h2><p>简而言之，主机给客户机发了指令，让客户机收集相关信息，客户机把信息收集后发送给主机。</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagios.png" alt="nagios"></p>
 <p>通信过程：</p>
 <ol>
 <li>Nagios执行安装在它里面的check_nrpe插件，并告诉check_nrpe去检测哪些服务。</li>
 <li>Nagios执行安装在它里面的check_nrpe插件，并告诉check_nrpe去检测哪些服务</li>
-<li>NRPE运行本地的各种插件区检测本地的服务和状态(check_disk,…etc)</li>
+<li>NRPE运行本地的各种插件区检测本地的服务和状态(check_disk,..etc)</li>
 <li>最后，NRPE把检测的结果传给主机端的check_nrpe,check_nrpe再把结果送到Nagios状态队列中。</li>
 <li>Nagios依次读取队列中的信息，再把结果显示出来。</li>
 </ol>
-<h2 id="nagios-安装"><a class="markdownIt-Anchor" href="#nagios-安装"></a> Nagios 安装</h2>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">mv CentOS-Base.repo CentOS-Base.repo.bak</span><br><span class="line">wget http://mirrors.163.com/.<span class="built_in">help</span>/CentOS7-Base-163.repo</span><br><span class="line">yum makecache</span><br><span class="line">yum -y update</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install the required packages</span></span><br><span class="line">yum install gcc glibc glibc-common wget gd gd-devel perl postfix unzip zip httpd php <span class="comment"># php安装后可访问web页面</span></span><br><span class="line"><span class="comment"># Download and Install Nagios Core</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line">wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz</span><br><span class="line">tar xzf nagios-4.4.3.tar.gz</span><br><span class="line">./configure</span><br></pre></td></tr></table></figure>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagiosinstalled.png" alt="nagiosinstalled" /></p>
+<h2 id="Nagios-安装"><a href="#Nagios-安装" class="headerlink" title="Nagios 安装"></a>Nagios 安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">mv CentOS-Base.repo CentOS-Base.repo.bak</span><br><span class="line">wget http://mirrors.163.com/.<span class="built_in">help</span>/CentOS7-Base-163.repo</span><br><span class="line">yum makecache</span><br><span class="line">yum -y update</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install the required packages</span></span><br><span class="line">yum install gcc glibc glibc-common wget gd gd-devel perl postfix unzip zip httpd php <span class="comment"># php安装后可访问web页面</span></span><br><span class="line"><span class="comment"># Download and Install Nagios Core</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line">wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz</span><br><span class="line">tar xzf nagios-4.4.3.tar.gz</span><br><span class="line">./configure</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagiosinstalled.png" alt="nagiosinstalled"></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">useradd nagios</span><br><span class="line">groupadd nagcmd</span><br><span class="line">usermod -a -G nagcmd nagios</span><br><span class="line">usermod -a -G nagcmd apache <span class="comment"># 得安装httpd才有</span></span><br><span class="line"></span><br><span class="line">./configure --with-nagios-group=nagios --with-command-group=nagcmd</span><br><span class="line">make all</span><br><span class="line">make install</span><br><span class="line">make install-init</span><br><span class="line"><span class="comment"># Next, run the following command to install the Nagios sample configuration files</span></span><br><span class="line">make install-config</span><br><span class="line"><span class="comment"># To, install the initialization script which can be used to manage your Nagios service, run the following command</span></span><br><span class="line">make install-daemoninit</span><br><span class="line"><span class="comment"># Run the following command to install and configure the external command file to make Nagios Core to work from the command line:</span></span><br><span class="line">make install-commandmode</span><br><span class="line"><span class="comment"># The following command will install the Apache web server configuration files</span></span><br><span class="line">make install-webconf</span><br><span class="line"><span class="comment"># After all the installations are complete, restart your apache service with:</span></span><br><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagiosconfigpath.png" alt="nagiosconfigpath" /></p>
+
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/nagiosconfigpath.png" alt="nagiosconfigpath"></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create nagiosadmin User Account</span></span><br><span class="line">htpasswd -c /usr/<span class="built_in">local</span>/nagios/etc/htpasswd.users nagiosadmin <span class="comment">#password 1234</span></span><br><span class="line"></span><br><span class="line"><span class="comment">####### Install Nagios Plugins ######</span></span><br><span class="line">yum install gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils epel-release perl-Net-SNMP </span><br><span class="line"></span><br><span class="line">wget https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz</span><br><span class="line">tar -zxvf nagios-plugins-2.2.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> /tmp/nagios-plugins-2.2.1/</span><br><span class="line"><span class="comment"># Compile and install the Nagios plugins.</span></span><br><span class="line">./configure --with-nagios-user=nagios --with-nagios-group=nagios</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后将 Nagios 和 Apache 设置为开机启动，并重启 Nagios 服务以使配置修改内容生效，最后打开防火墙，放行HTTP服务：</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nagios</span><br><span class="line">systemctl <span class="built_in">enable</span> httpd</span><br><span class="line">systemctl restart nagios</span><br><span class="line">firewall-cmd --add-service=http --zone=public --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># Accessing Nagios Core</span></span><br><span class="line">/usr/<span class="built_in">local</span>/nagios/bin/nagios -v /usr/<span class="built_in">local</span>/nagios/etc/nagios.cfg</span><br><span class="line">systemctl start nagios</span><br><span class="line"></span><br><span class="line">http://119.255.249.177/nagios/</span><br></pre></td></tr></table></figure>
+
 <p>参考：</p>
 <p><a target="_blank" rel="noopener" href="https://linuxhostsupport.com/blog/how-to-install-nagios-core-on-centos-7/">https://linuxhostsupport.com/blog/how-to-install-nagios-core-on-centos-7/</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.itzgeek.com/how-tos/linux/centos-how-tos/monitor-centos-7-rhel-7-using-nagios-4-0-7.html">https://www.itzgeek.com/how-tos/linux/centos-how-tos/monitor-centos-7-rhel-7-using-nagios-4-0-7.html</a></p>

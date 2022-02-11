@@ -18,12 +18,12 @@
   
   
   <title>Python 自动化运维(1) | 甘士忠个人博客</title>
-  <meta name="description" content="介绍 运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。 优点：高效利、平台化、标准化、流程化 自动化运维工具：  部署类： jenkins 环境类： ansible 监控类： ngios  运维包括：监控、持续集成、运维等 运维自动化设计思想： 管理体系化、工作流程化、人员专业化、任务自动化（环境定义自动化、部署自动化、监控自动化）">
+  <meta name="description" content="介绍运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。 优点：高效利、平台化、标准化、流程化 自动化运维工具：  部署类： jenkins 环境类： ansible 监控类： ngios  运维包括：监控、持续集成、运维等 运维自动化设计思想： 管理体系化、工作流程化、人员专业化、任务自动化（环境定义自动化、部署自动化、监控自动化） 关">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 自动化运维(1)">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/09/12/DevOps/Ansible/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="介绍 运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。 优点：高效利、平台化、标准化、流程化 自动化运维工具：  部署类： jenkins 环境类： ansible 监控类： ngios  运维包括：监控、持续集成、运维等 运维自动化设计思想： 管理体系化、工作流程化、人员专业化、任务自动化（环境定义自动化、部署自动化、监控自动化）">
+<meta property="og:description" content="介绍运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。 优点：高效利、平台化、标准化、流程化 自动化运维工具：  部署类： jenkins 环境类： ansible 监控类： ngios  运维包括：监控、持续集成、运维等 运维自动化设计思想： 管理体系化、工作流程化、人员专业化、任务自动化（环境定义自动化、部署自动化、监控自动化） 关">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/ansiblecompared.png">
 <meta property="article:published_time" content="2021-09-12T03:03:04.000Z">
@@ -433,8 +433,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
-<p>运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。</p>
 <p>优点：高效利、平台化、标准化、流程化</p>
 <p>自动化运维工具：</p>
 <ul>
@@ -447,8 +446,7 @@
 <p>关心的问题：自动化、易实现、跨平台、轻量级</p>
 <p>缺点： 数据无法共享、无法主动式发现问题[不能预测]、部署成本高、标准不统一</p>
 <p>云运维： 资源数据共享、主动发现问题、统一标准、批量推送成本低</p>
-<h2 id="ansible"><a class="markdownIt-Anchor" href="#ansible"></a> ansible</h2>
-<p>Ansible是一个自动化管理IT资源的工具</p>
+<h2 id="ansible"><a href="#ansible" class="headerlink" title="ansible"></a>ansible</h2><p>Ansible是一个自动化管理IT资源的工具</p>
 <p>功能：</p>
 <ul>
 <li>系统环境配置</li>
@@ -469,16 +467,16 @@
 <li>效率低、易挂起，串行的，</li>
 </ul>
 <p>与其他软件对比：</p>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/ansiblecompared.png" alt="ansible" /></p>
-<h2 id="ansible教程"><a class="markdownIt-Anchor" href="#ansible教程"></a> Ansible教程</h2>
-<p>准备环境</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/DevOps/ansiblecompared.png" alt="ansible"></p>
+<h2 id="Ansible教程"><a href="#Ansible教程" class="headerlink" title="Ansible教程"></a>Ansible教程</h2><p>准备环境</p>
 <ul>
 <li>pyhon</li>
 <li>setuptools</li>
 </ul>
-<p>参考:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/effortsing/p/10012070.html">https://www.cnblogs.com/effortsing/p/10012070.html</a></p>
+<p>参考:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/effortsing/p/10012070.html">https://www.cnblogs.com/effortsing/p/10012070.html</a> </p>
 <p>快速安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-setuptools</span><br><span class="line">sudo apt install python3-pip</span><br><span class="line">python3 -m pip install ansible </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 这个方式好，能产生ansible.cfg</span></span></span><br><span class="line">sudo apt-get install -y python-software-properties software-properties-common</span><br><span class="line">sudo add-apt-repository -y ppa:ansible/ansible; sudo apt-get update</span><br><span class="line">sudo apt-get install -y ansible</span><br></pre></td></tr></table></figure>
+
 <p>Ansible源码安装, 主要是因为自定义了系统、软件环境</p>
 <ul>
 <li>获取源码</li>
@@ -488,13 +486,11 @@
 </ul>
 <p>Ansible系统源安装:</p>
 <ul>
-<li>Centos
-<ul>
+<li>Centos <ul>
 <li>yum install ansible</li>
 </ul>
 </li>
-<li>Ubuntu
-<ul>
+<li>Ubuntu<ul>
 <li>apt-get install software-prperties-common</li>
 <li>apt-get-repository ppa:ansible/ansible</li>
 <li>apt-get update</li>
@@ -511,56 +507,16 @@
 <li>/etc/ansible/ansible.cfg # 最后，将会检查在用软件包管理工具安装Ansible时自动产生的配置文件</li>
 </ul>
 <p>如果以上目录都没有，则自己新建，只能有一个配置文件，不然会被覆盖</p>
-<h2 id="ansible-2"><a class="markdownIt-Anchor" href="#ansible-2"></a> Ansible</h2>
-<p>Ansible命令格式： ansible all -m ping</p>
+<h2 id="Ansible"><a href="#Ansible" class="headerlink" title="Ansible"></a>Ansible</h2><p>Ansible命令格式： ansible all -m ping </p>
 <ol>
 <li>ansible 命令主题： ansible/ansible-playbook</li>
 <li>被操作的目标机器的正则表达式： all</li>
 <li>指定使用的模块： -m ping （command shell 命令）</li>
 <li>传入参数: -a 传入的参数，例：ansible all -a ‘ls’</li>
 </ol>
-<p>命令详解：</p>
-<table>
-<thead>
-<tr>
-<th>optional arguments</th>
-<th>detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-a</td>
-<td>指定传入模块的参数</td>
-</tr>
-<tr>
-<td>-C -D</td>
-<td>两个一起使用，检查hosts规则文件的修改</td>
-</tr>
-<tr>
-<td>-l</td>
-<td>限制匹配规则的主机数</td>
-</tr>
-<tr>
-<td>-list-hosts</td>
-<td>显示所有匹配规则的主机数</td>
-</tr>
-<tr>
-<td>-m -M</td>
-<td>指定所用的模块和模块路径</td>
-</tr>
-<tr>
-<td>–syntax-check</td>
-<td>检查语法</td>
-</tr>
-<tr>
-<td>-v</td>
-<td>显示详细日志</td>
-</tr>
-</tbody>
-</table>
+<p>命令详解：<br>|optional arguments|detail|<br>|-|-|<br>-a | 指定传入模块的参数<br>-C -D | 两个一起使用，检查hosts规则文件的修改<br>-l | 限制匹配规则的主机数<br>-list-hosts | 显示所有匹配规则的主机数<br>-m -M | 指定所用的模块和模块路径<br>–syntax-check | 检查语法<br>-v | 显示详细日志</p>
 <ul>
-<li>添加一台主机
-<ul>
+<li>添加一台主机<ul>
 <li>编辑/etc/ansible/hosts, 如果没有可以手动添加，其他位置创建也可以</li>
 <li>添加本地public SSH key 到目标机器的authorized_keys</li>
 <li>添加本机的密钥到Ansible</li>
@@ -573,61 +529,50 @@
 <p><strong>Ad-Hoc</strong> ()</p>
 <p><strong>Playbook</strong> 是一种简单的配置管理系统与多机器部署系统的基础。与现有的其他系统有不同之处，且非常适合于复杂应用的部署。</p>
 <p>Playbooks可用于声明配置，更强大的地方在于，playbooks中以编排有序的执行过程，甚至于做到在多组机器间，来回有序的执行带别指定的步骤，且可以同步或异步的发起任务。</p>
-<h3 id="ansible-api"><a class="markdownIt-Anchor" href="#ansible-api"></a> Ansible API</h3>
-<p>API提供的功能：</p>
+<h3 id="Ansible-API"><a href="#Ansible-API" class="headerlink" title="Ansible API"></a>Ansible API</h3><p>API提供的功能：</p>
 <ul>
-<li>
-<p>调用Ansible模块</p>
+<li><p>调用Ansible模块</p>
 <ul>
-<li>
-<ol>
+<li><ol>
 <li>引入Ansible runner库</li>
 </ol>
 </li>
-<li>
-<ol start="2">
+<li><ol start="2">
 <li>初始化runner对象， 传入相关参数</li>
 </ol>
 </li>
-<li>
-<ol start="3">
+<li><ol start="3">
 <li>运行runner对象的runner函数</li>
 </ol>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ansible.runner</span><br><span class="line">runner = ansible.runner.Runner(</span><br><span class="line">  module_name = <span class="string">&#x27;ping&#x27;</span>,</span><br><span class="line">  module_args = <span class="string">&#x27;&#x27;</span>, <span class="comment"># 参数</span></span><br><span class="line">  pattern = <span class="string">&#x27;web*&#x27;</span>, <span class="comment"># 匹配的机器</span></span><br><span class="line">  forks = <span class="number">10</span>, <span class="comment"># 进程数</span></span><br><span class="line">)</span><br><span class="line">datastructure = runner.run()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>ansible2.0版本前后，差异很大，以上示例不适用于2.0后，以下是Ansible2.0 API使用方法</p>
 </blockquote>
 <ul>
-<li>
-<ol>
+<li><ol>
 <li>定义一个结果对象</li>
 </ol>
 </li>
-<li>
-<ol start="2">
+<li><ol start="2">
 <li>初始化ansible节点对象</li>
 </ol>
 </li>
-<li>
-<ol start="3">
+<li><ol start="3">
 <li>初始化结果对象</li>
 </ol>
 </li>
-<li>
-<ol start="4">
+<li><ol start="4">
 <li>创建一个任务</li>
 </ol>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后续学</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后续学</span></span><br></pre></td></tr></table></figure></li>
+<li><p>开发动态的Inventory数据源</p>
 </li>
-<li>
-<p>开发动态的Inventory数据源</p>
-</li>
-<li>
-<p>更好的控制playbook等功能的运行</p>
+<li><p>更好的控制playbook等功能的运行</p>
 </li>
 </ul>
 <p>编写ansible module</p>

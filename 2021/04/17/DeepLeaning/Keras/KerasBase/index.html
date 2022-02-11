@@ -18,12 +18,12 @@
   
   
   <title>Keras学习准备[待续...] | 甘士忠个人博客</title>
-  <meta name="description" content="1. 安装 12345pip install tensorflowpip install tensorflow-gpupip install keras## 其他pip install pydot pydot_ng  vizgraph python3-tk matplotlib  2. 主要模型  MLP(多层感知机)  全连接网络，也成为深度前馈网络或前馈神经网络。常用于简单的逻辑和线性回归问">
+  <meta name="description" content="1. 安装12345pip install tensorflowpip install tensorflow-gpupip install keras## 其他pip install pydot pydot_ng  vizgraph python3-tk matplotlib 2. 主要模型 MLP(多层感知机) 全连接网络，也成为深度前馈网络或前馈神经网络。常用于简单的逻辑和线性回归问题。处理序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Keras学习准备[待续...]">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/17/DeepLeaning/Keras/KerasBase/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="1. 安装 12345pip install tensorflowpip install tensorflow-gpupip install keras## 其他pip install pydot pydot_ng  vizgraph python3-tk matplotlib  2. 主要模型  MLP(多层感知机)  全连接网络，也成为深度前馈网络或前馈神经网络。常用于简单的逻辑和线性回归问">
+<meta property="og:description" content="1. 安装12345pip install tensorflowpip install tensorflow-gpupip install keras## 其他pip install pydot pydot_ng  vizgraph python3-tk matplotlib 2. 主要模型 MLP(多层感知机) 全连接网络，也成为深度前馈网络或前馈神经网络。常用于简单的逻辑和线性回归问题。处理序">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-17T07:54:23.000Z">
 <meta property="article:modified_time" content="2021-10-28T06:55:59.896Z">
@@ -424,31 +424,23 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="1-安装"><a class="markdownIt-Anchor" href="#1-安装"></a> 1. 安装</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorflow</span><br><span class="line">pip install tensorflow-gpu</span><br><span class="line">pip install keras</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 其他</span></span></span><br><span class="line">pip install pydot pydot_ng  vizgraph python3-tk matplotlib</span><br></pre></td></tr></table></figure>
-<h2 id="2-主要模型"><a class="markdownIt-Anchor" href="#2-主要模型"></a> 2. 主要模型</h2>
-<ol>
-<li>MLP(多层感知机)
-<ul>
+        <h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorflow</span><br><span class="line">pip install tensorflow-gpu</span><br><span class="line">pip install keras</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 其他</span></span></span><br><span class="line">pip install pydot pydot_ng  vizgraph python3-tk matplotlib</span><br></pre></td></tr></table></figure>
+<h2 id="2-主要模型"><a href="#2-主要模型" class="headerlink" title="2. 主要模型"></a>2. 主要模型</h2><ol>
+<li>MLP(多层感知机)<ul>
 <li>全连接网络，也成为深度前馈网络或前馈神经网络。常用于简单的逻辑和线性回归问题。处理序列数据和多维数据欠佳。</li>
 </ul>
 </li>
-<li>CNN(卷积神经网络)
-<ul>
+<li>CNN(卷积神经网络)<ul>
 <li>主要应用与图像或视频的分类、分割和生成等。也可用于时序数据网络</li>
 </ul>
 </li>
-<li>RNN(循环神经网络)
-<ul>
+<li>RNN(循环神经网络)<ul>
 <li>主要应用于序列数据的预测</li>
 </ul>
 </li>
 </ol>
-<h2 id="3-代码流程"><a class="markdownIt-Anchor" href="#3-代码流程"></a> 3. 代码流程</h2>
-<h3 id="31-加载数据集"><a class="markdownIt-Anchor" href="#31-加载数据集"></a> 3.1 加载数据集</h3>
-<p>数据集常用MNIST手写体</p>
-<h2 id="3-mlp"><a class="markdownIt-Anchor" href="#3-mlp"></a> 3. MLP</h2>
-<ul>
+<h2 id="3-代码流程"><a href="#3-代码流程" class="headerlink" title="3. 代码流程"></a>3. 代码流程</h2><h3 id="3-1-加载数据集"><a href="#3-1-加载数据集" class="headerlink" title="3.1 加载数据集"></a>3.1 加载数据集</h3><p>数据集常用MNIST手写体</p>
+<h2 id="3-MLP"><a href="#3-MLP" class="headerlink" title="3. MLP"></a>3. MLP</h2><ul>
 <li>数据集 MNIST手写体</li>
 </ul>
 <p>代码：<a target="_blank" rel="noopener" href="https://github.com/PacktPublishing/Advanced-Deep-Learning-with-Keras">https://github.com/PacktPublishing/Advanced-Deep-Learning-with-Keras</a></p>

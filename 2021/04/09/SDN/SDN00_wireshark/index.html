@@ -18,12 +18,12 @@
   
   
   <title>软件定义网络（SDN）学习笔记(0)--wireshark抓包分析 | 甘士忠个人博客</title>
-  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    简单网络命令  1. ifconfig ifconfig用于显示、设置、启动和停止网络设备。">
+  <meta name="description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   简单网络命令1. ifconfigifconfig用于显示、设置、启动和停止网络设备。通过此命">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件定义网络（SDN）学习笔记(0)--wireshark抓包分析">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/09/SDN/SDN00_wireshark/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器    简单网络命令  1. ifconfig ifconfig用于显示、设置、启动和停止网络设备。">
+<meta property="og:description" content="SDN学习目录  SDN学习笔记(0)–wireshark抓包分析 SDN学习笔记(1)–iPerf和Netperf性能测试 SDN学习笔记(2)–Scapy交互式数据处理与Postman HTTP请求测试 SDN学习笔记(3)–OVS系统架构 SDN学习笔记(5)–OpenDaylight控制器   简单网络命令1. ifconfigifconfig用于显示、设置、启动和停止网络设备。通过此命">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ifconfig.png">
 <meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ping.png">
@@ -450,61 +450,45 @@
 <p><a href="/2021/05/31/SDN/SDN05_OpenDaylight/">SDN学习笔记(5)–OpenDaylight控制器</a></p>
 </blockquote>
 </blockquote>
-<h2 id="简单网络命令"><a class="markdownIt-Anchor" href="#简单网络命令"></a> 简单网络命令</h2>
-<h3 id="1-ifconfig"><a class="markdownIt-Anchor" href="#1-ifconfig"></a> 1. ifconfig</h3>
-<p>ifconfig用于显示、设置、启动和停止网络设备。通过此命令能够显示出正在使用的计算机的IP地址、子网掩码和默认网关等。当网络环境发生改变时可通过此命令对网络进行相应的配置。ifconfig命令的格式和参数解释如下：</p>
+<h2 id="简单网络命令"><a href="#简单网络命令" class="headerlink" title="简单网络命令"></a>简单网络命令</h2><h3 id="1-ifconfig"><a href="#1-ifconfig" class="headerlink" title="1. ifconfig"></a>1. ifconfig</h3><p>ifconfig用于显示、设置、启动和停止网络设备。通过此命令能够显示出正在使用的计算机的IP地址、子网掩码和默认网关等。当网络环境发生改变时可通过此命令对网络进行相应的配置。ifconfig命令的格式和参数解释如下：</p>
 <ul>
 <li>命令格式：ifconfig [网络设备] [参数]</li>
 <li>命令参数如下表所示：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ifconfig.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ifconfig.png"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ifconfig <span class="comment"># 查看网络设备信息</span></span></span><br><span class="line">eth0      Link encap:Ethernet  HWaddr fa:16:3e:22:f1:7c  </span><br><span class="line">          inet addr:30.0.0.96  Bcast:30.0.0.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::f816:3eff:fe22:f17c/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:2402 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:2390 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:190993 (190.9 KB)  TX bytes:4116702 (4.1 MB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:16 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:16 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:880 (880.0 B)  TX bytes:880 (880.0 B)</span><br><span class="line">eth0表示第一块网卡。</span><br><span class="line">HWaddr表示网卡的物理地址即MAC地址。</span><br><span class="line">inet addr表示网卡的IPv4地址。</span><br><span class="line">inet6 addr表示网卡的IPv6地址。</span><br><span class="line">Bcast表示网卡的广播地址。</span><br><span class="line">Mask表示子网掩码地址。</span><br><span class="line">UP表示网卡开启状态。</span><br><span class="line">RUNNING表示网卡的网线被接上。</span><br><span class="line">MULTICAST表示支持组播。</span><br><span class="line">MTU表示最大传输单元。</span><br><span class="line">RX packets、TX packets表示接收、发送数据包情况统计。</span><br><span class="line">RX byte、TX bytes表示接收、发送数据字节数统计信息。</span><br><span class="line">lo表示主机的回环地址。一般是用来测试一个网络程序时又不想让局域网或外网的用户能够查看，只能在此台主机上运行和查看所用的网络接口，比如把httpd服务器指定到回坏地址后，在浏览器输入127.0.0.1就能看到你所架WEB网站，但只有您能看得到，局域网的其它主机或用户无从知道。</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ifconfig eth0 down <span class="comment"># 关闭网卡</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ifconfig eth0 up <span class="comment"># 开启网卡</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ifconfig eth0 192.168.2.10 netmask 255.255.255.0 broadcast 192.168.2.255 <span class="comment"># 配置IP地址等信息</span></span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>note: 机器重启后，配置的IP地址就失效了，若想将配置信息永久地存的电脑里，需要修改网卡的配置文件。</p>
 </blockquote>
-<h3 id="2-ping"><a class="markdownIt-Anchor" href="#2-ping"></a> 2. ping</h3>
-<p>ping命令用于检查网络是否通畅和网络连接速度。简单地说，网络上的机器都有唯一确定的IP地址，给目标IP地址发送一个数据包，就会返回一个同样大小的数据包，根据返回的数据包可以确定目标主机是否存在，可以初步判断网络是否通畅以及连接速度等信息。根据数据包返回时间和丢包率，可以大致判断出网络是否稳定。Ping的返回异常信息有“Request Timed Out”、“Destination Net Unreachable”、“Bad IP address”和“Source quench received”：<br />
-（1） Request Timed Out表示对方主机可以到达但是连接超时，这种情况通常是对方拒绝接收你发给它的数据包而造成的数据包丢失。原因可能是对方装有防火墙。<br />
-（2） Destination Net Unreachable表示对方主机不存在或者没有跟对方建立连接。<br />
-（3） Bad IP address表示可能没有连接到DNS服务器所以无法解析这个IP地址，也可能是IP地址不存在。<br />
-（4） Source quench received表示对方或中途的服务器繁忙无法回应。<br />
-说明：“destination host unreachable”和“time out”的区别：如果所经过的路由器的路由表中具有到达目标的路由，而目标因为其它原因不可到达，这时候会出现“time out”，如果路由表中连到达目标的路由都没有，那就会出现“destination host unreachable”。<br />
-ping命令的格式和参数解释如下：</p>
+<h3 id="2-ping"><a href="#2-ping" class="headerlink" title="2. ping"></a>2. ping</h3><p>ping命令用于检查网络是否通畅和网络连接速度。简单地说，网络上的机器都有唯一确定的IP地址，给目标IP地址发送一个数据包，就会返回一个同样大小的数据包，根据返回的数据包可以确定目标主机是否存在，可以初步判断网络是否通畅以及连接速度等信息。根据数据包返回时间和丢包率，可以大致判断出网络是否稳定。Ping的返回异常信息有“Request Timed Out”、“Destination Net Unreachable”、“Bad IP address”和“Source quench received”：<br>（1） Request Timed Out表示对方主机可以到达但是连接超时，这种情况通常是对方拒绝接收你发给它的数据包而造成的数据包丢失。原因可能是对方装有防火墙。<br>（2） Destination Net Unreachable表示对方主机不存在或者没有跟对方建立连接。<br>（3） Bad IP address表示可能没有连接到DNS服务器所以无法解析这个IP地址，也可能是IP地址不存在。<br>（4） Source quench received表示对方或中途的服务器繁忙无法回应。<br>说明：“destination host unreachable”和“time out”的区别：如果所经过的路由器的路由表中具有到达目标的路由，而目标因为其它原因不可到达，这时候会出现“time out”，如果路由表中连到达目标的路由都没有，那就会出现“destination host unreachable”。<br>ping命令的格式和参数解释如下：</p>
 <ul>
-<li>命令格式：<br />
-ping [参数] [主机名或IP地址]</li>
+<li>命令格式：<br>ping [参数] [主机名或IP地址]</li>
 <li>命令参数如下表所示：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ping.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/ping.png"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ping 127.0.0.1 <span class="comment">#</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ping -c 5 www.xxx.com <span class="comment"># -c 5表示在发送5个数据包后停止。</span></span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>note1: ping本网网关或本网IP地址，可以检查硬件设备是否有问题，也可以检查本机与本地网络连接是否正常（在非局域网中这一步骤可以忽略）。</p>
 </blockquote>
-<h3 id="3-traceroute命令"><a class="markdownIt-Anchor" href="#3-traceroute命令"></a> 3. traceroute命令</h3>
-<p>traceroute是用来显示源主机到目标主机之间所经过的网关的命令。traceroute命令用IP生存时间（TTL）字段和ICMP错误消息来确定从一个主机到网络上其他主机的路由。首先，traceroute发送一个TTL是1的IP数据包到目的地，当路径上的第一个路由器收到这个数据包时，TTL将会减1。此时，TTL变为0，所以该路由器会将此数据包丢掉，并返回一个ICMP time exceeded消息（包括发IP包的源地址，IP包的所有内容及路由器的IP地址）。traceroute收到这个消息后，便知道这个路由器存在于路径上，接着traceroute再发送一个TTL是2的数据包，继而发现第2个路由器。依此规律，traceroute每次将发送的数据包的TTL加1来发现下一个路由器，一直持续到某个数据包抵达目的地。当数据包到达目的地后，该主机则不会返回ICMP time exceeded消息，此时traceroute通过UDP数据包向不常见端口（30000以上）发送数据包，因此会收到ICMP port unreachable消息，故可判断到达目的地。<br />
-traceroute命令的格式和参数解释如下：</p>
+<h3 id="3-traceroute命令"><a href="#3-traceroute命令" class="headerlink" title="3. traceroute命令"></a>3. traceroute命令</h3><p>traceroute是用来显示源主机到目标主机之间所经过的网关的命令。traceroute命令用IP生存时间（TTL）字段和ICMP错误消息来确定从一个主机到网络上其他主机的路由。首先，traceroute发送一个TTL是1的IP数据包到目的地，当路径上的第一个路由器收到这个数据包时，TTL将会减1。此时，TTL变为0，所以该路由器会将此数据包丢掉，并返回一个ICMP time exceeded消息（包括发IP包的源地址，IP包的所有内容及路由器的IP地址）。traceroute收到这个消息后，便知道这个路由器存在于路径上，接着traceroute再发送一个TTL是2的数据包，继而发现第2个路由器。依此规律，traceroute每次将发送的数据包的TTL加1来发现下一个路由器，一直持续到某个数据包抵达目的地。当数据包到达目的地后，该主机则不会返回ICMP time exceeded消息，此时traceroute通过UDP数据包向不常见端口（30000以上）发送数据包，因此会收到ICMP port unreachable消息，故可判断到达目的地。<br>traceroute命令的格式和参数解释如下：</p>
 <ul>
-<li>命令格式：<br />
-traceroute [参数] [主机]</li>
+<li>命令格式：<br>traceroute [参数] [主机]</li>
 <li>命令参数如下表所示：</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/traceroute.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/traceroute.png"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo su</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt-get install traceroute <span class="comment"># 安装</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> traceroute www.baidu.com <span class="comment"># 追踪网络数据包的路由途径，执行结果如下图所示</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> traceroute -m 10 www.baidu.com <span class="comment"># 设置路由追踪10条，即只发回通过10个网关的信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> traceroute -w 3 www.baidu.com <span class="comment"># 把对外发探测包的等待响应时间设置为3秒</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="4-route命令"><a class="markdownIt-Anchor" href="#4-route命令"></a> 4. route命令</h3>
-<p>route用于显示和操作IP路由表，它的主要作用是创建静态路由。在Linux系统中，设置路由通常是为了解决以下问题：Linux系统在一个局域网中，局域网中有一个网关，若要让机器访问Internet，那么就需要将网关的IP地址设置为Linux机器的默认路由。route命令的格式和参数解释如下：</p>
+<h3 id="4-route命令"><a href="#4-route命令" class="headerlink" title="4. route命令"></a>4. route命令</h3><p>route用于显示和操作IP路由表，它的主要作用是创建静态路由。在Linux系统中，设置路由通常是为了解决以下问题：Linux系统在一个局域网中，局域网中有一个网关，若要让机器访问Internet，那么就需要将网关的IP地址设置为Linux机器的默认路由。route命令的格式和参数解释如下：</p>
 <ul>
-<li>命令格式：<br />
-route [-f] [-p] [command] [destination] [mask netmask] [gateway] [metric] [if interface]</li>
+<li>命令格式：<br>route [-f] [-p] [command] [destination] [mask netmask] [gateway] [metric] [if interface]</li>
 <li>命令参数如下表所示:</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/traceroute.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/NetTools/traceroute.png"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> route</span></span><br><span class="line">openlab@openlab:~/Desktop$ route</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">default         30.0.0.1        0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">default         30.0.0.1        0.0.0.0         UG    100    0        0 eth0</span><br><span class="line">30.0.0.0        *               255.255.255.0   U     0      0        0 eth0</span><br><span class="line">169.254.169.254 30.0.0.1        255.255.255.255 UGH   0      0        0 eth0</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Destination：表示目标网段或主机。</li>
 <li>Gateway：表示网关地址，“*”表示目标是本主机所属的网络，不需要路由。</li>
 <li>Genmask：表示网络掩码。</li>
-<li>Flags：表示标记。常用标记如下：
-<ul>
+<li>Flags：表示标记。常用标记如下：<ul>
 <li>U表示路由是活动的</li>
 <li>H表示目标是一个主机</li>
 <li>G表示路由指向网关</li>
@@ -517,60 +501,36 @@ route [-f] [-p] [command] [destination] [mask netmask] [gateway] [metric] [if in
 <li>Metric：表示路由距离，到达指定网络所需的中转数（Linux内核中没有使用）。</li>
 <li>Ref：表示路由项引用次数（Linux内核中没有使用）。</li>
 <li>Use：表示此路由项被路由软件查找的次数。</li>
-<li>Iface：表示该路由表项对应的输出接口。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0 <span class="comment"># 添加网关</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> route del -net 224.0.0.0 netmask 240.0.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> route add -net 192.168.62.0 netmask 255.255.255.0 gw 192.168.1.1 <span class="comment"># 添加一条路由(发往192.168.62这个网段的全部要经过网关192.168.1.1)</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> route del -net 192.168.122.0 netmask 255.255.255.0 <span class="comment"># 删除一条路由　删除的时候不用写网关</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="5-ip"><a class="markdownIt-Anchor" href="#5-ip"></a> 5. IP</h3>
-<p>ip命令用来显示或操纵Linux主机的路由、网络设备、策略路由和隧道，是Linux下较新的功能强大的网络配置工具。它能够替代一些传统的网络管理工具，例如ifconfig、route等，使用权限为超级用户，ip命令的格式和参数解释如下：</p>
-<ul>
-<li>命令格式：<br />
-ip [OPTIONS] OBJECT [COMMAND [ARGUMENTS]]</li>
-<li>命令参数：<br />
-OPTIONS是一些修改ip行为或者改变其输出的选项。所有的选项都是以-字符开头，分为长、短两种形式。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip link list <span class="comment"># 查看网络设备的运行状态</span></span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default </span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fa:16:3e:50:89:7f brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure>
-<ul>
+<li>Iface：表示该路由表项对应的输出接口。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0 <span class="comment"># 添加网关</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> route del -net 224.0.0.0 netmask 240.0.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> route add -net 192.168.62.0 netmask 255.255.255.0 gw 192.168.1.1 <span class="comment"># 添加一条路由(发往192.168.62这个网段的全部要经过网关192.168.1.1)</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> route del -net 192.168.122.0 netmask 255.255.255.0 <span class="comment"># 删除一条路由　删除的时候不用写网关</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="5-IP"><a href="#5-IP" class="headerlink" title="5. IP"></a>5. IP</h3>ip命令用来显示或操纵Linux主机的路由、网络设备、策略路由和隧道，是Linux下较新的功能强大的网络配置工具。它能够替代一些传统的网络管理工具，例如ifconfig、route等，使用权限为超级用户，ip命令的格式和参数解释如下：</li>
+<li>命令格式：<br>ip [OPTIONS] OBJECT [COMMAND [ARGUMENTS]]</li>
+<li>命令参数：<br>OPTIONS是一些修改ip行为或者改变其输出的选项。所有的选项都是以-字符开头，分为长、短两种形式。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip link list <span class="comment"># 查看网络设备的运行状态</span></span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default </span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fa:16:3e:50:89:7f brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure></li>
 <li>lo表示主机的回环地址。</li>
 <li>eth0表示第一块网卡。</li>
 <li>UP表示网卡开启状态。</li>
 <li>MULTICAST表示支持组播。</li>
 <li>mtu表示最大传输单元。</li>
-<li>link/ether表示MAC地址。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip -s link list <span class="comment"># 查看更加详细的网络设备信息</span></span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default </span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    RX: bytes  packets  errors  dropped overrun mcast   </span><br><span class="line">    880        16       0       0       0       0      </span><br><span class="line">    TX: bytes  packets  errors  dropped carrier collsns </span><br><span class="line">    880        16       0       0       0       0      </span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fa:16:3e:50:89:7f brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    RX: bytes  packets  errors  dropped overrun mcast   </span><br><span class="line">    378682     3605     0       0       0       0      </span><br><span class="line">    TX: bytes  packets  errors  dropped carrier collsns </span><br><span class="line">    2422264    2317     0       0       0       0 </span><br></pre></td></tr></table></figure>
-<ul>
+<li>link/ether表示MAC地址。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip -s link list <span class="comment"># 查看更加详细的网络设备信息</span></span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default </span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    RX: bytes  packets  errors  dropped overrun mcast   </span><br><span class="line">    880        16       0       0       0       0      </span><br><span class="line">    TX: bytes  packets  errors  dropped carrier collsns </span><br><span class="line">    880        16       0       0       0       0      </span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fa:16:3e:50:89:7f brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    RX: bytes  packets  errors  dropped overrun mcast   </span><br><span class="line">    378682     3605     0       0       0       0      </span><br><span class="line">    TX: bytes  packets  errors  dropped carrier collsns </span><br><span class="line">    2422264    2317     0       0       0       0 </span><br></pre></td></tr></table></figure></li>
 <li>RX packets、TX packets表示接收、发送数据包情况统计。</li>
-<li>RX bytes、TX bytes表示接收、发送数据字节数统计信息。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip addr list <span class="comment"># 查看ip信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip link <span class="built_in">set</span> eth0 down <span class="comment"># ip link list命令</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip link <span class="built_in">set</span> eth0 up <span class="comment"># 开启eth0网卡</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> route add default gw 30.0.1.1 <span class="comment"># 设置网关</span></span></span><br></pre></td></tr></table></figure>
-<ul>
+<li>RX bytes、TX bytes表示接收、发送数据字节数统计信息。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ip addr list <span class="comment"># 查看ip信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip link <span class="built_in">set</span> eth0 down <span class="comment"># ip link list命令</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip link <span class="built_in">set</span> eth0 up <span class="comment"># 开启eth0网卡</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> route add default gw 30.0.1.1 <span class="comment"># 设置网关</span></span></span><br></pre></td></tr></table></figure></li>
 <li>inet表示网卡的IPv4地址。</li>
-<li>inet6表示网卡的IPv6地址。</li>
-</ul>
-<blockquote>
+<li>inet6表示网卡的IPv6地址。<blockquote>
 <p>note: 使用ip命令关闭网卡后，默认路由也被删除了，而使用ip命令启用网卡时，并不会配置路由，所以将无法ping通公网地址，故需要配置路由。</p>
 </blockquote>
-<h3 id="6-netstat命令"><a class="markdownIt-Anchor" href="#6-netstat命令"></a> 6. netstat命令</h3>
-<p>netstat是一个监控TCP/IP网络的非常有用的命令，它可以显示路由表、实际的网络连接以及每一个网络接口设备的状态信息。它用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。另外它还能列出处于监听状态（即等待接入请求）的套接字。如果你想确认系统上的Web服务有没有起来，你可以查看80端口有没有打开。netstat命令的格式和参数解释如下：</p>
-<ul>
-<li>命令格式：<br />
-netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][—ip]</li>
-<li>命令参数如下表所示：</li>
+</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> netstat -a <span class="comment"># 查看所有端口信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -at <span class="comment"># 查看TCP连接</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -l <span class="comment"># 查看所有处于监听状态的Sockets</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -ap | grep ssh <span class="comment"># 查看程序运行的端口</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="7-tcpdump命令"><a class="markdownIt-Anchor" href="#7-tcpdump命令"></a> 7. tcpdump命令</h3>
-<p>tcpdump是根据使用者的定义对网络上的数据包进行截获的包分析工具。tcpdump凭借强大的功能和灵活的截取策略，成为类UNIX系统下用于网络分析和问题排查的首选工具。tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤。</p>
+<h3 id="6-netstat命令"><a href="#6-netstat命令" class="headerlink" title="6. netstat命令"></a>6. netstat命令</h3><p>netstat是一个监控TCP/IP网络的非常有用的命令，它可以显示路由表、实际的网络连接以及每一个网络接口设备的状态信息。它用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。另外它还能列出处于监听状态（即等待接入请求）的套接字。如果你想确认系统上的Web服务有没有起来，你可以查看80端口有没有打开。netstat命令的格式和参数解释如下：</p>
 <ul>
-<li>命令格式：<br />
-tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
-[ -i 网络接口 ] [ -r 文件名] [ -s snaplen ]<br />
-[ -T 类型 ] [ -w 文件名 ] [表达式 ]</li>
+<li>命令格式：<br>netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][—ip]</li>
+<li>命令参数如下表所示：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> netstat -a <span class="comment"># 查看所有端口信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -at <span class="comment"># 查看TCP连接</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -l <span class="comment"># 查看所有处于监听状态的Sockets</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> netstat -ap | grep ssh <span class="comment"># 查看程序运行的端口</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="7-tcpdump命令"><a href="#7-tcpdump命令" class="headerlink" title="7. tcpdump命令"></a>7. tcpdump命令</h3>tcpdump是根据使用者的定义对网络上的数据包进行截获的包分析工具。tcpdump凭借强大的功能和灵活的截取策略，成为类UNIX系统下用于网络分析和问题排查的首选工具。tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤。</li>
+<li>命令格式：<br>tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br>[ -i 网络接口 ] [ -r 文件名] [ -s snaplen ]<br>[ -T 类型 ] [ -w 文件名 ] [表达式 ]</li>
 <li>命令参数：</li>
 </ul>
 <p>tcpdump命令常用参数如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tcpdump -i eth0 <span class="comment"># 进行抓包</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ping www.xxxx.com <span class="comment"># 在打开一个窗口进行网络请求,可看到抓包信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tcpdump -i eth0 tcp port 80 <span class="comment"># 抓取端口为80的TCP协议的数据信息</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tcpdump-i eth0 tcp <span class="comment"># 抓取TCP协议的数据信息，并访问网址：www.xxx.com</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tcpdump -i eth0 -w tcpdump_package.pcap <span class="comment"># 该命令作用是将tcupdump抓到的网络包保存到tcpdump_package.pcap文件中，命名规则为：文件名.pcap。</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tcpdump -r tcpdump_package.pcap <span class="comment"># 该命令作用是将保存在tcpdump_package.pacp中的抓包信息读取出来。</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="练习题"><a class="markdownIt-Anchor" href="#练习题"></a> 练习题</h3>
-<p>下面（B）命令用于测试网络是否连通。</p>
+
+<h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><p>下面（B）命令用于测试网络是否连通。</p>
 <ul>
 <li>A. ifconfig</li>
 <li>B. ping</li>
@@ -592,7 +552,7 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>D. RX packets、TX packets表示接收、发送数据字节数统计信息。</li>
 </ul>
 <p>判断： 使用ifconfig命令配置主机信息后，信息将永久保存在电脑里。×</p>
-<p>判断： traceroute -m 4 www.xxx.com表示只发回通过4个网关的信息。√</p>
+<p>判断： traceroute -m 4 <a target="_blank" rel="noopener" href="http://www.xxx.com表示只发回通过4个网关的信息.√/">www.xxx.com表示只发回通过4个网关的信息。√</a></p>
 <p>下列关于ip命令理解错误的是（B）</p>
 <ul>
 <li>A. ip命令用来显示或操纵Linux主机的路由、网络设备、策略路由和隧道，它能够替代一些传统的网络管理工具，例如ifconfig、route等。</li>
@@ -605,7 +565,7 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>A. tcpdump支持对网络层、协议、主机、网络或端口的过滤。</li>
 <li>B. tcpdump -i eth1 ‘((tcp) and (port 80) and ((dst host 192.168.1.254) or (dst host 192.168.1.200)))’，表示抓取所有经过eth1，目的地址是192.168.1.254和192.168.1.200，端口是80的TCP数据。</li>
 <li>C. 不带任何选项的tcpdump，默认会抓取第一个网络接口，且只有将tcpdump进程终止才会停止抓包。</li>
-<li>D. 表达式单元之间可以使用操作符&quot; and / &amp;&amp; / or / || / not / ! &quot;进行连接，从而组成复杂的条件表达式。</li>
+<li>D. 表达式单元之间可以使用操作符” and / &amp;&amp; / or / || / not / ! “进行连接，从而组成复杂的条件表达式。</li>
 </ul>
 <p>下面对netstat的输出结果理解正确的是（D）</p>
 <ul>
@@ -615,10 +575,8 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>D. 以上均正确</li>
 </ul>
 <p>判断： netstat是一个网络连接端扫描软件，用来扫描电脑上开放的端口，确定哪些服务运行在哪些端口，并且推断出计算机运行的操作系统。×</p>
-<p>判断： 使用括号&quot;()&quot;可以改变tcpdump的表达式的优先级 √</p>
-<h2 id="wireshark抓包分析工具"><a class="markdownIt-Anchor" href="#wireshark抓包分析工具"></a> Wireshark抓包分析工具</h2>
-<p>Wireshark是一个免费开源的网络数据包分析软件。用于截取网络数据包并尽可能显示出最为详细的网络数据包数据。为了安全考虑，Wireshark只能查看封包，而不能修改封包的内容，或者发送封包。Wireshark能够对大部分局域网协议进行解析，具有界面简单、操作方便、实时显示捕获数据的优点。Wireshark不是入侵侦测系统，对于网络上的异常流量行为，Wireshark不会产生警示或是任何提示。然而，仔细分析Wireshark撷取的封包能够帮助使用者对于网络行为有更清楚的了解。Wireshark的用途很广，网络管理员可以使用Wireshark来检测网络问题，网络安全工程师可以使用Wireshark来检查资讯安全相关问题，开发者可以使用Wireshark来为新的通讯协议除错，普通使用者可以使用Wireshark来学习网络协议的相关知识。<br />
-在使用Wireshark工具时，可以按如下流程进行：</p>
+<p>判断： 使用括号”()”可以改变tcpdump的表达式的优先级 √</p>
+<h2 id="Wireshark抓包分析工具"><a href="#Wireshark抓包分析工具" class="headerlink" title="Wireshark抓包分析工具"></a>Wireshark抓包分析工具</h2><p>Wireshark是一个免费开源的网络数据包分析软件。用于截取网络数据包并尽可能显示出最为详细的网络数据包数据。为了安全考虑，Wireshark只能查看封包，而不能修改封包的内容，或者发送封包。Wireshark能够对大部分局域网协议进行解析，具有界面简单、操作方便、实时显示捕获数据的优点。Wireshark不是入侵侦测系统，对于网络上的异常流量行为，Wireshark不会产生警示或是任何提示。然而，仔细分析Wireshark撷取的封包能够帮助使用者对于网络行为有更清楚的了解。Wireshark的用途很广，网络管理员可以使用Wireshark来检测网络问题，网络安全工程师可以使用Wireshark来检查资讯安全相关问题，开发者可以使用Wireshark来为新的通讯协议除错，普通使用者可以使用Wireshark来学习网络协议的相关知识。<br>在使用Wireshark工具时，可以按如下流程进行：</p>
 <ol>
 <li>确定Wireshark的位置。即在哪执行wireshark命令，如果没有一个正确的位置，启动Wireshark后会花费很长的时间捕获一些与自己无关的数据。</li>
 <li>选择捕获接口。一般都是选择连接到Internet网络的接口，这样才可以捕获到与网络相关的数据。否则，捕获到的其它数据对自己也没有任何帮助。</li>
@@ -626,23 +584,18 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>使用显示过滤器。通常使用捕获过滤器过滤后的数据，往往还是很复杂。为了使过滤的数据包再更细致，此时使用显示过滤器进行过滤。</li>
 <li>使用着色规则。通常使用显示过滤器过滤后的数据，都是有用的数据包。如果想更加突出的显示某个会话，可以使用着色规则高亮显示。</li>
 <li>构建图表。如果用户想要更明显的看出一个网络中数据的变化情况，使用图表的形式可以很方便的展现数据分布情况。</li>
-<li>重组数据。Wireshark的重组功能，可以重组一个会话中不同数据包的信息，或者是一个重组一个完整的图片或文件。由于传输的文件往往较大，所以信息分布在多个数据包中。为了能够查看到整个图片或文件，这时候就需要使用重组数据的方法来实现。</li>
+<li>重组数据。Wireshark的重组功能，可以重组一个会话中不同数据包的信息，或者是一个重组一个完整的图片或文件。由于传输的文件往往较大，所以信息分布在多个数据包中。为了能够查看到整个图片或文件，这时候就需要使用重组数据的方法来实现。<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3></li>
 </ol>
-<h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
 <p>控制器：Ubuntu14.03桌面版,Floodlight1.0;CPU:1,内存:2GB,磁盘:20GB</p>
 <p>交换机：Ubuntu14.03桌面版,OVS2.3.1;CPU:1,内存:2GB,磁盘:20GB</p>
-<h3 id="基本使用步骤"><a class="markdownIt-Anchor" href="#基本使用步骤"></a> 基本使用步骤</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt-get install wireshark <span class="comment"># root用户下安装</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo wireshark <span class="comment"># 普通用户下打开wireshark主界面，这里权限的问题，root打不开，普通用户无法获得网卡</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="步骤-1-选择需要抓包的网卡"><a class="markdownIt-Anchor" href="#步骤-1-选择需要抓包的网卡"></a> 步骤 1 选择需要抓包的网卡</h4>
-<p>Wireshark是捕获机器上的某一块网卡的网络包，当你的机器上有多块网卡的时候，你需要选择一个网卡，请按下面的方式选择网卡：</p>
+<h3 id="基本使用步骤"><a href="#基本使用步骤" class="headerlink" title="基本使用步骤"></a>基本使用步骤</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt-get install wireshark <span class="comment"># root用户下安装</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo wireshark <span class="comment"># 普通用户下打开wireshark主界面，这里权限的问题，root打不开，普通用户无法获得网卡</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="步骤-1-选择需要抓包的网卡"><a href="#步骤-1-选择需要抓包的网卡" class="headerlink" title="步骤 1 选择需要抓包的网卡"></a>步骤 1 选择需要抓包的网卡</h4><p>Wireshark是捕获机器上的某一块网卡的网络包，当你的机器上有多块网卡的时候，你需要选择一个网卡，请按下面的方式选择网卡：</p>
 <ul>
 <li>方式一：选择网卡“eth0”，单击开始按钮</li>
-<li>方式二：1)在菜单栏选择&quot;Capture -&gt; Interfaces&quot;，进入选择网卡的页面;2)选择网卡“eth0”，单击“Start”，进入抓包页面</li>
+<li>方式二：1)在菜单栏选择”Capture -&gt; Interfaces”，进入选择网卡的页面;2)选择网卡“eth0”，单击“Start”，进入抓包页面</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/wiresharkui.png" alt="" /></p>
-<h4 id="步骤-2-单击浏览器图标打开浏览器在浏览器上访问wwwsinacomcn进行抓包"><a class="markdownIt-Anchor" href="#步骤-2-单击浏览器图标打开浏览器在浏览器上访问wwwsinacomcn进行抓包"></a> 步骤 2 单击浏览器图标，打开浏览器，<a target="_blank" rel="noopener" href="http://xn--www-u28dn69a56ah46gcvzcoyd455a.sina.com.cn">在浏览器上访问www.sina.com.cn</a>，进行抓包</h4>
-<h4 id="步骤-3-单击红色停止按钮停止抓包抓包结果如下图所示"><a class="markdownIt-Anchor" href="#步骤-3-单击红色停止按钮停止抓包抓包结果如下图所示"></a> 步骤 3 单击红色停止按钮停止抓包，抓包结果如下图所示</h4>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/wiresharkcapturing.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/wiresharkui.png"></p>
+<h4 id="步骤-2-单击浏览器图标，打开浏览器，在浏览器上访问www-sina-com-cn，进行抓包"><a href="#步骤-2-单击浏览器图标，打开浏览器，在浏览器上访问www-sina-com-cn，进行抓包" class="headerlink" title="步骤 2 单击浏览器图标，打开浏览器，在浏览器上访问www.sina.com.cn，进行抓包"></a>步骤 2 单击浏览器图标，打开浏览器，在浏览器上访问<a target="_blank" rel="noopener" href="http://www.sina.com.cn,进行抓包/">www.sina.com.cn，进行抓包</a></h4><h4 id="步骤-3-单击红色停止按钮停止抓包，抓包结果如下图所示"><a href="#步骤-3-单击红色停止按钮停止抓包，抓包结果如下图所示" class="headerlink" title="步骤 3 单击红色停止按钮停止抓包，抓包结果如下图所示"></a>步骤 3 单击红色停止按钮停止抓包，抓包结果如下图所示</h4><p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/wiresharkcapturing.png"></p>
 <p>图中四个区域分别为：</p>
 <ol>
 <li>为DISPLAY FILTER（显示过滤器），显示过滤器用于查找捕捉记录中的内容。</li>
@@ -650,12 +603,11 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>为PACKET DETAILS PANE（封包详细信息）：这里显示的是在封包列表中被选中项目的详细信息。</li>
 <li>为DISSECTOR PANE（16进制数据）：“解析器”在Wireshark中也被叫做“16进制数据查看面板”。这里显示的内容与“封包详细信息”中相同，只是改为以16进制的格式表述。</li>
 </ol>
-<h4 id="步骤-4-根据抓包结果分析抓包数据"><a class="markdownIt-Anchor" href="#步骤-4-根据抓包结果分析抓包数据"></a> 步骤 4 根据抓包结果，分析抓包数据</h4>
-<ul>
+<h4 id="步骤-4-根据抓包结果，分析抓包数据"><a href="#步骤-4-根据抓包结果，分析抓包数据" class="headerlink" title="步骤 4 根据抓包结果，分析抓包数据"></a>步骤 4 根据抓包结果，分析抓包数据</h4><ul>
 <li>在封包列表部分选择一条TCP协议数据，如下图所示。</li>
 <li>在封包列表部分选择一条TCP协议数据，如下图所示。</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/captureanalysis.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/captureanalysis.png"></p>
 <p>图中：</p>
 <ul>
 <li>Frame：表示物理层数据帧概况。</li>
@@ -663,44 +615,37 @@ tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ]<br />
 <li>Internet Protocol Version 4：表示互联网IP包头信息。</li>
 <li>Transmission Control Protocol：表示传输层数据段头部信息，此处为TCP。</li>
 </ul>
-<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/capturemessage.png" alt="" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/SDN/Wireshark/capturemessage.png"></p>
 <p>图中：</p>
 <ul>
 <li>数据链路层显示有源MAC地址，目的MAC地址。</li>
 <li>网络层IP的版本信息显示为IPv4。协议为TCP。源IP地址30.0.0.93即本机IP地址，目的IP地址10.168.16.15即远端服务器地址。</li>
 <li>源端口为5901，目的端口为52356。</li>
 </ul>
-<h4 id="步骤-5-过滤报文信息"><a class="markdownIt-Anchor" href="#步骤-5-过滤报文信息"></a> 步骤 5 过滤报文信息</h4>
-<ul>
-<li>过滤源IP地址
-<ul>
+<h4 id="步骤-5-过滤报文信息"><a href="#步骤-5-过滤报文信息" class="headerlink" title="步骤 5 过滤报文信息"></a>步骤 5 过滤报文信息</h4><ul>
+<li>过滤源IP地址<ul>
 <li>如查找源地址为30.0.0.93的报文，则在过滤框中输入ip.src==30.0.0.93进行过滤</li>
 </ul>
 </li>
-<li>过滤目的IP地址
-<ul>
+<li>过滤目的IP地址<ul>
 <li>如查找目的地址为10.168.16.15的报文，则在过滤框中输入ip.dst==10.168.16.15进行过滤</li>
 </ul>
 </li>
-<li>过滤端口
-<ul>
-<li>如过滤52356端口，则在过滤框中输入tcp.port<mark>52356||udp.port</mark>52356</li>
+<li>过滤端口<ul>
+<li>如过滤52356端口，则在过滤框中输入tcp.port==52356||udp.port==52356</li>
 </ul>
 </li>
-<li>过滤协议
-<ul>
+<li>过滤协议<ul>
 <li>如过滤TCP的协议，则在过滤框中输入协议名tcp进行过滤</li>
 </ul>
 </li>
-<li>使用连接符and过滤。
-<ul>
+<li>使用连接符and过滤。<ul>
 <li>过滤两种条件时，使用and连接，如过滤ip为30.0.0.93并且为TCP协议的报文，则在过滤框中输入ip.src==30.0.0.93 and tcp进行过滤，如下图所示。步骤 6 保存Wireshark抓包数据。</li>
 </ul>
 </li>
 </ul>
 <p>捕获的数据信息可以保存在文件中，这样就可以随时在Wireshark中打开此文件进行分析，而无需再次捕获同样的数据。关闭数据捕获屏幕或退出Wireshark时，系统会提示你保存信息</p>
-<h3 id="练习题-2"><a class="markdownIt-Anchor" href="#练习题-2"></a> 练习题</h3>
-<p>下面关于Wireshark说法错误的是（D）</p>
+<h3 id="练习题-1"><a href="#练习题-1" class="headerlink" title="练习题"></a>练习题</h3><p>下面关于Wireshark说法错误的是（D）</p>
 <ul>
 <li>A. 捕获过滤器用来过滤捕获的封包，以免捕获太多的记录。</li>
 <li>B. 封包列表中显示所有已经捕获的封包。可以看到发送或接收方的MAC/IP地址、TCP/UDP端口号、协议或封包的内容。</li>
