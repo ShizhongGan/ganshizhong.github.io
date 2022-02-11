@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Docker 容器内网络无法连接 | 甘士忠个人博客</title>
+  <meta name="description" content="操作系统ubuntu16docker 参照官方教程安装最新版本 问题描述最近迷恋上了docker，因为官方提供的ubuntu镜像只有64M!!!十分轻便。然而基于该镜像生成的容器无法联网，参见下面代码错误，然后试了试其它镜像，依旧无法联网。 12345678910111213141516171819202122root@gan# docker imagesREPOSITORY          T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 容器内网络无法连接">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/04/27/Docker/netdisconnected/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="操作系统ubuntu16docker 参照官方教程安装最新版本 问题描述最近迷恋上了docker，因为官方提供的ubuntu镜像只有64M!!!十分轻便。然而基于该镜像生成的容器无法联网，参见下面代码错误，然后试了试其它镜像，依旧无法联网。 12345678910111213141516171819202122root@gan# docker imagesREPOSITORY          T">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-27T08:09:04.000Z">
+<meta property="article:modified_time" content="2021-10-28T06:55:59.900Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/04/27/Docker/netdisconnected/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.17px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.67px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.17px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Django/">Django</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/30/Django/djangodeployerror/" class="title">Docker 部署 Django-Mysql常见错误</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-30T03:03:04.000Z" itemprop="datePublished">2022-01-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/27/BigData/SparkDeploy/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-27T03:12:07.472Z" itemprop="datePublished">2022-01-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Ansible/">Ansible</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/29/Ansible/roles/" class="title">Ansible学习笔记--roles</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-29T02:24:04.000Z" itemprop="datePublished">2021-12-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Docker/">Docker</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/24/Docker/dockerclean/" class="title">容器数据磁盘被写满处理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-24T05:54:04.000Z" itemprop="datePublished">2021-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Docker/netdisconnected" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker 容器内网络无法连接
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/27/Docker/netdisconnected/" class="article-date">
+	  <time datetime="2021-04-27T08:09:04.000Z" itemprop="datePublished">2021-04-27</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/27/Docker/netdisconnected/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><p>ubuntu16<br>docker 参照官方教程安装最新版本</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近迷恋上了docker，因为官方提供的ubuntu镜像只有64M!!!十分轻便。<br>然而基于该镜像生成的容器无法联网，参见下面代码错误，然后试了试其它镜像，依旧无法联网。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">root@gan# docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              latest              a2a15febcdf3        7 days ago          64.2MB</span><br><span class="line">root@e6a2c5bec004:/# apt update</span><br><span class="line">Err:1 http://security.ubuntu.com/ubuntu bionic-security InRelease</span><br><span class="line">  Connection failed [IP: 91.189.88.162 80]</span><br><span class="line">Err:2 http://archive.ubuntu.com/ubuntu bionic InRelease</span><br><span class="line">  Connection failed [IP: 91.189.88.149 80]</span><br><span class="line">Err:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease</span><br><span class="line">  Connection failed [IP: 91.189.88.24 80]</span><br><span class="line">Err:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease</span><br><span class="line">  Connection failed [IP: 91.189.88.149 80]</span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree</span><br><span class="line">Reading state information... Done</span><br><span class="line">All packages are up to date.</span><br><span class="line">W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic/InRelease  Conn                    ection failed [IP: 91.189.88.149 80]</span><br><span class="line">W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic-updates/InRelea                    se  Connection failed [IP: 91.189.88.24 80]</span><br><span class="line">W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic-backports/InRel                    ease  Connection failed [IP: 91.189.88.149 80]</span><br><span class="line">W: Failed to fetch http://security.ubuntu.com/ubuntu/dists/bionic-security/InRel                    ease  Connection failed [IP: 91.189.88.162 80]</span><br><span class="line">W: Some index files failed to download. They have been ignored, or old ones used                     instead.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>例如：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/yangzhenping/article/details/43567155">Docker容器内不能联网的6种解决方案</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/24832972/docker-apt-get-update-fails">stack overflow中的高分回复 Docker apt-get update fails</a><br>中文这六种解决方法，不要轻易动用，除非你之前做过大量的网络设置，负责这些问题基本不会出现。</p>
+<h3 id="第一步：首先查看docker虚拟网卡，查看mtu值，如果是1500-默认，或者更大-，则需要修改为1450或者更小，-etc-docker-daemon-json-。此外，可以在daemon-json中修改镜像的存储路径，以免占用太多的系统内存；修改mtu值便可以联网了；dns根据情况修改，可以不加吧。"><a href="#第一步：首先查看docker虚拟网卡，查看mtu值，如果是1500-默认，或者更大-，则需要修改为1450或者更小，-etc-docker-daemon-json-。此外，可以在daemon-json中修改镜像的存储路径，以免占用太多的系统内存；修改mtu值便可以联网了；dns根据情况修改，可以不加吧。" class="headerlink" title="第一步：首先查看docker虚拟网卡，查看mtu值，如果是1500(默认，或者更大)，则需要修改为1450或者更小，/etc/docker/daemon.json 。此外，可以在daemon.json中修改镜像的存储路径，以免占用太多的系统内存；修改mtu值便可以联网了；dns根据情况修改，可以不加吧。"></a>第一步：首先查看docker虚拟网卡，查看mtu值，如果是1500(默认，或者更大)，则需要修改为1450或者更小，/etc/docker/daemon.json 。此外，可以在daemon.json中修改镜像的存储路径，以免占用太多的系统内存；修改mtu值便可以联网了；dns根据情况修改，可以不加吧。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">root@gan:/etc/docker# ifconfig</span><br><span class="line">docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255</span><br><span class="line">        inet6 fe80::42:7eff:fee3:87ab  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether 02:42:7e:e3:87:ab  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 4518  bytes 281479 (281.4 KB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 5733  bytes 17386562 (17.3 MB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"><span class="meta">root@gan#</span><span class="bash"> vim /etc/docker/daemon.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &quot;data-root&quot;: &quot;/home/ec2-user/software/docker-data&quot;,</span><br><span class="line">    &quot;storage-driver&quot;: &quot;overlay2&quot;,</span><br><span class="line">    &quot;mtu&quot;: 1450, </span><br><span class="line">    &quot;dns&quot;: [&quot;you_server_dns&quot;,&quot;8.8.8.8&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#启动</span></span> </span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 守护进程重启</span></span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 重启docker服务</span></span></span><br><span class="line">sudo systemctl restart docker</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 关闭docker</span></span></span><br><span class="line">sudo systemctl stop docker</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 重启docker服务</span></span></span><br><span class="line">sudo service docker restart</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 关闭docker</span></span></span><br><span class="line">sudo service docker stop</span><br></pre></td></tr></table></figure>
+<h3 id="第二步：再按照其它方法慢慢修改吧"><a href="#第二步：再按照其它方法慢慢修改吧" class="headerlink" title="第二步：再按照其它方法慢慢修改吧"></a>第二步：再按照其它方法慢慢修改吧</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>有时候搜索不到答案，就细致读一下官方文档，按照官方文档操作一般不会遇到问题，否则就是这个软件的BUG了。</p>
+<p><strong>MTU [百度百科]</strong><br>通信术语 最大传输单元（Maximum Transmission Unit，MTU）是指一种通信协议的某一层上面所能通过的最大数据包大小（以字节为单位）。最大传输单元这个参数通常与通信接口有关（网络接口卡、串口等）。</p>
+<ul>
+<li>因为协议数据单元的包头和包尾的长度是固定的，MTU越大，则一个协议数据单元的承载的有效数据就越长，通信效率也越高。MTU越大，传送相同的用户数据所需的数据包个数也越低。</li>
+<li>MTU也不是越大越好，因为MTU越大， 传送一个数据包的延迟也越大；并且MTU越大，数据包中 bit位发生错误的概率也越大。</li>
+<li>MTU越大，通信效率越高而传输延迟增大，所以要权衡通信效率和传输延迟选择合适的MTU。</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/04/27/Docker/netdisconnected/" title="Docker 容器内网络无法连接" target="_blank" rel="external">http://shizhonggan.github.io/2021/04/27/Docker/netdisconnected/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/28/Docker/basic_method/" title="Docker 常用命令方法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/26/Docker/docker_install/" title="Ubuntu安装Docker与最常用配置"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2022 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

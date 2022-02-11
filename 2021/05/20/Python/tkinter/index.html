@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>tkinter快速入门 | 甘士忠个人博客</title>
+  <meta name="description" content="窗口12345importinit_window &#x3D; tk.Tk()init_window.title(&quot;test&quot;)init_window.geometry(&quot;500x400&quot;)init_window.mainloop()  标签和按钮 Label &amp; Button1234567891011121314def hit_me():    global">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tkinter快速入门">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/05/20/Python/tkinter/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="窗口12345importinit_window &#x3D; tk.Tk()init_window.title(&quot;test&quot;)init_window.geometry(&quot;500x400&quot;)init_window.mainloop()  标签和按钮 Label &amp; Button1234567891011121314def hit_me():    global">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-20T01:39:04.000Z">
+<meta property="article:modified_time" content="2022-01-07T08:50:29.421Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="tkinter">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/05/20/Python/tkinter/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.17px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.67px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.17px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Django/">Django</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/30/Django/djangodeployerror/" class="title">Docker 部署 Django-Mysql常见错误</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-30T03:03:04.000Z" itemprop="datePublished">2022-01-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/27/BigData/SparkDeploy/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-27T03:12:07.472Z" itemprop="datePublished">2022-01-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Ansible/">Ansible</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/29/Ansible/roles/" class="title">Ansible学习笔记--roles</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-29T02:24:04.000Z" itemprop="datePublished">2021-12-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Docker/">Docker</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/24/Docker/dockerclean/" class="title">容器数据磁盘被写满处理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-24T05:54:04.000Z" itemprop="datePublished">2021-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Python/tkinter" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      tkinter快速入门
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/05/20/Python/tkinter/" class="article-date">
+	  <time datetime="2021-05-20T01:39:04.000Z" itemprop="datePublished">2021-05-20</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/python/" rel="tag">python</a>, <a class="article-tag-link-link" href="/tags/tkinter/" rel="tag">tkinter</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/05/20/Python/tkinter/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="窗口"><a href="#窗口" class="headerlink" title="窗口"></a>窗口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span></span><br><span class="line">init_window = tk.Tk()</span><br><span class="line">init_window.title(<span class="string">&quot;test&quot;</span>)</span><br><span class="line">init_window.geometry(<span class="string">&quot;500x400&quot;</span>)</span><br><span class="line">init_window.mainloop()</span><br></pre></td></tr></table></figure>
+
+<h2 id="标签和按钮-Label-amp-Button"><a href="#标签和按钮-Label-amp-Button" class="headerlink" title="标签和按钮 Label &amp; Button"></a>标签和按钮 Label &amp; Button</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hit_me</span>():</span></span><br><span class="line">    <span class="keyword">global</span> on_hit</span><br><span class="line">    <span class="keyword">if</span> on_hit == <span class="literal">False</span>:</span><br><span class="line">        var.<span class="built_in">set</span>(<span class="string">&quot;you hit me&quot;</span>)</span><br><span class="line">        on_hit = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        on_hit = <span class="literal">False</span></span><br><span class="line">        var.<span class="built_in">set</span>(<span class="string">&quot;&quot;</span>)</span><br><span class="line">label = tk.Label(init_window, text=<span class="string">&quot;OMG&quot;</span>, bg=<span class="string">&quot;green&quot;</span>, font=(<span class="string">&quot;Arial&quot;</span>,<span class="number">12</span>), width=<span class="number">15</span>, height=<span class="number">2</span>)</span><br><span class="line">label = tk.Label(init_window, textvariable=var, bg=<span class="string">&quot;green&quot;</span>, font=(<span class="string">&quot;Arial&quot;</span>, <span class="number">12</span>), width=<span class="number">15</span>, height=<span class="number">2</span>)</span><br><span class="line">label.pack()</span><br><span class="line"></span><br><span class="line">button = tk.Button(init_window, text=<span class="string">&quot;hit me&quot;</span>, width=<span class="number">15</span>, height=<span class="number">2</span>, command=hit_me)</span><br><span class="line">button.pack()</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入和文本框-Entry-amp-Text"><a href="#输入和文本框-Entry-amp-Text" class="headerlink" title="输入和文本框 Entry &amp; Text"></a>输入和文本框 Entry &amp; Text</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">e = tk.Entry(init_window, show=<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">e.pack()</span><br><span class="line"></span><br><span class="line">var = tk.StringVar()</span><br><span class="line">on_hit = <span class="literal">False</span></span><br><span class="line">button1 = tk.Button(init_window, text=<span class="string">&quot;insert point&quot;</span>, width=<span class="number">15</span>, height=<span class="number">2</span>, command=insert_point)</span><br><span class="line">button1.pack()</span><br><span class="line"></span><br><span class="line">button2 = tk.Button(init_window, text=<span class="string">&quot;insert end&quot;</span>, width=<span class="number">15</span>, height=<span class="number">2</span>, command=insert_end)</span><br><span class="line">button2.pack()</span><br><span class="line"></span><br><span class="line">t = tk.Text(init_window, height=<span class="number">2</span>)</span><br><span class="line">t.pack()</span><br></pre></td></tr></table></figure>
+
+<h2 id="列表部件-Listbox"><a href="#列表部件-Listbox" class="headerlink" title="列表部件 Listbox"></a>列表部件 Listbox</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var2 = tk.StringVar()</span><br><span class="line">var2.<span class="built_in">set</span>((<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">44</span>)) <span class="comment">#为变量设置值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建Listbox</span></span><br><span class="line"></span><br><span class="line">lb = tk.Listbox(window, listvariable=var2)  <span class="comment">#将var2的值赋给Listbox</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个list并将值循环添加到Listbox控件中</span></span><br><span class="line">list_items = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> list_items:</span><br><span class="line">    lb.insert(<span class="string">&#x27;end&#x27;</span>, item)  <span class="comment">#从最后一个位置开始加入值</span></span><br><span class="line">lb.insert(<span class="number">1</span>, <span class="string">&#x27;first&#x27;</span>)       <span class="comment">#在第一个位置加入&#x27;first&#x27;字符</span></span><br><span class="line">lb.insert(<span class="number">2</span>, <span class="string">&#x27;second&#x27;</span>)      <span class="comment">#在第二个位置加入&#x27;second&#x27;字符</span></span><br><span class="line">lb.delete(<span class="number">2</span>)                <span class="comment">#删除第二个位置的字符</span></span><br><span class="line">lb.pack()</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示主窗口</span></span><br><span class="line">window.mainloop()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Radiobutton-选择按钮"><a href="#Radiobutton-选择按钮" class="headerlink" title="Radiobutton 选择按钮"></a>Radiobutton 选择按钮</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var = tk.StringVar()</span><br><span class="line">var.<span class="built_in">set</span>(<span class="number">0</span>) <span class="comment"># 默认空，选项按钮没有被勾选</span></span><br><span class="line">l = tk.Label(window, bg=<span class="string">&#x27;yellow&#x27;</span>, width=<span class="number">20</span>, text=<span class="string">&#x27;empty&#x27;</span>)</span><br><span class="line">l.pack()</span><br><span class="line"></span><br><span class="line">r1 = tk.Radiobutton(window, text=<span class="string">&#x27;Option A&#x27;</span>,</span><br><span class="line">                    variable=var, value=<span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">                    command=print_selection)</span><br><span class="line">r1.pack()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scale-尺度"><a href="#Scale-尺度" class="headerlink" title="Scale 尺度"></a>Scale 尺度</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">s = tk.Scale(window, label=<span class="string">&#x27;try me&#x27;</span>, from_=<span class="number">5</span>, to=<span class="number">11</span>, orient=tk.HORIZONTAL,</span><br><span class="line">             length=<span class="number">200</span>, showvalue=<span class="number">0</span>, tickinterval=<span class="number">2</span>, resolution=<span class="number">0.01</span>, command=print_selection)</span><br><span class="line">s.pack()</span><br><span class="line"><span class="comment">## 触发</span></span><br><span class="line">l = tk.Label(window, bg=<span class="string">&#x27;yellow&#x27;</span>, width=<span class="number">20</span>, text=<span class="string">&#x27;empty&#x27;</span>)</span><br><span class="line">l.pack()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_selection</span>(<span class="params">v</span>):</span></span><br><span class="line">    l.config(text=<span class="string">&#x27;you have selected &#x27;</span> + v)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Checkbutton-勾选项"><a href="#Checkbutton-勾选项" class="headerlink" title="Checkbutton 勾选项"></a>Checkbutton 勾选项</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var1 = tk.IntVar()</span><br><span class="line">c1 = tk.Checkbutton(window, text=<span class="string">&#x27;Python&#x27;</span>, variable=var1, onvalue=<span class="number">1</span>, offvalue=<span class="number">0</span>,</span><br><span class="line">                    command=print_selection)</span><br><span class="line">c1.pack()</span><br><span class="line"></span><br><span class="line"><span class="comment">## 触发</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_selection</span>():</span></span><br><span class="line">    <span class="keyword">if</span> (var1.get() == <span class="number">1</span>) &amp; (var2.get() == <span class="number">0</span>):   <span class="comment">#如果选中第一个选项，未选中第二个选项</span></span><br><span class="line">        l.config(text=<span class="string">&#x27;I love only Python &#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> (var1.get() == <span class="number">0</span>) &amp; (var2.get() == <span class="number">1</span>): <span class="comment">#如果选中第二个选项，未选中第一个选项</span></span><br><span class="line">        l.config(text=<span class="string">&#x27;I love only C++&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> (var1.get() == <span class="number">0</span>) &amp; (var2.get() == <span class="number">0</span>):  <span class="comment">#如果两个选项都未选中</span></span><br><span class="line">        l.config(text=<span class="string">&#x27;I do not love either&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        l.config(text=<span class="string">&#x27;I love both&#x27;</span>)             <span class="comment">#如果两个选项都选中</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Canvas-画布"><a href="#Canvas-画布" class="headerlink" title="Canvas 画布"></a>Canvas 画布</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">canvas = tk.Canvas(window, bg=<span class="string">&#x27;blue&#x27;</span>, height=<span class="number">100</span>, width=<span class="number">200</span>)</span><br><span class="line">canvas.pack()</span><br><span class="line"></span><br><span class="line">image_file = tk.PhotoImage(file=<span class="string">&#x27;ins.gif&#x27;</span>)</span><br><span class="line">image = canvas.create_image(<span class="number">10</span>, <span class="number">10</span>, anchor=<span class="string">&#x27;nw&#x27;</span>, image=image_file)</span><br><span class="line"></span><br><span class="line">x0, y0, x1, y1= <span class="number">50</span>, <span class="number">50</span>, <span class="number">80</span>, <span class="number">80</span></span><br><span class="line">line = canvas.create_line(x0, y0, x1, y1)</span><br><span class="line"></span><br><span class="line">oval = canvas.create_oval(x0, y0, x1, y1, fill=<span class="string">&#x27;red&#x27;</span>)  <span class="comment">#创建一个圆，填充色为`red`红色</span></span><br><span class="line">arc = canvas.create_arc(x0+<span class="number">30</span>, y0+<span class="number">30</span>, x1+<span class="number">30</span>, y1+<span class="number">30</span>, start=<span class="number">0</span>, extent=<span class="number">180</span>)  <span class="comment">#创建一个扇形</span></span><br><span class="line">rect = canvas.create_rectangle(<span class="number">100</span>, <span class="number">30</span>, <span class="number">100</span>+<span class="number">20</span>, <span class="number">30</span>+<span class="number">20</span>)   <span class="comment">#创建一个矩形</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">moveit</span>():</span></span><br><span class="line">    canvas.move(rect, <span class="number">0</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Menubar-菜单"><a href="#Menubar-菜单" class="headerlink" title="Menubar 菜单"></a>Menubar 菜单</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##创建一个菜单栏，这里我们可以把他理解成一个容器，在窗口的上方</span></span><br><span class="line">menubar = tk.Menu(window)</span><br><span class="line"></span><br><span class="line"><span class="comment">##定义一个空菜单单元</span></span><br><span class="line">filemenu = tk.Menu(menubar, tearoff=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">##将上面定义的空菜单命名为`File`，放在菜单栏中，就是装入那个容器中</span></span><br><span class="line">menubar.add_cascade(label=<span class="string">&#x27;File&#x27;</span>, menu=filemenu)</span><br><span class="line"></span><br><span class="line"><span class="comment">##在`File`中加入`New`的小菜单，即我们平时看到的下拉菜单，每一个小菜单对应命令操作。</span></span><br><span class="line"><span class="comment">##如果点击这些单元, 就会触发`do_job`的功能</span></span><br><span class="line">filemenu.add_command(label=<span class="string">&#x27;New&#x27;</span>, command=do_job)</span><br><span class="line">filemenu.add_command(label=<span class="string">&#x27;Open&#x27;</span>, command=do_job)<span class="comment">##同样的在`File`中加入`Open`小菜单</span></span><br><span class="line">filemenu.add_command(label=<span class="string">&#x27;Save&#x27;</span>, command=do_job)<span class="comment">##同样的在`File`中加入`Save`小菜单</span></span><br><span class="line"></span><br><span class="line">filemenu.add_separator()<span class="comment">##这里就是一条分割线</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##同样的在`File`中加入`Exit`小菜单,此处对应命令为`window.quit`</span></span><br><span class="line">filemenu.add_command(label=<span class="string">&#x27;Exit&#x27;</span>, command=window.quit)</span><br><span class="line"></span><br><span class="line">submenu = tk.Menu(filemenu)<span class="comment">##和上面定义菜单一样，不过此处实在`File`上创建一个空的菜单</span></span><br><span class="line">filemenu.add_cascade(label=<span class="string">&#x27;Import&#x27;</span>, menu=submenu, underline=<span class="number">0</span>)<span class="comment">##给放入的菜单`submenu`命名为`Import`</span></span><br><span class="line">submenu.add_command(label=<span class="string">&quot;Submenu1&quot;</span>, command=do_job)<span class="comment">##这里和上面也一样，在`Import`中加入一个小菜单命令`Submenu1`</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">counter = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_job</span>():</span></span><br><span class="line">    <span class="keyword">global</span> counter</span><br><span class="line">    l.config(text=<span class="string">&#x27;do &#x27;</span>+ <span class="built_in">str</span>(counter))</span><br><span class="line">    counter+=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Frame-框架"><a href="#Frame-框架" class="headerlink" title="Frame 框架"></a>Frame 框架</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###定义一个`label`显示`on the window`</span></span><br><span class="line">tk.Label(window, text=<span class="string">&#x27;on the window&#x27;</span>).pack()</span><br><span class="line"></span><br><span class="line"><span class="comment">###在`window`上创建一个`frame`</span></span><br><span class="line">frm = tk.Frame(window)</span><br><span class="line">frm.pack()</span><br><span class="line"></span><br><span class="line"><span class="comment">###在刚刚创建的`frame`上创建两个`frame`，我们可以把它理解成一个大容器里套了一个小容器，即`frm`上有两个`frame` ，`frm_l`和`frm_r`</span></span><br><span class="line"></span><br><span class="line">frm_l = tk.Frame(frm)</span><br><span class="line">frm_r = tk.Frame(frm)</span><br><span class="line"></span><br><span class="line"><span class="comment">###这里是控制小的`frm`部件在大的`frm`的相对位置，此处`frm_l`就是在`frm`的左边，`frm_r`在`frm`的右边</span></span><br><span class="line">frm_l.pack(side=<span class="string">&#x27;left&#x27;</span>)</span><br><span class="line">frm_r.pack(side=<span class="string">&#x27;right&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">###这里的三个label就是在我们创建的frame上定义的label部件，还是以容器理解，就是容器上贴了标签，来指明这个是什么，解释这个容器。</span></span><br><span class="line">tk.Label(frm_l, text=<span class="string">&#x27;on the frm_l1&#x27;</span>).pack()<span class="comment">##这个`label`长在`frm_l`上，显示为`on the frm_l1`</span></span><br><span class="line">tk.Label(frm_l, text=<span class="string">&#x27;on the frm_l2&#x27;</span>).pack()<span class="comment">##这个`label`长在`frm_l`上，显示为`on the frm_l2`</span></span><br><span class="line">tk.Label(frm_r, text=<span class="string">&#x27;on the frm_r1&#x27;</span>).pack()<span class="comment">##这个`label`长在`frm_r`上，显示为`on the frm_r1`</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="messagebox-弹窗"><a href="#messagebox-弹窗" class="headerlink" title="messagebox 弹窗"></a>messagebox 弹窗</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">from</span> tkinter <span class="keyword">import</span> messagebox</span><br><span class="line">tk.Button(init_window, text=<span class="string">&quot;hit me&quot;</span>, command=hit_me).pack()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hit_me</span>():</span></span><br><span class="line">    <span class="comment"># tk.messagebox.showinfo(title=&quot;Hi&quot;, message=&quot;hahahaha&quot;)</span></span><br><span class="line">    <span class="comment"># messagebox.showwarning(title=&quot;Hi&quot;, message=&quot;nonono&quot;)</span></span><br><span class="line">    <span class="comment"># tk.messagebox.showerror(title=&quot;Hi&quot;, message=&quot;no!never&quot;)</span></span><br><span class="line">    <span class="comment"># print(messagebox.askquestion(title=&quot;hi&quot;, message=&quot;hhhaaaa&quot;))</span></span><br><span class="line">    <span class="comment"># print(messagebox.askyesno(title=&quot;hi&quot;, message=&quot;hhhaaaa&quot;))</span></span><br><span class="line">    <span class="comment"># print(messagebox.askretrycancel(title=&quot;hi&quot;, message=&quot;hhhaaaa&quot;))</span></span><br><span class="line">    <span class="built_in">print</span>(messagebox.askokcancel(title=<span class="string">&quot;hi&quot;</span>, message=<span class="string">&quot;hhhaaaa&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="pack-grid-place-放置位置"><a href="#pack-grid-place-放置位置" class="headerlink" title="pack grid place 放置位置"></a>pack grid place 放置位置</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tk.Label(window, text=<span class="string">&#x27;1&#x27;</span>).pack(side=<span class="string">&#x27;top&#x27;</span>)<span class="comment">#上</span></span><br><span class="line">tk.Label(window, text=<span class="string">&#x27;1&#x27;</span>).pack(side=<span class="string">&#x27;bottom&#x27;</span>)<span class="comment">#下</span></span><br><span class="line">tk.Label(window, text=<span class="string">&#x27;1&#x27;</span>).pack(side=<span class="string">&#x27;left&#x27;</span>)<span class="comment">#左</span></span><br><span class="line">tk.Label(window, text=<span class="string">&#x27;1&#x27;</span>).pack(side=<span class="string">&#x27;right&#x27;</span>)<span class="comment">#右</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        tk.Label(window, text=<span class="number">1</span>).grid(row=i, column=j, padx=<span class="number">10</span>, pady=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">tk.Label(window, text=<span class="number">1</span>).place(x=<span class="number">20</span>, y=<span class="number">10</span>, anchor=<span class="string">&#x27;nw&#x27;</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/05/20/Python/tkinter/" title="tkinter快速入门" target="_blank" rel="external">http://shizhonggan.github.io/2021/05/20/Python/tkinter/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/05/20/Python/paramiko/" title="Paramiko执行后台命令报错"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/05/18/Tips/PaperDownload/" title="学术论文免费下载方法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2022 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
