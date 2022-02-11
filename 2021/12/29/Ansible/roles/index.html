@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Ansible学习笔记--roles | 甘士忠个人博客</title>
+  <meta name="description" content="rolesansible自1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。要使用roles只需要在playbook中使用include[已经废弃不用了]指令即可。简单来讲，roles就是通过分别将变量、文件、任务、模板及处理器放置于单独的目录中，并可以便捷地include它们的一种机制。角色一般用于基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible学习笔记--roles">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/12/29/Ansible/roles/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="rolesansible自1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。要使用roles只需要在playbook中使用include[已经废弃不用了]指令即可。简单来讲，roles就是通过分别将变量、文件、任务、模板及处理器放置于单独的目录中，并可以便捷地include它们的一种机制。角色一般用于基">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-29T02:24:04.000Z">
+<meta property="article:modified_time" content="2022-01-06T09:01:37.592Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/12/29/Ansible/roles/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.17px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.67px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.17px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Django/">Django</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/30/Django/djangodeployerror/" class="title">Docker 部署 Django-Mysql常见错误</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-30T03:03:04.000Z" itemprop="datePublished">2022-01-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/27/BigData/SparkDeploy/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-27T03:12:07.472Z" itemprop="datePublished">2022-01-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Ansible/">Ansible</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/29/Ansible/roles/" class="title">Ansible学习笔记--roles</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-29T02:24:04.000Z" itemprop="datePublished">2021-12-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Docker/">Docker</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/24/Docker/dockerclean/" class="title">容器数据磁盘被写满处理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-24T05:54:04.000Z" itemprop="datePublished">2021-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/29/Linux/command/" class="title">Linux 常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-29T02:24:04.000Z" itemprop="datePublished">2021-11-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Ansible/roles" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ansible学习笔记--roles
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/12/29/Ansible/roles/" class="article-date">
+	  <time datetime="2021-12-29T02:24:04.000Z" itemprop="datePublished">2021-12-29</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Ansible/">Ansible</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/12/29/Ansible/roles/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="roles"><a href="#roles" class="headerlink" title="roles"></a>roles</h2><p>ansible自1.2版本引入的新特性，用于层次性、结构化地组织playbook。<br>roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。<br>要使用roles只需要在playbook中使用include[<strong>已经废弃不用了</strong>]指令即可。<br>简单来讲，roles就是通过分别将变量、文件、任务、模板及处理器放置于单独的目录中，并可以便捷地include它们的一种机制。<br>角色一般用于基于主机构建服务的场景中，但也可以是用于构建守护进程等场景中</p>
+<p>复杂场景：建议使用roles，代码复用度高</p>
+<ul>
+<li>变更指定主机或主机组</li>
+<li>如命名不规范维护和传承成本大</li>
+<li>某些功能需多个Playbook，通过includes即可实现</li>
+</ul>
+<p>角色(roles)：角色集合</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir roles/&#123;mysql,httpd,nginx,memcache&#125; -pv </span><br><span class="line">tree roles</span><br><span class="line">roles/</span><br><span class="line">    mysql/</span><br><span class="line">    httpd/</span><br><span class="line">    nginx/</span><br><span class="line">    memcached/</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于ansible-roles-安装-nginx"><a href="#基于ansible-roles-安装-nginx" class="headerlink" title="基于ansible roles 安装 nginx"></a>基于ansible roles 安装 nginx</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 环境准备，清除已安装的nginx和用户组</span></span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;yum -y remove nginx&#x27;</span> -b</span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;rpm -q nginx&#x27;</span></span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;getent passwd nginx&#x27;</span></span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;getent group nginx&#x27;</span> </span><br><span class="line">ansible internal -m user -a <span class="string">&#x27;name=nginx state=absent&#x27;</span> -b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始</span></span><br><span class="line"><span class="built_in">cd</span> ansible/ <span class="comment"># 根目录</span></span><br><span class="line"><span class="built_in">cd</span> roles/nginx <span class="comment"># 项目文件夹</span></span><br><span class="line"></span><br><span class="line">[ec2-user@master ansible]$ tree</span><br><span class="line">.</span><br><span class="line">├── nginx_role.yml <span class="comment"># 调用文件</span></span><br><span class="line">└── roles</span><br><span class="line">    ├── httpd</span><br><span class="line">    ├── memcached</span><br><span class="line">    ├── mysql</span><br><span class="line">    └── nginx</span><br><span class="line">        ├── tasks <span class="comment"># 在该文件下创建多个任务</span></span><br><span class="line">        │   ├── group.yml</span><br><span class="line">        │   ├── main.yml <span class="comment"># 入口文件</span></span><br><span class="line">        │   ├── restart.yml</span><br><span class="line">        │   ├── start.yml</span><br><span class="line">        │   ├── template.yml</span><br><span class="line">        │   ├── user.yml</span><br><span class="line">        │   └── yum.yml</span><br><span class="line">        └── templates <span class="comment"># 创建配置文件的j2模板</span></span><br><span class="line">            └── nginx.conf.j2</span><br><span class="line"></span><br><span class="line">mkdir tasks templates <span class="comment"># 创建两个常用文件夹</span></span><br><span class="line"><span class="built_in">cd</span> tasks</span><br><span class="line">vi main.yml <span class="comment"># 入口</span></span><br><span class="line">- include: group.yml</span><br><span class="line">- include: user.yml</span><br><span class="line">- include: yum.yml</span><br><span class="line">- include: template.yml</span><br><span class="line">- include: start.yml</span><br><span class="line"></span><br><span class="line">vi group.yml</span><br><span class="line">- name: create group</span><br><span class="line">  group: name=nginx gid=80</span><br><span class="line"></span><br><span class="line">vi user.yml</span><br><span class="line">- name: create user</span><br><span class="line">  user: name=nginx uid=80 group=nginx system=yes shell=/sbin/nologin</span><br><span class="line"></span><br><span class="line">vi yum.yml</span><br><span class="line">- name: install package</span><br><span class="line">  yum: name=nginx</span><br><span class="line"></span><br><span class="line">vi template.yml</span><br><span class="line">- name: copy conf</span><br><span class="line">  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf</span><br><span class="line"></span><br><span class="line">vi start.yml</span><br><span class="line">- name: start service</span><br><span class="line">  service: name=nginx state=started enabled=yes</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ../../../</span><br><span class="line">vi nginx_role.yml</span><br><span class="line">---</span><br><span class="line">- hosts: internal</span><br><span class="line">  remote_user: ec2-user</span><br><span class="line">  become: yes</span><br><span class="line">  roles:</span><br><span class="line">    - role: nginx</span><br><span class="line"></span><br><span class="line">ansible-playbook -C nginx_role.yml <span class="comment"># 检查再执行</span></span><br><span class="line"></span><br><span class="line">rpm -qa nginx <span class="comment"># 查看系统是否有这个安装包</span></span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;ss -ntlp&#x27;</span> <span class="comment"># 可查看到80端口</span></span><br><span class="line">ansible internal -m shell -a <span class="string">&#x27;ps aux|grep nginx&#x27;</span> <span class="comment"># 查看进程 </span></span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## roles目录结构</span></span><br><span class="line">可以互相调用,roles目录结构,每个角色，以特定的层级目录结构进行组织</span><br></pre></td></tr></table></figure>
+<p>playbook.yml  调用角色<br>roles/<br>  project/ (角色名称)<br>    tasks/<br>    files/<br>    vars/<br>    templates/<br>    handlers/<br>    default/ 不常用<br>    meta/    不常用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## Roles各目录作用</span><br></pre></td></tr></table></figure>
+<p>/roles/project/ :项目名称,有以下子目录<br>    files/ ：存放由copy或script模块等调用的文件<br>    templates/：template模块查找所需要模板文件的目录<br>    tasks/：定义task,role的基本元素，至少应该包含一个名为main.yml的文件；<br>            其它的文件需要在此文件中通过include进行包含<br>    handlers/：至少应该包含一个名为main.yml的文件；<br>               其它的文件需要在此文件中通过include进行包含<br>    vars/：定义变量，至少应该包含一个名为main.yml的文件；<br>           其它的文件需要在此文件中通过include进行包含<br>    meta/：定义当前角色的特殊设定及其依赖关系,至少应该包含一个名为main.yml的文件，<br>           其它文件需在此文件中通过include进行包含<br>    default/：设定默认变量时使用此目录中的main.yml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roles&#x2F;appname 目录结构</span><br></pre></td></tr></table></figure>
+<pre><code>tasks目录：至少应该包含一个名为main.yml的文件，其定义了此角色的任务列表；
+           此文件可以使用include包含其它的位于此目录中的task文件
+files目录：存放由copy或script等模块调用的文件；
+templates目录：template模块会自动在此目录中寻找Jinja2模板文件
+handlers目录：此目录中应当包含一个main.yml文件，用于定义此角色用到的各handler；
+              在handler中使用include包含的其它的handler文件也应该位于此目录中；
+vars目录：应当包含一个main.yml文件，用于定义此角色用到的变量；
+meta目录：应当包含一个main.yml文件，用于定义此角色的特殊设定及其依赖关系；
+          ansible1.3及其以后的版本才支持；
+default目录：为当前角色设定默认变量时使用此目录；应当包含一个main.yml文件
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">roles&#x2F;example_role&#x2F;files&#x2F;             所有文件，都将可存放在这里</span><br><span class="line">roles&#x2F;example_role&#x2F;templates&#x2F;         所有模板都存放在这里</span><br><span class="line">roles&#x2F;example_role&#x2F;tasks&#x2F;main.yml：   主函数，包括在其中的所有任务将被执行</span><br><span class="line">roles&#x2F;example_role&#x2F;handlers&#x2F;main.yml：所有包括其中的 handlers 将被执行</span><br><span class="line">roles&#x2F;example_role&#x2F;vars&#x2F;main.yml：    所有包括在其中的变量将在roles中生效</span><br><span class="line">roles&#x2F;example_role&#x2F;meta&#x2F;main.yml：    roles所有依赖将被正常登入</span><br></pre></td></tr></table></figure>
+<h2 id="创建role"><a href="#创建role" class="headerlink" title="创建role"></a>创建role</h2><p>创建role的步骤</p>
+<ul>
+<li>创建以roles命名的目录</li>
+<li>在roles目录中分别创建以各角色名称命名的目录，如webservers等</li>
+<li>在每个角色命名的目录中分别创建files、handlers、meta、tasks、templates和vars目录；用不到的目录可以创建为空目录，也可以不创建</li>
+<li>在playbook文件中，调用各角色</li>
+</ul>
+<h2 id="实验-创建httpd角色"><a href="#实验-创建httpd角色" class="headerlink" title="实验: 创建httpd角色"></a>实验: 创建httpd角色</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">1&gt; 创建roles目录</span><br><span class="line">   mkdir roles&#x2F;&#123;httpd,mysql,redis&#125;&#x2F;tasks -pv</span><br><span class="line">   mkdir  roles&#x2F;httpd&#x2F;&#123;handlers,files&#125;</span><br><span class="line"></span><br><span class="line">查看目录结构</span><br><span class="line">tree roles&#x2F;</span><br><span class="line">    roles&#x2F;</span><br><span class="line">    ├── httpd</span><br><span class="line">    │   ├── files</span><br><span class="line">    │   ├── handlers</span><br><span class="line">    │   └── tasks</span><br><span class="line">    ├── mysql</span><br><span class="line">    │   └── tasks</span><br><span class="line">    └── redis</span><br><span class="line">        └── tasks</span><br><span class="line"></span><br><span class="line">2&gt; 创建目标文件</span><br><span class="line">   cd roles&#x2F;httpd&#x2F;tasks&#x2F;</span><br><span class="line">   touch install.yml config.yml service.yml</span><br><span class="line"></span><br><span class="line">3&gt; vim install.yml</span><br><span class="line">   - name: install httpd package</span><br><span class="line">     yum: name&#x3D;httpd</span><br><span class="line">     </span><br><span class="line">   vim config.yml</span><br><span class="line">   - name: config file  </span><br><span class="line">     copy: src&#x3D;httpd.conf dest&#x3D;&#x2F;etc&#x2F;httpd&#x2F;conf&#x2F; backup&#x3D;yes </span><br><span class="line">   </span><br><span class="line">   vim service.yml</span><br><span class="line">   - name: start service </span><br><span class="line">     service: name&#x3D;httpd state&#x3D;started enabled&#x3D;yes</span><br><span class="line">     </span><br><span class="line">4&gt; 创建main.yml主控文件,调用以上单独的yml文件,</span><br><span class="line">   main.yml定义了谁先执行谁后执行的顺序</span><br><span class="line">   vim main.yml</span><br><span class="line">   - include: install.yml</span><br><span class="line">   - include: config.yml</span><br><span class="line">   - include: service.yml</span><br><span class="line">   </span><br><span class="line">5&gt; 准备httpd.conf文件,放到httpd单独的文件目录下</span><br><span class="line">   cp &#x2F;app&#x2F;ansible&#x2F;flies&#x2F;httpd.conf ..&#x2F;files&#x2F;</span><br><span class="line">   </span><br><span class="line">6&gt; 创建一个网页</span><br><span class="line">   vim flies&#x2F;index.html</span><br><span class="line">   &lt;h1&gt; welcome to weixiaodong home &lt;\h1&gt;</span><br><span class="line"></span><br><span class="line">7&gt; 创建网页的yml文件</span><br><span class="line">   vim tasks&#x2F;index.yml</span><br><span class="line">   - name: index.html</span><br><span class="line">     copy: src&#x3D;index.html dest&#x3D;&#x2F;var&#x2F;www&#x2F;html </span><br><span class="line"></span><br><span class="line">8&gt; 将网页的yml文件写进mian.yml文件中</span><br><span class="line">   vim mian.yml</span><br><span class="line">   - include: install.yml</span><br><span class="line">   - include: config.yml</span><br><span class="line">   - include: index.yml</span><br><span class="line">   - include: service.yml</span><br><span class="line"></span><br><span class="line">9&gt; 在handlers目录下创建handler文件mian.yml</span><br><span class="line">   vim handlers&#x2F;main.yml</span><br><span class="line">   - name: restart service httpd</span><br><span class="line">     service: name&#x3D;httpd state&#x3D;restarted</span><br><span class="line"></span><br><span class="line">10&gt; 创建文件调用httpd角色</span><br><span class="line">    cd &#x2F;app&#x2F;ansidle&#x2F;roles</span><br><span class="line">    vim role_httpd.yml</span><br><span class="line">    ---</span><br><span class="line">    # httpd role</span><br><span class="line">    - hosts: appsrvs</span><br><span class="line">      remote_user: root </span><br><span class="line"></span><br><span class="line">      roles:       #调用角色</span><br><span class="line">        - role: httpd  </span><br><span class="line">        </span><br><span class="line">11&gt; 查看目录结构</span><br><span class="line">    tree </span><br><span class="line">    .</span><br><span class="line">    httpd</span><br><span class="line">    ├── files</span><br><span class="line">    │   ├── httpd.conf</span><br><span class="line">    │   └── index.html</span><br><span class="line">    ├── handlers</span><br><span class="line">    │   └── main.yml</span><br><span class="line">    └── tasks</span><br><span class="line">        ├── config.yml</span><br><span class="line">        ├── index.yml</span><br><span class="line">        ├── install.yml</span><br><span class="line">        ├── main.yml</span><br><span class="line">        └── service.yml</span><br><span class="line"></span><br><span class="line">12&gt; ansible-playbook role_httpd.yml</span><br><span class="line">针对大型项目使用Roles进行编排</span><br><span class="line">roles目录结构：</span><br><span class="line">playbook.yml</span><br><span class="line">roles&#x2F;</span><br><span class="line">  project&#x2F;</span><br><span class="line">    tasks&#x2F;</span><br><span class="line">    files&#x2F;</span><br><span class="line">    vars&#x2F;</span><br><span class="line">    templates&#x2F;</span><br><span class="line">    handlers&#x2F;</span><br><span class="line">    default&#x2F; # 不经常用</span><br><span class="line">    meta&#x2F;    # 不经常用</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">nginx-role.yml</span><br><span class="line">roles&#x2F;</span><br><span class="line">└── nginx</span><br><span class="line">    ├── files</span><br><span class="line">    │ └── main.yml</span><br><span class="line">    ├── tasks</span><br><span class="line">    │ ├── groupadd.yml</span><br><span class="line">    │ ├── install.yml</span><br><span class="line">    │ ├── main.yml</span><br><span class="line">    │ ├── restart.yml</span><br><span class="line">    │ └── useradd.yml</span><br><span class="line">    └── vars</span><br><span class="line">        └── main.yml</span><br><span class="line">示例</span><br><span class="line">roles的示例如下所示：</span><br><span class="line">site.yml</span><br><span class="line">webservers.yml</span><br><span class="line">dbservers.yml</span><br><span class="line">roles&#x2F;</span><br><span class="line">  common&#x2F;</span><br><span class="line">    files&#x2F;</span><br><span class="line">    templates&#x2F;</span><br><span class="line">    tasks&#x2F;</span><br><span class="line">    handlers&#x2F;</span><br><span class="line">    vars&#x2F;</span><br><span class="line">    meta&#x2F;</span><br><span class="line">  webservers&#x2F;</span><br><span class="line">    files&#x2F;</span><br><span class="line">    templates&#x2F;</span><br><span class="line">    tasks&#x2F;</span><br><span class="line">  handlers&#x2F;</span><br><span class="line">    vars&#x2F;</span><br><span class="line">    meta&#x2F;</span><br><span class="line">实验： 创建一个nginx角色</span><br><span class="line">建立nginx角色在多台主机上来部署nginx需要安装 创建账号</span><br><span class="line">1&gt; 创建nginx角色目录</span><br><span class="line">     cd &#x2F;app&#x2F;ansible&#x2F;role</span><br><span class="line">     mkdir nginx&#123;tesks,templates,hanslers&#125; -pv</span><br><span class="line"></span><br><span class="line">2&gt; 创建任务目录</span><br><span class="line">     cd tasks&#x2F;</span><br><span class="line">     touch insatll.yml config.yml service.yml file.yml user.yml</span><br><span class="line">   创建main.yml文件定义任务执行顺序</span><br><span class="line">     vim main.yml</span><br><span class="line">     - include: user.yml</span><br><span class="line">     - include: insatll.yml</span><br><span class="line">     - include: config.yml</span><br><span class="line">     - include: file.yml</span><br><span class="line">     - include: service.yml</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">3&gt; 准备配置文件(centos7、8)</span><br><span class="line">   ll &#x2F;app&#x2F;ansible&#x2F;role&#x2F;nginx&#x2F;templates&#x2F;</span><br><span class="line">   nginx7.conf.j2</span><br><span class="line">   nginx8.conf.j2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4&gt; 定义任务</span><br><span class="line">   vim tasks&#x2F;install.yml</span><br><span class="line">   - name: install</span><br><span class="line">     yum: name&#x3D;nginx</span><br><span class="line">     </span><br><span class="line">   vim tasks&#x2F;config.yml</span><br><span class="line">    - name: config file</span><br><span class="line">      template: src&#x3D;nginx7.conf.j2 dest&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br><span class="line">      when: ansible_distribution_major_version&#x3D;&#x3D;&quot;7&quot;</span><br><span class="line">      notify: restrat</span><br><span class="line">      </span><br><span class="line">    - name: config file</span><br><span class="line">      template: src&#x3D;nginx8.conf.j2 dest&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br><span class="line">      when: ansible_distribution_major_version&#x3D;&#x3D;&quot;8&quot;</span><br><span class="line">      notify: restrat</span><br><span class="line">      </span><br><span class="line">    vim tasks&#x2F;file.yml   跨角色调用file.yum文件,实现文件复用</span><br><span class="line">    - name: index.html</span><br><span class="line">      copy: src&#x3D;roles&#x2F;httpd&#x2F;files&#x2F;index.html dest&#x3D;&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F; </span><br><span class="line">   </span><br><span class="line">    vim tasks&#x2F;service.yml</span><br><span class="line">    - nmae: start service</span><br><span class="line">      service: name&#x3D;nginx state&#x3D;started enabled&#x3D;yes</span><br><span class="line">      </span><br><span class="line">    vim handlers&#x2F;main.yml</span><br><span class="line">    - name: restrat</span><br><span class="line">      service: name&#x3D;nginx state&#x3D;restarted</span><br><span class="line">      </span><br><span class="line">    vim roles&#x2F;role_nginix.yml</span><br><span class="line">    --- </span><br><span class="line">    #test rcle</span><br><span class="line">    - hosts: appsrvs</span><br><span class="line">    </span><br><span class="line">      roles: </span><br><span class="line">        - role: nginx</span><br><span class="line">        </span><br><span class="line">5&gt; 测试安装</span><br><span class="line">   ansible-playbook role_nginx.yml</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook调用角色"><a href="#playbook调用角色" class="headerlink" title="playbook调用角色"></a>playbook调用角色</h2><p>调用角色方法1：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">websrvs</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">memcached</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+<p>调用角色方法2：传递变量给角色</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">  <span class="attr">remote_user:</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">role:</span> <span class="string">nginx</span>, <span class="attr">username:</span> <span class="string">nginx</span> &#125;   <span class="comment">#不同的角色调用不同的变量  </span></span><br><span class="line">    <span class="string">键role用于指定角色名称</span></span><br><span class="line">    <span class="string">后续的k/v用于传递变量给角色</span></span><br></pre></td></tr></table></figure>
+<p>调用角色方法3：还可基于条件测试实现角色调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">roles:</span><br><span class="line">  - &#123; role: nginx, username: nginx, when: ansible_distribution_major_version &#x3D;&#x3D; &#39;7&#39; &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过roles传递变量"><a href="#通过roles传递变量" class="headerlink" title="通过roles传递变量"></a>通过roles传递变量</h2><p>当给一个主机应用角色的时候可以传递变量，然后在角色内使用这些变量</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - common</span><br><span class="line">    - &#123; role: foo_app_instance, dir: &#39;&#x2F;web&#x2F;htdocs&#x2F;a.com&#39;, port: 8080 &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="向roles传递参数"><a href="#向roles传递参数" class="headerlink" title="向roles传递参数"></a>向roles传递参数</h2><p>而在playbook中，可以这样使用roles:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">webservers</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">common</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">webservers</span></span><br></pre></td></tr></table></figure>
+<p>也可以向roles传递参数,示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - common</span><br><span class="line">    - &#123; role: foo_app_instance, dir: &#39;&#x2F;opt&#x2F;a&#39;, port: 5000 &#125;</span><br><span class="line">    - &#123; role: foo_app_instance, dir: &#39;&#x2F;opt&#x2F;b&#39;, port: 5001 &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="条件式地使用roles"><a href="#条件式地使用roles" class="headerlink" title="条件式地使用roles"></a>条件式地使用roles</h2><p>示例：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">webservers</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">role:</span> <span class="string">some_role</span>, <span class="attr">when:</span> <span class="string">&quot;ansible_os_family == &#x27;RedHat&#x27;&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Roles条件及变量等案例"><a href="#Roles条件及变量等案例" class="headerlink" title="Roles条件及变量等案例"></a>Roles条件及变量等案例</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># When条件</span></span><br><span class="line">    <span class="attr">roles:</span></span><br><span class="line">      <span class="bullet">-</span> &#123;<span class="attr">role:</span> <span class="string">nginx</span>, <span class="attr">when:</span> <span class="string">&quot;ansible_distribution_major_version == &#x27;7&#x27; &quot;</span> ,<span class="attr">username:</span> <span class="string">nginx</span> &#125;</span><br><span class="line"><span class="comment"># 变量调用</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">zabbix-proxy</span></span><br><span class="line">  <span class="attr">sudo:</span> <span class="literal">yes</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">role:</span> <span class="string">geerlingguy.php-mysql</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">role:</span> <span class="string">dj-wasabi.zabbix-proxy</span>, <span class="attr">zabbix_server_host:</span> <span class="number">192.168</span><span class="number">.37</span><span class="number">.167</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整的roles架构"><a href="#完整的roles架构" class="headerlink" title="完整的roles架构"></a>完整的roles架构</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx-role.yml 顶层任务调用yml文件</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testweb</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">httpd</span> <span class="string">可执行多个role</span></span><br><span class="line"></span><br><span class="line"><span class="string">cat</span> <span class="string">roles/nginx/tasks/main.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">include:</span> <span class="string">groupadd.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">include:</span> <span class="string">useradd.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">include:</span> <span class="string">install.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">include:</span> <span class="string">restart.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">include:</span> <span class="string">filecp.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># roles/nginx/tasks/groupadd.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">add</span> <span class="string">group</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">user:</span> <span class="string">name=nginx</span> <span class="string">state=present</span></span><br><span class="line"></span><br><span class="line"><span class="string">cat</span> <span class="string">roles/nginx/tasks/filecp.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">file</span> <span class="string">copy</span></span><br><span class="line">  <span class="attr">copy:</span> <span class="string">src=tom.conf</span> <span class="string">dest=/tmp/tom.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#以下文件格式类似：</span></span><br><span class="line"><span class="string">useradd.yml,install.yml,restart.yml</span></span><br><span class="line"></span><br><span class="line"><span class="string">ls</span> <span class="string">roles/nginx/files/</span></span><br><span class="line"><span class="string">tom.conf</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="roles-playbook-tags使用"><a href="#roles-playbook-tags使用" class="headerlink" title="roles playbook tags使用"></a>roles playbook tags使用</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ansible-playbook</span> <span class="string">--tags=&quot;nginx,httpd,mysql&quot;</span> <span class="string">nginx-role.yml</span> <span class="comment">#对标签进行挑选执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  nginx-role.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testweb</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">roles:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">role:</span> <span class="string">nginx</span> ,<span class="attr">tags:</span> [ <span class="string">&#x27;nginx&#x27;</span>, <span class="string">&#x27;web&#x27;</span> ] ,<span class="attr">when:</span> <span class="string">ansible_distribution_major_version</span> <span class="string">==</span> <span class="string">&quot;6“ &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: httpd ,tags: [ &#x27;httpd&#x27;, &#x27;web&#x27; ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: mysql ,tags: [ &#x27;mysql&#x27;, &#x27;db&#x27; ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: marridb ,tags: [ &#x27;mysql&#x27;, &#x27;db&#x27; ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: php &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="实验-创建角色memcached"><a href="#实验-创建角色memcached" class="headerlink" title="实验: 创建角色memcached"></a>实验: 创建角色memcached</h2><p>memcacched 当做缓存用,会在内存中开启一块空间充当缓存</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">/etc/sysconfig/memcached</span> </span><br><span class="line">    <span class="string">PORT=&quot;11211&quot;</span></span><br><span class="line">    <span class="string">USER=&quot;memcached&quot;</span></span><br><span class="line">    <span class="string">MAXCONN=&quot;1024&quot;</span></span><br><span class="line">    <span class="string">CACHESIZE=&quot;64&quot;</span>    <span class="comment"># 缓存空间默认64M </span></span><br><span class="line">    <span class="string">OPTIONS=&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span><span class="string">&gt;</span> <span class="string">创建对用目录</span></span><br><span class="line">   <span class="string">cd</span> <span class="string">/app/ansible</span></span><br><span class="line">   <span class="string">mkdir</span> <span class="string">roles/memcached/&#123;tasks,templates&#125;</span> <span class="string">-pv</span></span><br><span class="line">   </span><br><span class="line"><span class="number">2</span><span class="string">&gt;</span> <span class="string">拷贝memcached配置文件模板</span></span><br><span class="line">   <span class="string">cp</span> <span class="string">/etc/sysconfig/memcached</span>  <span class="string">templates/memcached.j2</span></span><br><span class="line">   <span class="string">vim</span> <span class="string">templates/memcached.j2</span></span><br><span class="line">   <span class="string">CACHESIZE=&quot;&#123;&#123;ansible_memtotal_mb//4&#125;&#125;&quot;</span>   <span class="comment">#物理内存的1/4用做缓存</span></span><br><span class="line">   </span><br><span class="line"><span class="number">3</span><span class="string">&gt;</span> <span class="string">创建对应yml文件,并做相应配置</span></span><br><span class="line">   <span class="string">cd</span> <span class="string">tasks/</span></span><br><span class="line">   <span class="string">touch</span> <span class="string">install.yml</span> <span class="string">config.yml</span> <span class="string">service.yml</span></span><br><span class="line">   <span class="string">创建main.yml文件定义任务执行顺序</span></span><br><span class="line">   <span class="string">vim</span> <span class="string">main.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">include:</span> <span class="string">install.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">include:</span> <span class="string">config.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">include:</span> <span class="string">service.yml</span>  </span><br><span class="line">   </span><br><span class="line">   <span class="string">vim</span> <span class="string">install.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install</span> </span><br><span class="line">     <span class="attr">yum:</span> <span class="string">name=memcached</span></span><br><span class="line">     </span><br><span class="line">   <span class="string">vim</span> <span class="string">config.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span> <span class="string">file</span></span><br><span class="line">     <span class="attr">template:</span> <span class="string">src=memcached.j2</span> <span class="string">dets=/etc/sysconfig/memcached</span></span><br><span class="line"></span><br><span class="line">   <span class="string">vim</span> <span class="string">service.yml</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">service</span></span><br><span class="line">     <span class="attr">service:</span> <span class="string">name=memcached</span> <span class="string">state=started</span> <span class="string">enabled=yes</span></span><br><span class="line"></span><br><span class="line"><span class="number">4</span><span class="string">&gt;</span> <span class="string">创建调用角色文件</span></span><br><span class="line">   <span class="string">cd</span> <span class="string">/app/ansible/roles/</span></span><br><span class="line">   <span class="string">vim</span> <span class="string">role_memcached.yml</span></span><br><span class="line">    <span class="string">---</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">appsrvs</span></span><br><span class="line">    </span><br><span class="line">      <span class="attr">roles:</span> </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">memcached</span></span><br><span class="line"></span><br><span class="line"><span class="number">5</span><span class="string">&gt;</span> <span class="string">安装</span></span><br><span class="line">   <span class="string">ansible-playbook</span>  <span class="string">role_memcached.yml</span> </span><br><span class="line">   <span class="string">memcached端口号11211</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h2><ul>
+<li>委任（指定某一台机器做某一个task）<ul>
+<li>delegate_to</li>
+<li>local_action (专指针对ansible命令执行的机器做的变更操作)</li>
+</ul>
+</li>
+<li>交互提示<ul>
+<li>prompt</li>
+</ul>
+</li>
+<li>*暂停（java）<ul>
+<li>wait_for</li>
+</ul>
+</li>
+<li>Debug<ul>
+<li>debug: msg=”This always executes.”</li>
+</ul>
+</li>
+<li>Include</li>
+<li>Template 多值合并</li>
+<li>Template 动态变量配置</li>
+</ul>
+<h2 id="Ansible-Roles"><a href="#Ansible-Roles" class="headerlink" title="Ansible Roles"></a>Ansible Roles</h2><ul>
+<li>委任<ul>
+<li>delegate_to</li>
+</ul>
+</li>
+<li>交互提示<ul>
+<li>prompt</li>
+</ul>
+</li>
+<li>暂停<ul>
+<li>wait_for</li>
+</ul>
+</li>
+<li>Debug<ul>
+<li>debug: msg=”This always executes.”</li>
+</ul>
+</li>
+<li>Include</li>
+<li>Template 多值合并</li>
+<li>Template 动态变量配置</li>
+</ul>
+<h2 id="推荐资料"><a href="#推荐资料" class="headerlink" title="推荐资料"></a>推荐资料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;galaxy.ansible.com</span><br><span class="line">https:&#x2F;&#x2F;galaxy.ansible.com&#x2F;explore#&#x2F;</span><br><span class="line">http:&#x2F;&#x2F;github.com&#x2F;</span><br><span class="line">http:&#x2F;&#x2F;ansible.com.cn&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;ansible&#x2F;ansible</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;ansible&#x2F;ansible-examples</span><br></pre></td></tr></table></figure>
+<h2 id="实验-实现二进制安装mysql的卸载"><a href="#实验-实现二进制安装mysql的卸载" class="headerlink" title="实验: 实现二进制安装mysql的卸载"></a>实验: 实现二进制安装mysql的卸载</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">remove_mysql.yml</span> </span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># install mariadb server </span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">appsrvs:!192.168.38.108</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">stop</span> <span class="string">service</span> </span><br><span class="line">      <span class="attr">shell:</span> <span class="string">/etc/init.d/mysqld</span> <span class="string">stop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">delete</span> <span class="string">user</span> </span><br><span class="line">      <span class="attr">user:</span> <span class="string">name=mysql</span> <span class="string">state=absent</span> <span class="string">remove=yes</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">delete</span></span><br><span class="line">      <span class="attr">file:</span> <span class="string">path=&#123;&#123;item&#125;&#125;</span> <span class="string">state=absent</span></span><br><span class="line">      <span class="attr">with_items:</span> </span><br><span class="line">        <span class="bullet">-</span> <span class="string">/usr/local/mysql</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/usr/local/mariadb-10.2.27-linux-x86_64</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/etc/init.d/mysqld</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/etc/profile.d/mysql.sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/etc/my.cnf</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/data/mysql</span></span><br><span class="line"></span><br><span class="line"><span class="string">ansible-playbook</span>  <span class="string">remove_mysql.yml</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/12/29/Ansible/roles/" title="Ansible学习笔记--roles" target="_blank" rel="external">http://shizhonggan.github.io/2021/12/29/Ansible/roles/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/01/27/BigData/SparkDeploy/" title="(no title)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/12/24/Docker/dockerclean/" title="容器数据磁盘被写满处理"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2022 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
