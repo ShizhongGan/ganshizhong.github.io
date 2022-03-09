@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://shizhonggan.github.io/2022/02/25/Python/concurrentprogramming/</loc>
-    <lastmod>2022-02-25</lastmod>
+    <loc>http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/</loc>
+    <lastmod>2022-03-09</lastmod>
   </url>
   <url>
-    <loc>http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/</loc>
-    <lastmod>2022-02-22</lastmod>
+    <loc>http://shizhonggan.github.io/2022/03/09/Python/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86&%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
+    <lastmod>2022-03-09</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/02/25/Python/concurrentprogramming/</loc>
+    <lastmod>2022-02-25</lastmod>
   </url>
   <url>
     <loc>http://shizhonggan.github.io/2022/01/30/Django/djangodeployerror/</loc>
