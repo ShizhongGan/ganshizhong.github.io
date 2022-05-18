@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/</loc>
+    <lastmod>2022-05-18</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/14/BigData/SparkStandalone/</loc>
+    <lastmod>2022-05-18</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/18/BigData/SparkStandAloneHA/</loc>
+    <lastmod>2022-05-18</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/18/BigData/SparkDeploy/</loc>
+    <lastmod>2022-05-18</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/17/BigData/hadoop_installerror/</loc>
+    <lastmod>2022-05-17</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/04/17/BigData/Spark01/</loc>
+    <lastmod>2022-04-28</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/03/18/Ansible/ansible_ui/</loc>
+    <lastmod>2022-04-27</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/04/26/Python/interview1/</loc>
+    <lastmod>2022-04-26</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/09/27/DevOps/Zabbix/</loc>
+    <lastmod>2022-04-24</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/09/27/DevOps/zabbix_docker/</loc>
+    <lastmod>2022-04-24</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/03/16/Django/DjangoRESTframework/</loc>
+    <lastmod>2022-04-02</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/03/16/Docker/gitlabmigrate/</loc>
+    <lastmod>2022-03-29</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/04/26/Docker/docker_install/</loc>
+    <lastmod>2022-03-29</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/03/09/Python/setup/</loc>
+    <lastmod>2022-03-24</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/11/29/Note/Nvidia_2022/</loc>
+    <lastmod>2022-03-24</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/03/18/Ansible/ansible_api/</loc>
+    <lastmod>2022-03-18</lastmod>
+  </url>
+  <url>
     <loc>http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/</loc>
     <lastmod>2022-03-09</lastmod>
   </url>
   <url>
-    <loc>http://shizhonggan.github.io/2022/03/09/Python/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86&%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
+    <loc>http://shizhonggan.github.io/2022/03/09/Python/memoryManagement/</loc>
     <lastmod>2022-03-09</lastmod>
   </url>
   <url>
@@ -173,15 +237,7 @@
     <lastmod>2021-10-28</lastmod>
   </url>
   <url>
-    <loc>http://shizhonggan.github.io/2021/04/26/Docker/docker_install/</loc>
-    <lastmod>2021-10-28</lastmod>
-  </url>
-  <url>
     <loc>http://shizhonggan.github.io/2021/09/16/DevOps/SaltStack/</loc>
-    <lastmod>2021-10-28</lastmod>
-  </url>
-  <url>
-    <loc>http://shizhonggan.github.io/2021/09/27/DevOps/Zabbix/</loc>
     <lastmod>2021-10-28</lastmod>
   </url>
   <url>
@@ -194,10 +250,6 @@
   </url>
   <url>
     <loc>http://shizhonggan.github.io/2021/09/18/DevOps/Nagios2/</loc>
-    <lastmod>2021-10-28</lastmod>
-  </url>
-  <url>
-    <loc>http://shizhonggan.github.io/2021/04/17/BigData/Spark01/</loc>
     <lastmod>2021-10-28</lastmod>
   </url>
   <url>

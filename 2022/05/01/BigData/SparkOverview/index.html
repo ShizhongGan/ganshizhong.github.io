@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Spark框架概述 | 甘士忠个人博客</title>
+  <meta name="description" content="Spark定义 Apache Spark是用于大规模数据（Large-scala data）处理的统一（unified）分析引擎。 Spark最早源于一篇论文Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing, 该论文是由加州大学伯克利分校的Matei Zahar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark框架概述">
+<meta property="og:url" content="http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="Spark定义 Apache Spark是用于大规模数据（Large-scala data）处理的统一（unified）分析引擎。 Spark最早源于一篇论文Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing, 该论文是由加州大学伯克利分校的Matei Zahar">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkdatatask.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkframe.png">
+<meta property="article:published_time" content="2022-05-01T07:54:23.000Z">
+<meta property="article:modified_time" content="2022-05-18T08:57:50.675Z">
+<meta property="article:author" content="甘士忠">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkdatatask.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.29px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.57px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.14px;">docker</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13px;">gitlab</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 13.86px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.14px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/BigData/SparkDeploy/" class="title">Spark部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/BigData/SparkStandAloneHA/" class="title">Spark StandAlone HA集群搭建</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Hadoop/">Hadoop</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/17/BigData/hadoop_installerror/" class="title">Hadoop安装常见错误</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-17T07:54:23.000Z" itemprop="datePublished">2022-05-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/14/BigData/SparkStandalone/" class="title">Spark 部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-14T07:54:23.000Z" itemprop="datePublished">2022-05-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/01/BigData/SparkOverview/" class="title">Spark框架概述</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-01T07:54:23.000Z" itemprop="datePublished">2022-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-BigData/SparkOverview" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spark框架概述
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/05/01/BigData/SparkOverview/" class="article-date">
+	  <time datetime="2022-05-01T07:54:23.000Z" itemprop="datePublished">2022-05-01</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/BigData/">BigData</a>►<a class="article-category-link" href="/categories/BigData/Spark/">Spark</a>
+  </span>
+
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/01/BigData/SparkOverview/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="spark定义"><a class="markdownIt-Anchor" href="#spark定义"></a> Spark定义</h2>
+<p>Apache Spark是用于<strong>大规模数据</strong>（Large-scala data）处理的<strong>统一</strong>（unified）分析引擎。</p>
+<p>Spark最早源于一篇论文Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing, 该论文是由加州大学伯克利分校的Matei Zaharia 等人发表的。论文中提出了一种弹性分布式数据集（即：RDD）的概念。</p>
+<p>A distributed memory abstraction that lets programmers perform in-memory computations on large clusters in a fault-tolerant manner.</p>
+<p>RDD是一种分布式内存抽象，其使得程序员能够在大规模集群中做内存运算，并且有一定的容错。而这也是整个Spark的核心数据结构，Spark整个平台围绕着RDD进行。</p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkdatatask.png" alt="spark" /></p>
+<h2 id="spark-vs-hadoopmapreduce"><a class="markdownIt-Anchor" href="#spark-vs-hadoopmapreduce"></a> Spark VS Hadoop(MapReduce)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Haddop</th>
+<th>Spark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>基础平台，包含计算（MapReduce）、存储（HDFS）、调度(YARN)</td>
+<td>纯计算工具（分布式）</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>海量数据批处理(离线计算，磁盘迭代计算)</td>
+<td>海量数据的批处理（内存计算、交互式计算）、海量数据流计算</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>对机器要求低，便宜</td>
+<td>堆内存有要求，相对较贵</td>
+</tr>
+<tr>
+<td>编程范式</td>
+<td>Map+Reduce, API较为底层，算法适应性差</td>
+<td>RDD组成DAG有向环图，API较为顶层，方便使用</td>
+</tr>
+<tr>
+<td>数据存储结构</td>
+<td>MapReduce中间计算结果在HDFS磁盘上，延迟大</td>
+<td>RDD中间运算结果在内存中，延迟小</td>
+</tr>
+<tr>
+<td>运行方式</td>
+<td>Task以进程方式维护，任务启动慢</td>
+<td>Task以线程方式维护，任务启动快，可批量创建提高并行能力</td>
+</tr>
+</tbody>
+</table>
+<h2 id="spark四大特点"><a class="markdownIt-Anchor" href="#spark四大特点"></a> Spark四大特点</h2>
+<ul>
+<li>速度快 比Hadoop快一百倍
+<ul>
+<li>Spark处理数据时，可以将中间内存处理结果存储到内存中</li>
+<li>Spark提供了非常丰富的算子(API),可以做到复杂任务在一个Spark程序中完成</li>
+</ul>
+</li>
+<li>易于使用 概念多，编程容易<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; spark.read.json(&quot;logs.json&quot;) # 读取数据</span><br><span class="line">df.where(&quot;age &gt; 20&quot;) # 过滤</span><br><span class="line">  . select(&quot;name.first&quot;).show() # 选取字段，进行展示</span><br></pre></td></tr></table></figure>
+</li>
+<li>通用性强
+<ul>
+<li>在Spark的基础上，提供了Spark SQL、Spark Streaming、 MLib及 Graph在内的多个工具库</li>
+</ul>
+</li>
+<li>运行方式 可以在Hadoop和Mesos上，也支持Standalone的独立运行模式，也支持云上Kubernetes（2.3以上版本）。
+<ul>
+<li>数据源支持HDFS，Hbase,Cassandra和Kafak等多种途径</li>
+</ul>
+</li>
+</ul>
+<h2 id="spark框架模块"><a class="markdownIt-Anchor" href="#spark框架模块"></a> Spark框架模块</h2>
+<p>Spark Core: Spark的核心，Spark核心功能均由Spark Core模块提供，是Spark运行的基础。Spark Core以RDD为数据抽象，提供Python, JAVA,Scala，R语言的API,可以编程进行海量离线数据处理</p>
+<p>SparkSQL: 基于Spark Core之上，提供<strong>结构化数据</strong>的处理模块。SparkSQL支持以SQL语言对数据进行处理，SparkSQL本身针对<strong>离线计算</strong>场景。同时基于SparkSQL,Spark提供了<strong>StructuredStreaming模块</strong>，可以以SparkSQL为基础，进行数据的<strong>流式计算</strong>。</p>
+<p>SparkStreaming: 以SparkCore为基础，提供数据的<strong>流式计算</strong>【有一定缺陷】</p>
+<p>MLib: 以SparkCore为基础，进行<strong>机器学习计算</strong>，内置了大量的机器学习库和API算法。方便用户以分布式计算的模式进行机器学习计算</p>
+<p>GraphX: 以SparkCore为基础，进行<strong>图计算</strong>，提供了大量的图计算API，方便用于以分布式计算模式进行图计算</p>
+<h2 id="spark运行模式"><a class="markdownIt-Anchor" href="#spark运行模式"></a> Spark运行模式</h2>
+<p>本地模式（单机, Local）【开发测试环境】</p>
+<ul>
+<li>以<strong>一个独立的进程</strong>，通过其内部的多个线程来模拟整个Spark运行时环境</li>
+</ul>
+<p>Standalone模式（集群）</p>
+<ul>
+<li>Spark中的各个角色以<strong>独立进程</strong>的形式存在，并组成Spark集群环境</li>
+</ul>
+<p>Hadoop YARN模式（集群）</p>
+<ul>
+<li>Spark的各个角色运行在<strong>YARN的容器内部</strong>，并组成Spark集群环境</li>
+</ul>
+<p>Kubernetes模式（容器集群）</p>
+<ul>
+<li>Spark中的各个角色<strong>运行在Kubernetes的容器内部</strong>，并组成Spark集群环境</li>
+</ul>
+<p>云服务模式（运行在云平台上）</p>
+<h2 id="spark的架构角色"><a class="markdownIt-Anchor" href="#spark的架构角色"></a> Spark的架构角色</h2>
+<p><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkframe.png" alt="sparkframe" /></p>
+<h3 id="yarn-主要有四类角色从2个层面去看"><a class="markdownIt-Anchor" href="#yarn-主要有四类角色从2个层面去看"></a> YARN 主要有四类角色，从2个层面去看：</h3>
+<p>资源管理层面</p>
+<ul>
+<li>集群资源管理者(Master):ResourceManager</li>
+<li>单机资源管理者(Worker):NodeManager</li>
+</ul>
+<p>任务计算层面</p>
+<ul>
+<li>单任务管理者(Master):ApplicationMaster</li>
+<li>单任务执行者(worker):Task(容器内计算框架的工作角色)</li>
+</ul>
+<h3 id="spar-主要有四类角色从2个层面去看"><a class="markdownIt-Anchor" href="#spar-主要有四类角色从2个层面去看"></a> Spar 主要有四类角色，从2个层面去看：</h3>
+<p>资源管理层面</p>
+<ul>
+<li>集群资源管理者(Master)</li>
+<li>单机资源管理者(Worker)</li>
+</ul>
+<p>任务计算层面</p>
+<ul>
+<li>单任务管理者(Driver)</li>
+<li>单任务执行者(Executor)</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/" title="Spark框架概述" target="_blank" rel="external">http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/05/14/BigData/SparkStandalone/" title="Spark 部署"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/04/26/Python/interview1/" title="那些有点意思的python面试题"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2022 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

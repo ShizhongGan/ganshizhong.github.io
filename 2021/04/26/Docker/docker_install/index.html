@@ -18,15 +18,15 @@
   
   
   <title>Ubuntu安装Docker与最常用配置 | 甘士忠个人博客</title>
-  <meta name="description" content="1 docker 介绍Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。 Docker 从 17.0">
+  <meta name="description" content="1 docker 介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。 Docker 从 17">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu安装Docker与最常用配置">
 <meta property="og:url" content="http://shizhonggan.github.io/2021/04/26/Docker/docker_install/index.html">
 <meta property="og:site_name" content="钟声">
-<meta property="og:description" content="1 docker 介绍Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。 Docker 从 17.0">
+<meta property="og:description" content="1 docker 介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。 Docker 从 17">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-26T02:54:04.000Z">
-<meta property="article:modified_time" content="2021-10-28T06:55:59.899Z">
+<meta property="article:modified_time" content="2022-03-29T02:17:57.248Z">
 <meta property="article:author" content="甘士忠">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -270,7 +270,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -280,7 +280,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.17px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.67px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.83px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.17px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.17px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.33px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.67px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.17px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.83px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/gitalk/" style="font-size: 13.17px;">gitalk</a> <a href="/tags/hexo/" style="font-size: 13.17px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.17px;">paramiko</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 13.83px;">python</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.17px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.17px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.17px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.5px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.17px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.29px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.57px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.14px;">docker</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13px;">gitlab</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 13.86px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.14px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
     </div>
   </div>
 
@@ -289,7 +289,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
     </div>
   </div>
 
@@ -305,13 +305,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/Python/">Python</a>
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
               </p>
               <p class="item-title">
-                <a href="/2022/03/09/Python/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86&%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="title">Python 内存管理 &amp; 垃圾回收</a>
+                <a href="/2022/05/18/BigData/SparkDeploy/" class="title">Spark部署</a>
               </p>
               <p class="item-date">
-                <time datetime="2022-03-09T06:39:04.000Z" itemprop="datePublished">2022-03-09</time>
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
               </p>
             </div>
           </li>
@@ -320,13 +320,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/python/">python</a>
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
               </p>
               <p class="item-title">
-                <a href="/2022/02/25/Python/concurrentprogramming/" class="title">python 并发编程</a>
+                <a href="/2022/05/18/BigData/SparkStandAloneHA/" class="title">Spark StandAlone HA集群搭建</a>
               </p>
               <p class="item-date">
-                <time datetime="2022-02-25T08:39:04.000Z" itemprop="datePublished">2022-02-25</time>
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
               </p>
             </div>
           </li>
@@ -335,13 +335,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/python/">python</a>
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Hadoop/">Hadoop</a>
               </p>
               <p class="item-title">
-                <a href="/2022/02/21/Python/pywebbakdevtest1/" class="title">tkinter快速入门</a>
+                <a href="/2022/05/17/BigData/hadoop_installerror/" class="title">Hadoop安装常见错误</a>
               </p>
               <p class="item-date">
-                <time datetime="2022-02-21T08:39:04.000Z" itemprop="datePublished">2022-02-21</time>
+                <time datetime="2022-05-17T07:54:23.000Z" itemprop="datePublished">2022-05-17</time>
               </p>
             </div>
           </li>
@@ -350,13 +350,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/Django/">Django</a>
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
               </p>
               <p class="item-title">
-                <a href="/2022/01/30/Django/djangodeployerror/" class="title">Docker 部署 Django-Mysql常见错误</a>
+                <a href="/2022/05/14/BigData/SparkStandalone/" class="title">Spark 部署</a>
               </p>
               <p class="item-date">
-                <time datetime="2022-01-30T03:03:04.000Z" itemprop="datePublished">2022-01-30</time>
+                <time datetime="2022-05-14T07:54:23.000Z" itemprop="datePublished">2022-05-14</time>
               </p>
             </div>
           </li>
@@ -365,13 +365,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/Ansible/">Ansible</a>
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
               </p>
               <p class="item-title">
-                <a href="/2021/12/29/Ansible/roles/" class="title">Ansible学习笔记--roles</a>
+                <a href="/2022/05/01/BigData/SparkOverview/" class="title">Spark框架概述</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-12-29T02:24:04.000Z" itemprop="datePublished">2021-12-29</time>
+                <time datetime="2022-05-01T07:54:23.000Z" itemprop="datePublished">2022-05-01</time>
               </p>
             </div>
           </li>
@@ -436,7 +436,8 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="1-docker-介绍"><a href="#1-docker-介绍" class="headerlink" title="1 docker 介绍"></a>1 docker 介绍</h2><p>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。</p>
+        <h2 id="1-docker-介绍"><a class="markdownIt-Anchor" href="#1-docker-介绍"></a> 1 docker 介绍</h2>
+<p>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。</p>
 <p>Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</p>
 <p>容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
 <p>Docker 从 17.03 版本之后分为 CE（Community Edition: 社区版） 和 EE（Enterprise Edition: 企业版），我们用社区版就可以了。</p>
@@ -449,36 +450,51 @@
 </ul>
 <p>Docker 的优点</p>
 <ul>
-<li><p>Docker 是一个用于开发，交付和运行应用程序的开放平台。Docker 使您能够将应用程序与基础架构分开，从而可以快速交付软件。借助 Docker，您可以与管理应用程序相同的方式来管理基础架构。通过利用 Docker 的方法来快速交付，测试和部署代码，您可以大大减少编写代码和在生产环境中运行代码之间的延迟。</p>
+<li>Docker 是一个用于开发，交付和运行应用程序的开放平台。Docker 使您能够将应用程序与基础架构分开，从而可以快速交付软件。借助 Docker，您可以与管理应用程序相同的方式来管理基础架构。通过利用 Docker 的方法来快速交付，测试和部署代码，您可以大大减少编写代码和在生产环境中运行代码之间的延迟。
 <ol>
-<li><p>快速，一致地交付您的应用程序</p>
-<p> Docker 允许开发人员使用您提供的应用程序或服务的本地容器在标准化环境中工作，从而简化了开发的生命周期。</p>
-<p> 容器非常适合持续集成和持续交付（CI / CD）工作流程，请考虑以下示例方案：</p>
-<p> 您的开发人员在本地编写代码，并使用 Docker 容器与同事共享他们的工作。<br> 他们使用 Docker 将其应用程序推送到测试环境中，并执行自动或手动测试。<br> 当开发人员发现错误时，他们可以在开发环境中对其进行修复，然后将其重新部署到测试环境中，以进行测试和验证。<br> 测试完成后，将修补程序推送给生产环境，就像将更新的镜像推送到生产环境一样简单。</p>
+<li>
+<p>快速，一致地交付您的应用程序</p>
+<p>Docker 允许开发人员使用您提供的应用程序或服务的本地容器在标准化环境中工作，从而简化了开发的生命周期。</p>
+<p>容器非常适合持续集成和持续交付（CI / CD）工作流程，请考虑以下示例方案：</p>
+<p>您的开发人员在本地编写代码，并使用 Docker 容器与同事共享他们的工作。<br />
+他们使用 Docker 将其应用程序推送到测试环境中，并执行自动或手动测试。<br />
+当开发人员发现错误时，他们可以在开发环境中对其进行修复，然后将其重新部署到测试环境中，以进行测试和验证。<br />
+测试完成后，将修补程序推送给生产环境，就像将更新的镜像推送到生产环境一样简单。</p>
 </li>
-<li><p>响应式部署和扩展<br> Docker 是基于容器的平台，允许高度可移植的工作负载。Docker 容器可以在开发人员的本机上，数据中心的物理或虚拟机上，云服务上或混合环境中运行。</p>
-<p> Docker 的可移植性和轻量级的特性，还可以使您轻松地完成动态管理的工作负担，并根据业务需求指示，实时扩展或拆除应用程序和服务。</p>
+<li>
+<p>响应式部署和扩展<br />
+Docker 是基于容器的平台，允许高度可移植的工作负载。Docker 容器可以在开发人员的本机上，数据中心的物理或虚拟机上，云服务上或混合环境中运行。</p>
+<p>Docker 的可移植性和轻量级的特性，还可以使您轻松地完成动态管理的工作负担，并根据业务需求指示，实时扩展或拆除应用程序和服务。</p>
 </li>
-<li><p>在同一硬件上运行更多工作负载</p>
-<p> Docker 轻巧快速。它为基于虚拟机管理程序的虚拟机提供了可行、经济、高效的替代方案，因此您可以利用更多的计算能力来实现业务目标。Docker 非常适合于高密度环境以及中小型部署，而您可以用更少的资源做更多的事情。</p>
+<li>
+<p>在同一硬件上运行更多工作负载</p>
+<p>Docker 轻巧快速。它为基于虚拟机管理程序的虚拟机提供了可行、经济、高效的替代方案，因此您可以利用更多的计算能力来实现业务目标。Docker 非常适合于高密度环境以及中小型部署，而您可以用更少的资源做更多的事情。</p>
 </li>
 </ol>
 </li>
 </ul>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>ubuntu16.04安装成功；ubuntu14.04安装失败【<strong>各种报错啊，有耐心的可以慢慢去解决</strong>】。</p>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<p>ubuntu16.04安装成功；ubuntu14.04安装失败【<strong>各种报错啊，有耐心的可以慢慢去解决</strong>】。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rm /etc/apt/sources.list</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line">echo \</span><br><span class="line">&quot;deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&quot; \</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt; /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get upgrade</span></span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get remove docker docker-engine docker.io containerd runc <span class="comment"># 如果存在旧版本地docker产品先卸载</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>Install using the repository<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ <span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure></li>
-<li>INSTALL DOCKER CE<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure></li>
+<li>Install using the repository</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ <span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure>
 <ul>
-<li>docker 更改工作存储路径【可选操作】<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop docker</span><br></pre></td></tr></table></figure>
-Runtime directory and storage driver <br>You may want to control the disk space used for Docker images, containers, and volumes by moving it to a separate partition.<br>To accomplish this, set the following flags in the daemon.json file:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;data-root&quot;: &quot;/mnt/docker-data&quot;, ## 修改成你自己的目录</span><br><span class="line">    &quot;storage-driver&quot;: &quot;overlay2&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker start # 重启</span><br><span class="line">$ sudo systemctl start docker</span><br></pre></td></tr></table></figure></li>
+<li>INSTALL DOCKER CE</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+<ul>
+<li>docker 更改工作存储路径【可选操作】</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop docker</span><br></pre></td></tr></table></figure>
+<p>Runtime directory and storage driver <br />
+You may want to control the disk space used for Docker images, containers, and volumes by moving it to a separate partition.<br />
+To accomplish this, set the following flags in the daemon.json file:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;data-root&quot;: &quot;/mnt/docker-data&quot;, ## 修改成你自己的目录</span><br><span class="line">    &quot;storage-driver&quot;: &quot;overlay2&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker start # 重启</span><br><span class="line">$ sudo systemctl start docker</span><br><span class="line">systemctl enable docker </span><br></pre></td></tr></table></figure>
+<ul>
 <li>Docker 更改容器日志文件大小【可选操作】</li>
 </ul>
 <p>docker容器的日志文件会不断挤占系统资源内存，因此需要限定docker日志文件大小，实现docker日志定期处理，具体方法如下：</p>

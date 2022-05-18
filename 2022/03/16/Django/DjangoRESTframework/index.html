@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Django RESTframework 教程 | 甘士忠个人博客</title>
+  <meta name="description" content="介绍    序列化和反序列化 序列化：将程序中的一个数据结构转化为其他格式（字典、JSON、xml等），例如django中将模型类对象转化为JSON字符串，这一过程被称为序列化。增改查，删不用返回 反序列化：修改和新增  增：校验请求数据-&gt; 执行反序列化 -&gt; 保存数据库 -&gt; 将保存的对象序列化输出 删：判断要删除的数据是否存在 -&gt; 执行数据库删除 改：判断要修改的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django RESTframework 教程">
+<meta property="og:url" content="http://shizhonggan.github.io/2022/03/16/Django/DjangoRESTframework/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="介绍    序列化和反序列化 序列化：将程序中的一个数据结构转化为其他格式（字典、JSON、xml等），例如django中将模型类对象转化为JSON字符串，这一过程被称为序列化。增改查，删不用返回 反序列化：修改和新增  增：校验请求数据-&gt; 执行反序列化 -&gt; 保存数据库 -&gt; 将保存的对象序列化输出 删：判断要删除的数据是否存在 -&gt; 执行数据库删除 改：判断要修改的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/Django/web1.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/Django/web2.png">
+<meta property="article:published_time" content="2022-03-16T03:03:04.000Z">
+<meta property="article:modified_time" content="2022-04-02T09:03:36.097Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="RESTful">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ganshizhong.gitee.io/blogimages/Django/web1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2022/03/16/Django/DjangoRESTframework/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/DevOps/" style="font-size: 14px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.29px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.57px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.14px;">docker</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13px;">gitlab</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 13.86px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.14px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/BigData/SparkDeploy/" class="title">Spark部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/BigData/SparkStandAloneHA/" class="title">Spark StandAlone HA集群搭建</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Hadoop/">Hadoop</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/17/BigData/hadoop_installerror/" class="title">Hadoop安装常见错误</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-17T07:54:23.000Z" itemprop="datePublished">2022-05-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/14/BigData/SparkStandalone/" class="title">Spark 部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-14T07:54:23.000Z" itemprop="datePublished">2022-05-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/BigData/">BigData</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/BigData/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/01/BigData/SparkOverview/" class="title">Spark框架概述</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-01T07:54:23.000Z" itemprop="datePublished">2022-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Django/DjangoRESTframework" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Django RESTframework 教程
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/03/16/Django/DjangoRESTframework/" class="article-date">
+	  <time datetime="2022-03-16T03:03:04.000Z" itemprop="datePublished">2022-03-16</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Django/">Django</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/API/" rel="tag">API</a>, <a class="article-tag-link-link" href="/tags/Django/" rel="tag">Django</a>, <a class="article-tag-link-link" href="/tags/RESTful/" rel="tag">RESTful</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/16/Django/DjangoRESTframework/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<p><img src="https://ganshizhong.gitee.io/blogimages/Django/web1.png" alt="前后端不分离" /></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/Django/web2.png" alt="前后端分离" /></p>
+<h2 id="序列化和反序列化"><a class="markdownIt-Anchor" href="#序列化和反序列化"></a> 序列化和反序列化</h2>
+<p>序列化：将程序中的一个数据结构转化为其他格式（字典、JSON、xml等），例如django中将模型类对象转化为JSON字符串，这一过程被称为序列化。增改查，删不用返回</p>
+<p>反序列化：修改和新增</p>
+<ul>
+<li>增：校验请求数据-&gt; 执行反序列化 -&gt; 保存数据库 -&gt; 将保存的对象序列化输出</li>
+<li>删：判断要删除的数据是否存在 -&gt; 执行数据库删除</li>
+<li>改：判断要修改的数据是否存在  -&gt; 校验请求的数据 -&gt; 执行反序列化过程 -&gt; 保存数据库 -&gt; 将保存的对象序列化返回</li>
+<li>查：查询数据库 -&gt; 将数据库序列化返回</li>
+</ul>
+<h2 id="drf作用"><a class="markdownIt-Anchor" href="#drf作用"></a> DRF作用</h2>
+<p>Django REST framework 可以帮助我们简化序列化和反序列化部分的代码编写，大大提高REST API的开发速度。</p>
+<h2 id="drf特点"><a class="markdownIt-Anchor" href="#drf特点"></a> DRF特点</h2>
+<ul>
+<li>提供了定义序列化器Serializer的方法，可以快速根据Django ORM 或者其他库自动序列化/反序列化</li>
+<li>提供了丰富的类视图、Mixin扩展类，简化视图的编写</li>
+<li>丰富的定制层级：函数视图、类视图、试图集合到自动生成API，满足各种需求</li>
+<li>多种身份认证和权限认证方式的支持</li>
+<li>内置了限流系统</li>
+<li>直观的API web界面</li>
+<li>可扩展性，插件丰富</li>
+</ul>
+<h2 id="相关文档"><a class="markdownIt-Anchor" href="#相关文档"></a> 相关文档</h2>
+<p>官方文档： <a target="_blank" rel="noopener" href="http://www.django-rest-framework.org/">http://www.django-rest-framework.org/</a></p>
+<p>源码：<a target="_blank" rel="noopener" href="https://github.com/encode/django-rest-framework/tree/master">https://github.com/encode/django-rest-framework/tree/master</a></p>
+<h2 id="drf安装使用"><a class="markdownIt-Anchor" href="#drf安装使用"></a> DRF安装使用</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 环境依赖</span></span><br><span class="line">pip install djangorestframework</span><br><span class="line">pip install markdown       <span class="comment"># Markdown support for the browsable API.</span></span><br><span class="line">pip install django-filter  <span class="comment"># Filtering support</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Add &#x27;rest_framework&#x27; to your INSTALLED_APPS setting.</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;rest_framework&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">## If you&#x27;re intending to use the browsable API you&#x27;ll probably also want to add REST framework&#x27;s login and logout views. Add the following to your root urls.py file.</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    ...</span><br><span class="line">    path(<span class="string">&#x27;api-auth/&#x27;</span>, include(<span class="string">&#x27;rest_framework.urls&#x27;</span>)) <span class="comment"># Note that the URL path can be whatever you want.</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">## </span></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="comment"># Use Django&#x27;s standard `django.contrib.auth` permissions,</span></span><br><span class="line">    <span class="comment"># or allow read-only access for unauthenticated users.</span></span><br><span class="line">    <span class="string">&#x27;DEFAULT_PERMISSION_CLASSES&#x27;</span>: [</span><br><span class="line">        <span class="string">&#x27;rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">## 添加路由</span></span><br><span class="line">from django.urls import path, include</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">from rest_framework import routers, serializers, viewsets</span><br><span class="line"></span><br><span class="line"><span class="comment"># Serializers define the API representation.</span></span><br><span class="line">class UserSerializer(serializers.HyperlinkedModelSerializer):</span><br><span class="line">    class Meta:</span><br><span class="line">        model = User</span><br><span class="line">        fields = [<span class="string">&#x27;url&#x27;</span>, <span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;is_staff&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ViewSets define the view behavior.</span></span><br><span class="line">class UserViewSet(viewsets.ModelViewSet):</span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line"></span><br><span class="line"><span class="comment"># Routers provide an easy way of automatically determining the URL conf.</span></span><br><span class="line">router = routers.DefaultRouter()</span><br><span class="line">router.register(r<span class="string">&#x27;users&#x27;</span>, UserViewSet)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Wire up our API using automatic URL routing.</span></span><br><span class="line"><span class="comment"># Additionally, we include login URLs for the browsable API.</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;&#x27;</span>, include(router.urls)),</span><br><span class="line">    path(<span class="string">&#x27;api-auth/&#x27;</span>, include(<span class="string">&#x27;rest_framework.urls&#x27;</span>, namespace=<span class="string">&#x27;rest_framework&#x27;</span>))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="drf-序列化器"><a class="markdownIt-Anchor" href="#drf-序列化器"></a> DRF 序列化器</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class BookInfo(models.Model):</span><br><span class="line">    btitle &#x3D; models.CharField(max_length&#x3D;30, verbose_name &#x3D;&#39;名称&#39;)</span><br><span class="line">    bup_date &#x3D; models.DateField(auto_now&#x3D;True, verbose_name&#x3D;&#39;发布日期&#39;)</span><br><span class="line"></span><br><span class="line">## 自定义序列化器</span><br><span class="line">class BookInfoSerializer1(serializers.Serializer):</span><br><span class="line">    # read_only&#x3D;True 只做序列化 write_only&#x3D;True 只做反序列化</span><br><span class="line">    id &#x3D; serializers.IntegerField(label&#x3D;&quot;ID&quot;, read_only&#x3D;True)</span><br><span class="line">    btitle &#x3D; serializers.CharField(max_length&#x3D;30, label&#x3D;&#39;名称&#39;,required&#x3D;True)</span><br><span class="line">    bup_date &#x3D; serializers.DateField(label&#x3D;&#39;发布日期&#39;)</span><br><span class="line">    hello &#x3D; serializers.CharField(max_length&#x3D;10) # 新添加的字段</span><br><span class="line"></span><br><span class="line">from booktest.serializers import BookInfoSerializer, HeroInfoSerializer</span><br><span class="line">from booktest.models import BookInfo, HeroInfo</span><br><span class="line">book &#x3D; BookInfo.objects.get(id&#x3D;1)</span><br><span class="line">s &#x3D; BookInfoSerializer1(instance&#x3D;book, many&#x3D;False)</span><br><span class="line">s.data</span><br><span class="line"></span><br><span class="line">books &#x3D; BookInfo.objects.all()</span><br><span class="line">s &#x3D; BookInfoSerializer1(instance&#x3D;books, many&#x3D;True)</span><br><span class="line">s.data</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>序列化器中的字段个数可以与模型的属性个数不同
+<ul>
+<li>可以添加不存在的，也可以不写，但是不能修改</li>
+</ul>
+</li>
+<li>创建序列化器有两个参数BookInfoSerializer(instance, data)
+<ul>
+<li>S = BookInfoSerializer(instance=book, many=true) 只做序列化， S.data 可以取值
+<ul>
+<li>序列化 == 模型数据 -&gt; python字典（用于输出，返回数据给前端）</li>
+</ul>
+</li>
+<li>S = BookInfoSerializer(data=data) 只做反序列化
+<ul>
+<li>反序列化 == 前端发送的数据 -&gt; 经过验证 -&gt; python字典 -&gt;save -&gt;模型类对象（用于输入，接受前端数据）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>jsonresponse 如果返回的是列表，safe=False; 序列化如果是一个查询集合，many=True</p>
+</blockquote>
+<h2 id="drf-关联序列化"><a class="markdownIt-Anchor" href="#drf-关联序列化"></a> DRF 关联序列化</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 只能序列化输出, 默认是将关联模型的ID序列化</span><br><span class="line">hbook &#x3D; serializers.PrimaryKeyRelatedField(label&#x3D;&quot;书籍&quot;,read_only&#x3D;True) </span><br><span class="line"></span><br><span class="line"># 默认是将关联模型的__str__方法返回值序列化</span><br><span class="line">hbook &#x3D; serializers.StringRelatedField(label&#x3D;&quot;书籍&quot;, read_only&#x3D;True)  </span><br><span class="line"></span><br><span class="line"># 关联模型对象的序列化器中所有字段序列化出来</span><br><span class="line">hbook &#x3D; BookInfoSerializer1(read_only&#x3D;True) </span><br><span class="line"></span><br><span class="line"># 如果一里面关联序列化多时，需要指定many&#x3D;True</span><br><span class="line">heroinfo_set &#x3D; HeroInfoSerializer1(many&#x3D;True)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>两个序列化器只能一个做关联</p>
+</blockquote>
+<h2 id="drf-反序列化"><a class="markdownIt-Anchor" href="#drf-反序列化"></a> DRF 反序列化</h2>
+<ul>
+<li>is_valid()方法 ：在获取序列化的数据前，通过该方法进行验证</li>
+<li>errors属性: 验证失败，可以通过序列化器对象的errors属性获取错误信息，返回字典</li>
+<li>validated_data属性： 验证成功，获取数据</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&#x27;btitle&#x27;</span>: <span class="string">&#x27;三国&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">serializer = BookInfoSerializer(data=data)</span><br><span class="line">serializer.is_valid() <span class="comment"># 调用序列化器的校验方法， True或False【必须执行】</span></span><br><span class="line">serializer.is_valid(raise_exception=<span class="literal">True</span>) <span class="comment"># 校验出错后，自动抛出错误信息</span></span><br><span class="line">serializer.errors <span class="comment"># 获取校验的错误信息，可不用，用上面这一个</span></span><br><span class="line">serializer.validated_data <span class="comment"># 获取反序列化校验后的数据还是字典【然后执行】</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 额外对某些字段进行校验</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInfoSerializer1</span>(<span class="params">serializers.Serializer</span>):</span></span><br><span class="line">    <span class="comment"># read_only=True 只做序列化 write_only=True 只做反序列化</span></span><br><span class="line">    <span class="built_in">id</span> = serializers.IntegerField(label=<span class="string">&quot;ID&quot;</span>, read_only=<span class="literal">True</span>)</span><br><span class="line">    btitle = serializers.CharField(max_length=<span class="number">30</span>, label=<span class="string">&#x27;名称&#x27;</span>,required=<span class="literal">True</span>)</span><br><span class="line">    bup_date = serializers.DateField(label=<span class="string">&#x27;发布日期&#x27;</span>)</span><br><span class="line">    hello = serializers.CharField(max_length=<span class="number">10</span>) <span class="comment"># 新添加的字段</span></span><br><span class="line">    <span class="comment">## 以下是反序列化进行的操作</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_btitle</span>(<span class="params">self, value</span>):</span> <span class="comment"># 对某字段单独添加校验，注意命名</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;django&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> value.lower():</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">&quot;图书不是关于Django的&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span>(<span class="params">self, attrs</span>):</span></span><br><span class="line">        <span class="comment"># 多个字段进行联合校验</span></span><br><span class="line">        attrs[<span class="string">&quot;hello&quot;</span>] = <span class="string">&quot;word&quot;</span> <span class="comment"># 添加数据   </span></span><br><span class="line">        <span class="keyword">return</span> attrs </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">validate_btitle</span>(<span class="params">self, value</span>):</span> <span class="comment"># 对某字段单独添加校验，注意命名</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;django&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> value.lower():</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">&quot;图书不是关于Django的&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, validated_data</span>):</span></span><br><span class="line">        <span class="comment"># validated_data 反序列化校验后的字典型数据</span></span><br><span class="line">        <span class="comment"># 当调用序列化器的save方法时，如果当初创建序列化器对象是没有给instance传参数</span></span><br><span class="line">        book = BookInfo.objects.create(**validated_data)</span><br><span class="line">        BookInfo.objects.create(**&#123;<span class="string">&#x27;btitle&#x27;</span>:<span class="string">&#x27;三国&#x27;</span>&#125;) <span class="comment"># 将字典 转换成 关键字=value 这种格式</span></span><br><span class="line">        BookInfo.objects.create(</span><br><span class="line">            btitle=<span class="string">&quot;三国&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> book</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self, instance, validated_data</span>):</span></span><br><span class="line">        <span class="comment"># 如果传入参数，实际上会调用该方法</span></span><br><span class="line">        instance.btitle = validated_data.get(<span class="string">&#x27;btitle&#x27;</span>)</span><br><span class="line">        instance.save()</span><br><span class="line">        <span class="keyword">return</span> instance</span><br><span class="line"></span><br><span class="line"><span class="comment">## 校验成功后操作</span></span><br><span class="line">serializer.save() <span class="comment"># 会执行序列化器中的create方法或update方法</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2022/03/16/Django/DjangoRESTframework/" title="Django RESTframework 教程" target="_blank" rel="external">http://shizhonggan.github.io/2022/03/16/Django/DjangoRESTframework/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/03/18/Ansible/ansible_ui/" title="基于Ansible API的任务管理web系统"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/03/16/Docker/gitlabmigrate/" title="基于docker部署的gitlab迁移"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2022 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
