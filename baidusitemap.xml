@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://shizhonggan.github.io/2022/05/14/BigData/SparkStandalone/</loc>
+    <loc>http://shizhonggan.github.io/2022/05/30/Shell/shell/</loc>
+    <lastmod>2022-05-31</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/25/BigData/SparkYarn/</loc>
+    <lastmod>2022-05-27</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2021/09/27/DevOps/Zabbix/</loc>
+    <lastmod>2022-05-27</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/18/BigData/SparkStandAloneHA/</loc>
+    <lastmod>2022-05-25</lastmod>
+  </url>
+  <url>
+    <loc>http://shizhonggan.github.io/2022/05/14/BigData/HadoopDeploy/</loc>
     <lastmod>2022-05-18</lastmod>
   </url>
   <url>
     <loc>http://shizhonggan.github.io/2022/05/01/BigData/SparkOverview/</loc>
-    <lastmod>2022-05-18</lastmod>
-  </url>
-  <url>
-    <loc>http://shizhonggan.github.io/2022/05/18/BigData/SparkStandAloneHA/</loc>
     <lastmod>2022-05-18</lastmod>
   </url>
   <url>
@@ -31,10 +43,6 @@
   <url>
     <loc>http://shizhonggan.github.io/2022/04/26/Python/interview1/</loc>
     <lastmod>2022-04-26</lastmod>
-  </url>
-  <url>
-    <loc>http://shizhonggan.github.io/2021/09/27/DevOps/Zabbix/</loc>
-    <lastmod>2022-04-24</lastmod>
   </url>
   <url>
     <loc>http://shizhonggan.github.io/2021/09/27/DevOps/zabbix_docker/</loc>
