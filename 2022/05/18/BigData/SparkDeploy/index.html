@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Spark部署 | 甘士忠个人博客</title>
+  <meta name="description" content="Local 部署安装下载地址： https:&#x2F;&#x2F;dlcdn.apache.org&#x2F;spark&#x2F;spark-3.1.3&#x2F;spark-3.1.3-bin-hadoop3.2.tgz https:&#x2F;&#x2F;www.anaconda.com&#x2F;products&#x2F;distribution#Downloads 123456789101112131415161718192021222324252627282930313">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark部署">
+<meta property="og:url" content="http://shizhonggan.github.io/2022/05/18/BigData/SparkDeploy/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="Local 部署安装下载地址： https:&#x2F;&#x2F;dlcdn.apache.org&#x2F;spark&#x2F;spark-3.1.3&#x2F;spark-3.1.3-bin-hadoop3.2.tgz https:&#x2F;&#x2F;www.anaconda.com&#x2F;products&#x2F;distribution#Downloads 123456789101112131415161718192021222324252627282930313">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkjob.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/scala.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/spark-submit_pi.png">
+<meta property="og:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkclusterdepolysuccessful.png">
+<meta property="article:published_time" content="2022-05-18T07:54:23.000Z">
+<meta property="article:modified_time" content="2022-06-13T01:30:50.995Z">
+<meta property="article:author" content="甘士忠">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkjob.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2022/05/18/BigData/SparkDeploy/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Networking/">Networking</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13.29px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/Centos/" style="font-size: 13px;">Centos</a> <a href="/tags/DNS-server/" style="font-size: 13px;">DNS server</a> <a href="/tags/DevOps/" style="font-size: 13.86px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.43px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.71px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Kubernetes/" style="font-size: 13px;">Kubernetes</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13.14px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Networking/" style="font-size: 13px;">Networking</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/Spark/" style="font-size: 13.14px;">Spark</a> <a href="/tags/Spinnaker/" style="font-size: 13px;">Spinnaker</a> <a href="/tags/YARN/" style="font-size: 13px;">YARN</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/bind-chroot/" style="font-size: 13px;">bind chroot</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ci-cd/" style="font-size: 13px;">ci/cd</a> <a href="/tags/classmethod/" style="font-size: 13px;">classmethod</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.29px;">docker</a> <a href="/tags/epoll/" style="font-size: 13px;">epoll</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13.14px;">gitlab</a> <a href="/tags/gunicorn/" style="font-size: 13px;">gunicorn</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/io-multiplexing/" style="font-size: 13px;">io multiplexing</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/poll/" style="font-size: 13px;">poll</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/select/" style="font-size: 13px;">select</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.43px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/Python/Jupyter/" class="title">Jupyter 远程服务器部署与使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:43.040Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/DevOps/demo/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:42.893Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/26/Linux/IO_multiplexing/" class="title">Linux IO Multiplexing, Select vs Poll vs Epoll</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-26T07:39:04.000Z" itemprop="datePublished">2022-09-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/React/">React</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/22/NetworkSecurityPrj/react_admin/" class="title">基于React 后台系统开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-22T06:22:12.000Z" itemprop="datePublished">2022-09-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/30/Python/advance_tip/" class="title">python进阶知识点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-30T05:39:04.000Z" itemprop="datePublished">2022-08-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-BigData/SparkDeploy" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spark部署
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/05/18/BigData/SparkDeploy/" class="article-date">
+	  <time datetime="2022-05-18T07:54:23.000Z" itemprop="datePublished">2022-05-18</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/BigData/">BigData</a>►<a class="article-category-link" href="/categories/BigData/Spark/">Spark</a>
+  </span>
+
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/18/BigData/SparkDeploy/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="Local-部署安装"><a href="#Local-部署安装" class="headerlink" title="Local 部署安装"></a>Local 部署安装</h2><p>下载地址： <a target="_blank" rel="noopener" href="https://dlcdn.apache.org/spark/spark-3.1.3/spark-3.1.3-bin-hadoop3.2.tgz">https://dlcdn.apache.org/spark/spark-3.1.3/spark-3.1.3-bin-hadoop3.2.tgz</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anaconda.com/products/distribution#Downloads">https://www.anaconda.com/products/distribution#Downloads</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">sh Anaconda3-2022.05-Linux-x86_64.sh</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc  <span class="comment"># 使环境生效</span></span><br><span class="line"></span><br><span class="line">conda list <span class="comment"># 正常</span></span><br><span class="line"></span><br><span class="line">python -V <span class="comment">#3.9</span></span><br><span class="line"><span class="comment">## 修改镜像源 </span></span><br><span class="line">vi ~/.condarc <span class="comment">## 网上自己找</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;channels:</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/linux-64</span></span><br><span class="line"><span class="string"> - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/simpleitk/linux-64</span></span><br><span class="line"><span class="string"> - defaults</span></span><br><span class="line"><span class="string">show_channel_urls: true&#x27;</span> &gt; ~/.condarc</span><br><span class="line">conda config --show channels</span><br><span class="line">conda clean -i <span class="comment">## 保证生效</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置虚拟环境</span></span><br><span class="line">conda create -n pyspark python=3.8</span><br><span class="line">    environment location: /opt/anaconda3/envs/pyspark</span><br><span class="line"></span><br><span class="line"><span class="comment">#To activate this environment, use</span></span><br><span class="line">$ conda activate pyspark</span><br><span class="line"></span><br><span class="line"><span class="comment"># To deactivate an active environment, use</span></span><br><span class="line">$ conda deactivate</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 安装spark</span></span><br><span class="line">tar -zxvf spark-3.1.3-bin-hadoop3.2.tgz</span><br><span class="line"></span><br><span class="line">ln -s /opt/spark-xxx /opt/spark <span class="comment"># 可以起别名，我这里直接用mv 替换文件夹名</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置spark环境变量</span></span><br><span class="line">SPARK_HOME: Spark安装目录</span><br><span class="line">PYSPARK_PYTHON: 表示python想运行Python程序，去哪里找python执行器</span><br><span class="line">JAVA_HOME:告知Java在哪里</span><br><span class="line">HADOOP_CONF_DIR: 告知Spark Hadoop的配置文件位置</span><br><span class="line">HADOOP_HOME: 告知spark Hadoop安装在哪里</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export SPARK_HOME=/opt/spark</span></span><br><span class="line"><span class="string">export PYSPARK_PYTHON=/opt/anaconda3/envs/pyspark/bin/python3.8</span></span><br><span class="line"><span class="string">export JAVA_HOME=/opt/java/jdk1.8.0_271</span></span><br><span class="line"><span class="string">export HADOOP_CONF_DIR=/opt/hadoop/hadoop-3.2.3/etc/hadoop</span></span><br><span class="line"><span class="string">export HADOOP_HOME=/opt/hadoop/hadoop-3.2.3</span></span><br><span class="line"><span class="string">export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH &#x27;</span> &gt;&gt; /etc/profile.d/spark-3.1.3.sh</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PYSPARK_PYTHON=/opt/anaconda3/envs/pyspark/bin/python3.8</span></span><br><span class="line"><span class="string">export JAVA_HOME=/opt/java/jdk1.8.0_271&#x27;</span>&gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su</span><br><span class="line">(base) [root@master ec2-user]<span class="comment"># conda activate pyspark</span></span><br><span class="line">(pyspark) [root@master ec2-user]<span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /opt/spark/bin/</span><br><span class="line"><span class="comment">### pyspark 运行python脚本</span></span><br><span class="line">./pyspark</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;i am Spark&quot;</span>)</span><br><span class="line">sc.parallelize([1,2,3,4,5]).map(lambda x: x*10).collect()</span><br></pre></td></tr></table></figure>
+<p><a href="http://ip:port">http://ip:port</a> 访问相应的端口ip可以看到spark job如下：<br><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkjob.png" alt="sparkjob"></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### spark-shell 运行scala</span></span><br><span class="line">./spark-shell</span><br><span class="line">sc.parallelize(Array(1,2,3,4,5)).map(x=&gt;x*10).collect()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>spark-shell 运行scala交互如下：<br><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/scala.png" alt="sparkscalajob"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### submit-submit 直接运行 </span></span><br><span class="line">./spark-submit --master <span class="built_in">local</span>[*] /opt/spark/examples/src/main/python/pi.py 10 <span class="comment">## 10次迭代求解圆周率</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/spark-submit_pi.png" alt="spark-submit_pi"></p>
+<h2 id="Standalone-架构"><a href="#Standalone-架构" class="headerlink" title="Standalone 架构"></a>Standalone 架构</h2><p>Standalone 模式是Spark自带的一种集群模式，不同于前面本地模式启动多个进程来模拟集群环境，Standalone模式是真实的在多个机器之间搭建spark集群的环境，完全可以利用该模式搭建多机器集群，用于实际的大数据处理。</p>
+<p>Standalone 是完整的spark运行环境，其中：</p>
+<ul>
+<li>Master角色以Master进程存在，worker角色以worker进程存在</li>
+<li>Driver角色在运行时存在于Master进程内，Executor运行于Worker进程内</li>
+</ul>
+<p>Standalone集群在进程上主要有3类进程：</p>
+<ul>
+<li>主节点Master进程：<ul>
+<li>master角色，管理整个集群资源，并托管运行各个任务的Driver</li>
+</ul>
+</li>
+<li>从节点Workers:<ul>
+<li>worker角色，管理每个机器的资源，分配对应的资源来运行Excutor（Task）</li>
+</ul>
+</li>
+<li>历史服务器HistoryServer(可选)：<ul>
+<li>spark Application运行完成以后，保存时间日志数据至HDFS，启动HistoryServer可以查看应用运行相关信息</li>
+</ul>
+</li>
+</ul>
+<h2 id="Standalone-集群环境安装"><a href="#Standalone-集群环境安装" class="headerlink" title="Standalone 集群环境安装"></a>Standalone 集群环境安装</h2><p>master 运行Spark的Master进程和1个work进程<br>worker1 运行Spark的1个work进程<br>worker2 运行Spark的1个work进程  </p>
+<h3 id="每台机器部署Anaconda-python-环境【略，同上】"><a href="#每台机器部署Anaconda-python-环境【略，同上】" class="headerlink" title="每台机器部署Anaconda(python) 环境【略，同上】"></a>每台机器部署Anaconda(python) 环境【略，同上】</h3><h3 id="每台机器部署spark-环境【略-同上】"><a href="#每台机器部署spark-环境【略-同上】" class="headerlink" title="每台机器部署spark 环境【略,同上】"></a>每台机器部署spark 环境【略,同上】</h3><h3 id="spark集群文件配置"><a href="#spark集群文件配置" class="headerlink" title="spark集群文件配置"></a>spark集群文件配置</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/spark/conf</span><br><span class="line">cp workers.template workers</span><br><span class="line">cp spark-env.sh.template spark-env.sh</span><br><span class="line">cp spark-defaults.conf.template spark-defaults.conf</span><br><span class="line">cp log4j.properties.template log4j.properties</span><br><span class="line"><span class="comment"># 将spark程序运行的历史日志 存到hdfs的/sparklog文件夹中</span></span><br><span class="line">hadoop fs -mkdir /sparklog</span><br><span class="line">mkdir -p /data/spark/<span class="built_in">log</span>/</span><br></pre></td></tr></table></figure>
+<h4 id="1）修改-workers"><a href="#1）修改-workers" class="headerlink" title="1）修改 workers"></a>1）修改 workers</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;master</span></span><br><span class="line"><span class="string">worker1</span></span><br><span class="line"><span class="string">worker2&#x27;</span> &gt;&gt; workers</span><br></pre></td></tr></table></figure>
+<h4 id="2-修改-spark-env-sh"><a href="#2-修改-spark-env-sh" class="headerlink" title="2) 修改 spark-env.sh"></a>2) 修改 spark-env.sh</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">## java安装目录</span></span><br><span class="line"><span class="string">JAVA_HOME=/opt/java/jdk1.8.0_271</span></span><br><span class="line"><span class="string">## HADOOP软件配置文件目录，读取HDFS上文件和运行YARN集群</span></span><br><span class="line"><span class="string">HADOOP_CONF_DIR=/opt/hadoop/hadoop-3.2.3/etc/hadoop</span></span><br><span class="line"><span class="string">YARN_CONF_DIR=/opt/hadoop/hadoop-3.2.3/etc/hadoop</span></span><br><span class="line"><span class="string">## 指定spark master运行在哪台机器</span></span><br><span class="line"><span class="string">export SPARK_MASTER_HOST=master</span></span><br><span class="line"><span class="string">## 指定spark master的通讯端口</span></span><br><span class="line"><span class="string">export SPARK_MASTER_PORT=9777</span></span><br><span class="line"><span class="string">## 告知spark master的webui 端口</span></span><br><span class="line"><span class="string">SPARK_MASTER_WEBUI_PORT=9780</span></span><br><span class="line"><span class="string">## work cpu可用核数</span></span><br><span class="line"><span class="string">SPARK_WORKER_CORES=1</span></span><br><span class="line"><span class="string">## work 可用内存</span></span><br><span class="line"><span class="string">SPARK_WORKER_MEMORY=1g</span></span><br><span class="line"><span class="string">## work 的工作通讯地址</span></span><br><span class="line"><span class="string">SPARK_WORKER_PORT=9778</span></span><br><span class="line"><span class="string">## work 的webui地址</span></span><br><span class="line"><span class="string">SPARK_WORKER_WEBUI_PORT=9781</span></span><br><span class="line"><span class="string">## 设置历史服务器</span></span><br><span class="line"><span class="string"># 配置的意思是 将spark程序运行的历史日志 存到hdfs的/sparklog文件夹中</span></span><br><span class="line"><span class="string">SPARK_HISTORY_OPTS=&quot;-Dspark.history.fs.logDirectory=hdfs://master:9710/sparklog -Dspark.history.fs.cleaner.enabled=true&quot;</span></span><br><span class="line"><span class="string">&#x27;</span> &gt;&gt; spark-env.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>hdfs://master:9710 对应 fs.defaultFS；同时需要在hadoop下创建/sparklog文件夹 “hadoop fs -mkdir /sparklog”</p>
+</blockquote>
+<h4 id="3-修改-spark-defaults-conf"><a href="#3-修改-spark-defaults-conf" class="headerlink" title="3) 修改 spark-defaults.conf"></a>3) 修改 spark-defaults.conf</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string"># 开启spark的日期记录功能</span></span><br><span class="line"><span class="string">spark.eventLog.enabled true</span></span><br><span class="line"><span class="string"># 设置spark日志记录路径</span></span><br><span class="line"><span class="string">spark.eventLog.dir hdfs://master:9710/sparklog/</span></span><br><span class="line"><span class="string"># spark.eventLog.dir file:/data/spark/log/</span></span><br><span class="line"><span class="string"># 设置spark日志是否启动压缩</span></span><br><span class="line"><span class="string">spark.eventLog.compress false</span></span><br><span class="line"><span class="string">&#x27;</span> &gt;&gt; spark-defaults.conf</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-修改-log4j-properties"><a href="#4-修改-log4j-properties" class="headerlink" title="4) 修改 log4j.properties"></a>4) 修改 log4j.properties</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">log4j.rootCategory=WARN, console <span class="comment"># 修改</span></span><br><span class="line"></span><br><span class="line">cat log4j.properties | grep log4j.rootCategory=</span><br><span class="line">sed -i <span class="string">&#x27;s#log4j.rootCategory=INFO, console#log4j.rootCategory=WARN, console#&#x27;</span> log4j.properties</span><br></pre></td></tr></table></figure>
+<h4 id="复制文件到其他节点"><a href="#复制文件到其他节点" class="headerlink" title="复制文件到其他节点"></a>复制文件到其他节点</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scp workers 192.168.1.7:/opt/spark/conf</span><br><span class="line">scp spark-env.sh 192.168.1.7:/opt/spark/conf</span><br><span class="line">scp spark-defaults.conf 192.168.1.7:/opt/spark/conf</span><br><span class="line">scp log4j.properties 192.168.1.7:/opt/spark/conf</span><br><span class="line"></span><br><span class="line">scp workers 192.168.1.9:/opt/spark/conf</span><br><span class="line">scp spark-env.sh 192.168.1.9:/opt/spark/conf</span><br><span class="line">scp spark-defaults.conf 192.168.1.9:/opt/spark/conf</span><br><span class="line">scp log4j.properties 192.168.1.9:/opt/spark/conf</span><br></pre></td></tr></table></figure>
+<h3 id="启动spark集群"><a href="#启动spark集群" class="headerlink" title="启动spark集群"></a>启动spark集群</h3><blockquote>
+<p>一定要用”./path/start-all.sh “或”./start-all.sh”形式， 而不是绝对路径或直接文件执行</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/hadoop/hadoop-3.2.3/etc/hadoop/ &amp;&amp; stop-all.sh</span><br><span class="line"><span class="built_in">cd</span> /data/hadoop/pid/ </span><br><span class="line"></span><br><span class="line">./sbin/start-history-server.sh </span><br><span class="line">./sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+<h3 id="检查spark集群"><a href="#检查spark集群" class="headerlink" title="检查spark集群"></a>检查spark集群</h3><p><a target="_blank" rel="noopener" href="http://ip:9780/">http://ip:9780</a></p>
+<p><img src="https://ganshizhong.gitee.io/blogimages/BigData/Spark/sparkclusterdepolysuccessful.png" alt="sparkclusterdepolysuccessful"></p>
+<h3 id="集群连接测试"><a href="#集群连接测试" class="headerlink" title="集群连接测试"></a>集群连接测试</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/spark</span><br><span class="line"><span class="comment">## pyspark</span></span><br><span class="line">./bin/pyspark --master spark://master:9777</span><br><span class="line">sc.parallelize([1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5]).map(lambda x: x*10).collect()</span><br><span class="line"></span><br><span class="line">sc.textFile(<span class="string">&quot;hdfs://master:9710/input/word.txt&quot;</span>).flatMap(lambda line: line.split(<span class="string">&quot; &quot;</span>)).map(lambda x:(x,1)).reduceByKey(lambda a,b: a+b).collect()</span><br><span class="line"><span class="comment">## spark-submit</span></span><br><span class="line">./bin/spark-submit --master spark://master:9777 /opt/spark/examples/src/main/python/pi.py 100</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>StandAlone的原理？</li>
+</ol>
+<p>Master和Worker角色以独立进程的形式存在，并组成Spark运行时环境（集群）</p>
+<ol start="2">
+<li>Spark角色在StandAlone中的分布？</li>
+</ol>
+<p>Master角色： Master进程， worker角色： worker进程， Driver角色： 以线程运行在Master中，Excutor角色：以线程运行在worker中</p>
+<ol start="3">
+<li>Standalone如何提交Spark应用？</li>
+</ol>
+<p>./bin/spark-submit –master spark://server:9777</p>
+<ol start="4">
+<li>Job\Stage\Task的关系？</li>
+</ol>
+<p>一个Spark运行程序会被分成多个子任务（Job）运行，每一个Job会分成多个阶段（Stage）来运行，每个Stage内会分出来多个线程（Task）来执行具体任务。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2022/05/18/BigData/SparkDeploy/" title="Spark部署" target="_blank" rel="external">http://shizhonggan.github.io/2022/05/18/BigData/SparkDeploy/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/05/25/BigData/SparkYarn/" title="Spark on YARN 环境搭建"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/05/18/BigData/SparkStandAloneHA/" title="Spark StandAlone HA集群搭建"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2024 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

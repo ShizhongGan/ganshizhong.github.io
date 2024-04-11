@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>甘士忠个人博客</title>
+  <meta name="description" content="This is a demo project required by SRE role.The candidate should be able to complete the project independently in two days and well document the procedure in a practical and well understanding way.It">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钟声">
+<meta property="og:url" content="http://shizhonggan.github.io/2022/10/13/DevOps/demo/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="This is a demo project required by SRE role.The candidate should be able to complete the project independently in two days and well document the procedure in a practical and well understanding way.It">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-13T02:46:42.893Z">
+<meta property="article:modified_time" content="2022-10-13T02:46:42.909Z">
+<meta property="article:author" content="甘士忠">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2022/10/13/DevOps/demo/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Networking/">Networking</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13.29px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/Centos/" style="font-size: 13px;">Centos</a> <a href="/tags/DNS-server/" style="font-size: 13px;">DNS server</a> <a href="/tags/DevOps/" style="font-size: 13.86px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.43px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.71px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Kubernetes/" style="font-size: 13px;">Kubernetes</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13.14px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Networking/" style="font-size: 13px;">Networking</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/Spark/" style="font-size: 13.14px;">Spark</a> <a href="/tags/Spinnaker/" style="font-size: 13px;">Spinnaker</a> <a href="/tags/YARN/" style="font-size: 13px;">YARN</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/bind-chroot/" style="font-size: 13px;">bind chroot</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ci-cd/" style="font-size: 13px;">ci/cd</a> <a href="/tags/classmethod/" style="font-size: 13px;">classmethod</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.29px;">docker</a> <a href="/tags/epoll/" style="font-size: 13px;">epoll</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13.14px;">gitlab</a> <a href="/tags/gunicorn/" style="font-size: 13px;">gunicorn</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/io-multiplexing/" style="font-size: 13px;">io multiplexing</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/poll/" style="font-size: 13px;">poll</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/select/" style="font-size: 13px;">select</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.43px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/Python/Jupyter/" class="title">Jupyter 远程服务器部署与使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:43.040Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/DevOps/demo/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:42.893Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/26/Linux/IO_multiplexing/" class="title">Linux IO Multiplexing, Select vs Poll vs Epoll</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-26T07:39:04.000Z" itemprop="datePublished">2022-09-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/React/">React</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/22/NetworkSecurityPrj/react_admin/" class="title">基于React 后台系统开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-22T06:22:12.000Z" itemprop="datePublished">2022-09-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/30/Python/advance_tip/" class="title">python进阶知识点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-30T05:39:04.000Z" itemprop="datePublished">2022-08-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-DevOps/demo" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/10/13/DevOps/demo/" class="article-date">
+	  <time datetime="2022-10-13T02:46:42.893Z" itemprop="datePublished">2022-10-13</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/10/13/DevOps/demo/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>This is a demo project required by SRE role.<br>The candidate should be able to complete the project independently in two days and well document the procedure in a practical and well understanding way.<br>It is not guaranteed that all tasks can be achieved as expected, in which circumstance, the candidate should trouble shoot the issue, conclude based on findings and document which/why/how.</p>
+<p>Task 0: Install a ubuntu 18.04 server 64-bit<br>either in a physical machine or a virtual machine (choose any hypervisor like virtualbox, vmware workstation/fusion, kvm, hyper-v, …. )<br>Use virtualbox as a quick start: <a target="_blank" rel="noopener" href="https://www.virtualbox.org/">https://www.virtualbox.org/</a><br><a target="_blank" rel="noopener" href="http://releases.ubuntu.com/18.04/">http://releases.ubuntu.com/18.04/</a><br><a target="_blank" rel="noopener" href="http://releases.ubuntu.com/18.04/ubuntu-18.04.5-live-server-amd64.iso">http://releases.ubuntu.com/18.04/ubuntu-18.04.5-live-server-amd64.iso</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022468063">https://segmentfault.com/a/1190000022468063</a></p>
+<p><a target="_blank" rel="noopener" href="https://nsrc.org/workshops/2014/btnog/raw-attachment/wiki/Track2Agenda/ex-virtualbox-portforward-ssh.htm">https://nsrc.org/workshops/2014/btnog/raw-attachment/wiki/Track2Agenda/ex-virtualbox-portforward-ssh.htm</a></p>
+<p>For virtualbox VM, use network NAT and forward required ports to host machine, like:<br>22-&gt;22222 for ssh<br>80-&gt;28080 for gitlab<br>8081/8082-&gt;28081/28082 for go app<br>31080/31081-&gt;31080/31081 for go app in k8s</p>
+<p>Task 1: Update system<br>ssh to guest machine from host machine ($ ssh user@localhost -p 22222) and update the system to the latest<br><a target="_blank" rel="noopener" href="https://help.ubuntu.com/18.04/serverguide/apt.html">https://help.ubuntu.com/18.04/serverguide/apt.html</a><br>upgrade the kernel to the 18.04 latest<br>Note: You may need to change the default apt repo to local to avoid network issue, like:<br>    # cat /etc/apt/sources.list<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic main restricted<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-updates main restricted<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic universe<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-updates universe<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic multiverse<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-updates multiverse<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-backports main restricted universe multiverse<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-security main restricted<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-security universe<br>    deb <a target="_blank" rel="noopener" href="http://mirrors.163.com/ubuntu">http://mirrors.163.com/ubuntu</a> bionic-security multiverse</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;deb http://mirrors.163.com/ubuntu bionic main restricted</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-updates main restricted</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic universe</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-updates universe</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic multiverse</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-updates multiverse</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-backports main restricted universe multiverse</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-security main restricted</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-security universe</span></span><br><span class="line"><span class="string">deb http://mirrors.163.com/ubuntu bionic-security multiverse&#x27;</span> &gt; /cat/etc/apt/sources.list</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<p>Task 2: install gitlab-ce version in the host<br><a target="_blank" rel="noopener" href="https://about.gitlab.com/install/#ubuntu?version=ce">https://about.gitlab.com/install/#ubuntu?version=ce</a><br>Expect output: Gitlab is up and running at <a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.0.0.1</a> (no tls or FQDN required)<br>Access it from host machine <a target="_blank" rel="noopener" href="http://127.0.0.1:28080/">http://127.0.0.1:28080</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04">https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install ca-certificates curl openssh-server postfix</span><br><span class="line">curl -LO https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh</span><br><span class="line"></span><br><span class="line">bash /tmp/script.deb.sh</span><br><span class="line">apt install gitlab-ce</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Task 3: create a demo group/project in gitlab<br>named demo/go-web-hello-world (demo is group name, go-web-hello-world is project name).<br>Use golang to build a hello world web app (listen to 8081 port)<br>Check-in the code to mainline (need to use git).<br><a target="_blank" rel="noopener" href="https://golang.org/">https://golang.org/</a><br><a target="_blank" rel="noopener" href="https://gowebexamples.com/hello-world/">https://gowebexamples.com/hello-world/</a><br>Expect source code at <a target="_blank" rel="noopener" href="http://127.0.0.1:28080/demo/go-web-hello-world">http://127.0.0.1:28080/demo/go-web-hello-world</a></p>
+<p>Task 4: build the app and expose ($ go run) the service to 28081 port<br>Expect output from host machine:<br>curl <a target="_blank" rel="noopener" href="http://127.0.0.1:28081/">http://127.0.0.1:28081</a><br>Go Web Hello World!</p>
+<p>Task 5: install docker<br><a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a><br>Note:  To avoid default docker repo access issue (could not pull images), you can add mirror registry like this:<br>    # cat /etc/docker/daemon.json<br>    {<br>      “registry-mirrors”: [“<a href="https://hub-mirror.c.163.com&quot;]">https://hub-mirror.c.163.com&quot;]</a><br>    }<br>    # systemctl daemon-reload<br>    # systemctl restart docker</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apt install  ca-certificates  curl  gnupg  lsb-release</span><br><span class="line">mkdir -p /etc/apt/keyrings</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Task 6: run the app in container<br>build a docker image ($ docker build) for the web app and run that in a container ($ docker run), expose the service to 28082 (-p)<br><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/build/">https://docs.docker.com/engine/reference/commandline/build/</a><br>Check in the Dockerfile into gitlab<br>Expect output from host machine:<br>curl <a target="_blank" rel="noopener" href="http://127.0.0.1:28082/">http://127.0.0.1:28082</a><br>Go Web Hello World!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;net&#x2F;http&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    http.HandleFunc(&quot;&#x2F;&quot;, func(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">        fmt.Fprintf(w, &quot;\n Go Web Hello World!\n&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    http.ListenAndServe(&quot;:8081&quot;, nil)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># Create build stage based on buster image</span><br><span class="line">FROM golang:alpine</span><br><span class="line"># Create working directory under &#x2F;app</span><br><span class="line">WORKDIR &quot;&#x2F;app&quot;</span><br><span class="line"># Install any required modules</span><br><span class="line">#RUN go mod download</span><br><span class="line"># Copy over Go source code</span><br><span class="line">COPY hello.go &#x2F;app&#x2F;hello.go</span><br><span class="line">RUN go build hello.go</span><br><span class="line"># Run the Go build and output binary under hello_go_http</span><br><span class="line"># Make sure to expose the port the HTTP server is using</span><br><span class="line">EXPOSE 8082</span><br><span class="line"># Run the app binary when we run the container</span><br><span class="line">ENTRYPOINT [&quot;.&#x2F;hello&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker build -t goweb .</span><br><span class="line">docker run -d -p 8083:8082  --name goweb goweb</span><br><span class="line">docker tag goweb ganshizhong&#x2F;go-web-hello-world:v0.1</span><br><span class="line">docker push ganshizhong&#x2F;go-web-hello-world:v0.1</span><br><span class="line">docker pull ganshizhong&#x2F;go-web-hello-world:v0.1</span><br></pre></td></tr></table></figure>
+<p>Error response from daemon: Get <a target="_blank" rel="noopener" href="https://registry-1.docker.io/v2/">https://registry-1.docker.io/v2/</a>: dial tcp: lookup registry-1.docker.io: Temporary failure in name resolution<br>Q：删除所有none镜像<br>docker rmi <code>docker images | grep  &quot;&lt;none&gt;&quot; | awk &#39;&#123;print $3&#125;&#39;</code><br>参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42581414/article/details/105954828">https://blog.csdn.net/weixin_42581414/article/details/105954828</a></p>
+<p>Task 7: push image to dockerhub<br>tag the docker image using your_dockerhub_id/go-web-hello-world:v0.1 and push it to docker hub (<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a>)<br>Expect output: <a target="_blank" rel="noopener" href="https://hub.docker.com/repository/docker/your_dockerhub_id/go-web-hello-world">https://hub.docker.com/repository/docker/your_dockerhub_id/go-web-hello-world</a></p>
+<p>Task 8: document the procedure in a MarkDown file<br>create a README.md file in the gitlab repo and add the technical procedure above (0-7) in this file</p>
+<p>Task 9: install a single node Kubernetes cluster using kubeadm<br><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/">https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/</a><br>Check in the admin.conf file into the gitlab repo</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y apt-transport-https ca-certificates curl</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44895681/article/details/107413950">https://blog.csdn.net/qq_44895681/article/details/107413950</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/H12590400327/article/details/103740602">https://blog.csdn.net/H12590400327/article/details/103740602</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8e78e0abddf9">https://www.jianshu.com/p/8e78e0abddf9</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43168190/article/details/107227626">https://blog.csdn.net/weixin_43168190/article/details/107227626</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dream397/p/13814166.html">https://www.cnblogs.com/dream397/p/13814166.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.quwenqing.com/archives/1899.html">https://www.quwenqing.com/archives/1899.html</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --image-repository=registry.aliyuncs.com/google_containers</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Task 10: deploy the hello world container<br>in the kubernetes above and expose the service to nodePort 31080<br>Expect output:<br>curl <a target="_blank" rel="noopener" href="http://127.0.0.1:31080/">http://127.0.0.1:31080</a><br>Go Web Hello World!<br>Check in the deployment yaml file or the command line into the gitlab repo</p>
+<p><a target="_blank" rel="noopener" href="https://galaxyyao.github.io/2019/06/24/%E5%AE%B9%E5%99%A8-8-Kubernetes%E5%AE%9E%E6%88%98-k8s%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B9%8BNode-Pod%E4%B8%8EDeployment/">https://galaxyyao.github.io/2019/06/24/%E5%AE%B9%E5%99%A8-8-Kubernetes%E5%AE%9E%E6%88%98-k8s%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B9%8BNode-Pod%E4%B8%8EDeployment/</a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/zh-cn/docs/reference/kubectl/cheatsheet/</a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/_print/">https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/_print/</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes <span class="comment"># 节点，相当于一台容器</span></span><br><span class="line">kubectl describe node <span class="string">&#x27;node-name&#x27;</span></span><br><span class="line">kubectl </span><br><span class="line"></span><br><span class="line">kubectl run myweb --image=ganshizhong/go-web-hello-world:v0.1 --port=8082  -o yaml &gt; goweb.ymal</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl expose deployment goweb  --port=31080 --target-port=8082</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl rollout restart deployment goweb</span><br><span class="line"></span><br><span class="line">kubectl edit svc -n kkubernetes-dashboard</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: &quot;2022-09-16T02:38:43Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    app: goweb</span><br><span class="line">  name: goweb</span><br><span class="line">  namespace: default</span><br><span class="line">  resourceVersion: &quot;30824&quot;</span><br><span class="line">  uid: a9c5fab5-3c4a-49b7-bb80-cdbb58e72e3d</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: 10.111.191.86</span><br><span class="line">  clusterIPs:</span><br><span class="line">  - 10.111.191.86</span><br><span class="line">  externalTrafficPolicy: Cluster</span><br><span class="line">  internalTrafficPolicy: Cluster</span><br><span class="line">  ipFamilies:</span><br><span class="line">  - IPv4</span><br><span class="line">  ipFamilyPolicy: SingleStack</span><br><span class="line">  ports:</span><br><span class="line">  - nodePort: 51828</span><br><span class="line">    port: 31080</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: 8082</span><br><span class="line">  selector:</span><br><span class="line">    app: goweb</span><br><span class="line">  sessionAffinity: None</span><br><span class="line">  type: NodePort # 将&#96;ClusterIP&#96;替换为 &#96;NodePort&#96; 会自动产生一个nodePort端口，修改即可</span><br><span class="line">status:</span><br><span class="line">  loadBalancer: &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Task 11: install kubernetes dashboard<br>and expose the service to nodeport 31081<br><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/</a><br>Expect output: <a target="_blank" rel="noopener" href="https://127.0.0.1:31081/">https://127.0.0.1:31081</a> (asking for token)</p>
+<p>Task 12: generate token for dashboard login in task 11<br>figure out how to generate token to login to the dashboard and publish the procedure to the gitlab.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md</span><br><span class="line"></span><br><span class="line">kubectl -n kubernetes-dashboard create token admin-user</span><br></pre></td></tr></table></figure>
+
+<p>Task 13: publish your work<br>push all files/procedures in your local gitlab repo to remote github repo (e.g. <a target="_blank" rel="noopener" href="https://github.com/your_github_id/go-web-hello-world">https://github.com/your_github_id/go-web-hello-world</a>)<br>if this is for an interview session, please send it to <a href="mailto:&#x62;&#111;&#46;&#99;&#x75;&#105;&#64;&#101;&#114;&#x69;&#99;&#115;&#115;&#x6f;&#x6e;&#x2e;&#x63;&#111;&#109;">&#x62;&#111;&#46;&#99;&#x75;&#105;&#64;&#101;&#114;&#x69;&#99;&#115;&#115;&#x6f;&#x6e;&#x2e;&#x63;&#111;&#109;</a>, no later than two calendar days after the interview.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps&#x2F;v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: my-go-app</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: my-go-app</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: my-go-app</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: go-app-container</span><br><span class="line">          image: registry.cn-shanghai.aliyuncs.com&#x2F;your_hubname_xxxx&#x2F;servertest:1.0.0</span><br><span class="line">          imagePullPolicy: IfNotPresent</span><br><span class="line">          resources:</span><br><span class="line">            limits:</span><br><span class="line">              memory: &quot;512Mi&quot;</span><br><span class="line">              cpu: &quot;500m&quot;</span><br><span class="line">            requests:</span><br><span class="line">              memory: &quot;64Mi&quot;</span><br><span class="line">              cpu: &quot;100m&quot;</span><br><span class="line">          ports:</span><br><span class="line">          - containerPort: 8000</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: &quot;2022-09-16T02:06:39Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    run: deplyment</span><br><span class="line">  name: deplyment</span><br><span class="line">  namespace: default</span><br><span class="line">  resourceVersion: &quot;13869&quot;</span><br><span class="line">  uid: b6f661e5-a718-4774-bfcb-5921e5058d04</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - args:</span><br><span class="line">    - myweb</span><br><span class="line">    image: ganshizhong&#x2F;go-web-hello-world:v0.1</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    name: deplyment</span><br><span class="line">    ports:</span><br><span class="line">    - containerPort: 8082</span><br><span class="line">      protocol: TCP</span><br><span class="line">    resources: &#123;&#125;</span><br><span class="line">    terminationMessagePath: &#x2F;dev&#x2F;termination-log</span><br><span class="line">    terminationMessagePolicy: File</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - mountPath: &#x2F;var&#x2F;run&#x2F;secrets&#x2F;kubernetes.io&#x2F;serviceaccount</span><br><span class="line">      name: kube-api-access-dglgf</span><br><span class="line">      readOnly: true</span><br><span class="line">  dnsPolicy: ClusterFirst</span><br><span class="line">  enableServiceLinks: true</span><br><span class="line">  preemptionPolicy: PreemptLowerPriority</span><br><span class="line">  priority: 0</span><br><span class="line">  restartPolicy: Always</span><br><span class="line">  schedulerName: default-scheduler</span><br><span class="line">  securityContext: &#123;&#125;</span><br><span class="line">  serviceAccount: default</span><br><span class="line">  serviceAccountName: default</span><br><span class="line">  terminationGracePeriodSeconds: 30</span><br><span class="line">  tolerations:</span><br><span class="line">  - effect: NoExecute</span><br><span class="line">    key: node.kubernetes.io&#x2F;not-ready</span><br><span class="line">    operator: Exists</span><br><span class="line">    tolerationSeconds: 300</span><br><span class="line">  - effect: NoExecute</span><br><span class="line">    key: node.kubernetes.io&#x2F;unreachable</span><br><span class="line">    operator: Exists</span><br><span class="line">    tolerationSeconds: 300</span><br><span class="line">  volumes:</span><br><span class="line">  - name: kube-api-access-dglgf</span><br><span class="line">    projected:</span><br><span class="line">      defaultMode: 420</span><br><span class="line">      sources:</span><br><span class="line">      - serviceAccountToken:</span><br><span class="line">          expirationSeconds: 3607</span><br><span class="line">          path: token</span><br><span class="line">      - configMap:</span><br><span class="line">          items:</span><br><span class="line">          - key: ca.crt</span><br><span class="line">            path: ca.crt</span><br><span class="line">          name: kube-root-ca.crt</span><br><span class="line">      - downwardAPI:</span><br><span class="line">          items:</span><br><span class="line">          - fieldRef:</span><br><span class="line">              apiVersion: v1</span><br><span class="line">              fieldPath: metadata.namespace</span><br><span class="line">            path: namespace</span><br><span class="line">status:</span><br><span class="line">  phase: Pending</span><br><span class="line">  qosClass: BestEffort</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">单节点，preemption: 0/1 nodes are available: 1 Preemption is not helpful <span class="keyword">for</span> scheduling</span><br><span class="line"></span><br><span class="line">https://www.cnblogs.com/fat-girl-spring/p/14538991.html</span><br><span class="line"></span><br><span class="line">root@demo:/home/gsz<span class="comment"># kubectl describe node demo |grep Taint</span></span><br><span class="line">Taints:             node-role.kubernetes.io/control-plane:NoSchedule</span><br><span class="line">root@demo:/home/gsz<span class="comment"># kubectl taint node demo node-role.kubernetes.io/control-plane:NoSchedule-</span></span><br><span class="line">node/demo untainted</span><br><span class="line">root@demo:/home/gsz<span class="comment"># kubectl describe node demo |grep Taint</span></span><br><span class="line">Taints:             &lt;none&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2022/10/13/DevOps/demo/" title="" target="_blank" rel="external">http://shizhonggan.github.io/2022/10/13/DevOps/demo/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/10/13/Python/Jupyter/" title="Jupyter 远程服务器部署与使用"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/09/26/Linux/IO_multiplexing/" title="Linux IO Multiplexing, Select vs Poll vs Epoll"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2024 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

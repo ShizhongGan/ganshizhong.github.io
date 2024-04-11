@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>tkinter快速入门 | 甘士忠个人博客</title>
+  <meta name="description" content="1. python类变量和实例变量的异同 类变量：可在类的所有实例之间共享的值（也就是说，它们不是单独分配给每个实例的）。 实例变量：实例化之后，每个实例单独拥有的变量。1234567891011121314class student():    age &#x3D; 0    name &#x3D; &amp;#x27;stu&amp;#x27;    # age,name是类变量    def __init__(self,age">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tkinter快速入门">
+<meta property="og:url" content="http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="1. python类变量和实例变量的异同 类变量：可在类的所有实例之间共享的值（也就是说，它们不是单独分配给每个实例的）。 实例变量：实例化之后，每个实例单独拥有的变量。1234567891011121314class student():    age &#x3D; 0    name &#x3D; &amp;#x27;stu&amp;#x27;    # age,name是类变量    def __init__(self,age">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-21T08:39:04.000Z">
+<meta property="article:modified_time" content="2022-05-07T10:07:50.319Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Networking/">Networking</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13.29px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/Centos/" style="font-size: 13px;">Centos</a> <a href="/tags/DNS-server/" style="font-size: 13px;">DNS server</a> <a href="/tags/DevOps/" style="font-size: 13.86px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.43px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.71px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Kubernetes/" style="font-size: 13px;">Kubernetes</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13.14px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Networking/" style="font-size: 13px;">Networking</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/Spark/" style="font-size: 13.14px;">Spark</a> <a href="/tags/Spinnaker/" style="font-size: 13px;">Spinnaker</a> <a href="/tags/YARN/" style="font-size: 13px;">YARN</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/bind-chroot/" style="font-size: 13px;">bind chroot</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ci-cd/" style="font-size: 13px;">ci/cd</a> <a href="/tags/classmethod/" style="font-size: 13px;">classmethod</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.29px;">docker</a> <a href="/tags/epoll/" style="font-size: 13px;">epoll</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13.14px;">gitlab</a> <a href="/tags/gunicorn/" style="font-size: 13px;">gunicorn</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/io-multiplexing/" style="font-size: 13px;">io multiplexing</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/poll/" style="font-size: 13px;">poll</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/select/" style="font-size: 13px;">select</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.43px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/Python/Jupyter/" class="title">Jupyter 远程服务器部署与使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:43.040Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/DevOps/demo/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:42.893Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/26/Linux/IO_multiplexing/" class="title">Linux IO Multiplexing, Select vs Poll vs Epoll</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-26T07:39:04.000Z" itemprop="datePublished">2022-09-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/React/">React</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/22/NetworkSecurityPrj/react_admin/" class="title">基于React 后台系统开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-22T06:22:12.000Z" itemprop="datePublished">2022-09-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/30/Python/advance_tip/" class="title">python进阶知识点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-30T05:39:04.000Z" itemprop="datePublished">2022-08-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Python/pywebbakdevtest1" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      tkinter快速入门
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/02/21/Python/pywebbakdevtest1/" class="article-date">
+	  <time datetime="2022-02-21T08:39:04.000Z" itemprop="datePublished">2022-02-21</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/python/" rel="tag">python</a>, <a class="article-tag-link-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/02/21/Python/pywebbakdevtest1/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="1-python类变量和实例变量的异同"><a href="#1-python类变量和实例变量的异同" class="headerlink" title="1. python类变量和实例变量的异同"></a>1. python类变量和实例变量的异同</h2><ul>
+<li>类变量：可在类的所有实例之间共享的值（也就是说，它们不是单独分配给每个实例的）。</li>
+<li>实例变量：实例化之后，每个实例单独拥有的变量。<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>():</span></span><br><span class="line">    age = <span class="number">0</span></span><br><span class="line">    name = <span class="string">&#x27;stu&#x27;</span></span><br><span class="line">    <span class="comment"># age,name是类变量</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,age,name</span>):</span></span><br><span class="line">        self.age = age</span><br><span class="line">        self.name = name</span><br><span class="line">    <span class="comment"># 访问实例变量(用self.age  self.name)</span></span><br><span class="line"></span><br><span class="line">student1 = student(<span class="number">18</span>,<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(student1.name) </span><br><span class="line"><span class="comment"># 打印实例变量，输出hello</span></span><br><span class="line"><span class="built_in">print</span>(student.name)  </span><br><span class="line"><span class="comment"># 打印类变量，输出stu</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-python中的协程如何实现的"><a href="#2-python中的协程如何实现的" class="headerlink" title="2. python中的协程如何实现的"></a>2. python中的协程如何实现的</h2></li>
+</ul>
+<ul>
+<li>进程：进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位。每个进程都有自己的独立内存空间，不同进程通过进程间通信来通信。由于进程比较重量，占据独立的内存，所以上下文进程间的切换开销（栈、寄存器、虚拟内存、文件句柄等）比较大，但相对比较稳定安全。</li>
+</ul>
+<p>　　2、线程</p>
+<p>线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈),但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。线程间通信主要通过共享内存，上下文切换很快，资源开销较少，但相比进程不够稳定容易丢失数据。</p>
+<p>　　3、协程</p>
+<p>协程是一种用户态的轻量级线程，协程的调度完全由用户控制。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁的访问全局变量，所以上下文的切换非常快。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>首页 注册 登录<br>V2EX = way to explore<br>V2EX 是一个关于分享和探索的地方<br>现在注册<br>已注册用户请  登录<br>FinClip<br>DataPacket<br>CDN77<br>广告<br>FinClip<br>2022 FinClip 黑客马拉松，寻找「最强大脑」<br>广告<br>rapospectreV2EX  ›  程序员<br>2017 后端面试经历分享<br>  44     rapospectre · bluedazzle · 2017-03-20 11:36:07 +08:00 · 26188 次点击<br>这是一个创建于 1814 天前的主题，其中的信息可能已经有所发展或是发生改变。<br>0.背景<br>博主本人 2015 年毕业于郫县某 985 大学通信工程系，因为大学期间一直自己创业所以错过了大四秋招春招，毕业后又在北京继续创业一年，但在创业公司一直无法沉淀技术累积，于 16 年年底萌生进大公司学习的想法，于是从 16 年年底开始通过社招找工作。虽然大学就开始做研发，但无奈简历只看毕业工作经验，所以本人简历只有一年工作经验。</p>
+<p>在此总结一篇文章给各位参考；</p>
+<p>1.阿凡题<br>应该算是人生第一场面试，早上 11 点开始，公司是做 k12 在线教育相关业务，在五道口那边；</p>
+<p>一面<br>前台登记后发了一套笔试题，开始写，主要都是 Python 基础知识，不算难，基本就是 可变对象不可变对象区别、 Python 垃圾回收机制之类的题目，有一两道编程题也很简单，最后有个根据题目设计数据表的问题也不难，搞定后等面试官开始二面；</p>
+<p>二面<br>面试官好像是个主管，开始让做自我介绍，他在看我的笔试题，然后根据简历问了一些项目相关的问题以及简单的一些系统设计问题，之后大概问了问笔试题里一些问题和补充，感觉聊的比较开心，面试官也对之前我的经历比较感兴趣，于是去通知 CTO 进行三面；</p>
+<p>三面<br>CTO 面里问题的广度和深度都很大，从服务器部署的相关知识到 Nginx 一些细节问题都有问到，不得不说问的还是比较全面的，印象最深的应该是这个问题：</p>
+<p>浏览器的一个请求从发送到返回都经历了什么，讲的越详细越好<br>我大概讲下我的答案：</p>
+<p>1 、先从网络模型层面：</p>
+<p>client （浏览器）与 server 通过 http 协议通讯， http 协议属于应用层协议， http 基于 tcp 协议，所以 client 与 server 主要通过 socket 进行通讯；</p>
+<p>而 tcp 属于传输层协议、如果走 https 还需要会话层 TLS 、 SSL 等协议； 传输层之下网络层，这里主要是路由协议 OSPF 等进行路由转发之类的。再向下数据链路层主要是 ARP 、 RARP 协议完成 IP 和 Mac 地址互解析，再向下到最底层物理层基本就是 IEEE 802.X 等协议进行数据比特流转成高低电平的的一些定义等等；</p>
+<p>当浏览器发出请求，首先进行数据封包，然后数据链路层解析 IP 与 mac 地址的映射，然后上层网路层进行路由查表路由，通过应用层 DNS 协议得到目标地址对应的 IP ，在这里进行 n 跳的路由寻路；而传输层 tcp 协议可以说下比较经典的三次握手、四次分手的过程和状态机，这里放个图可以作为参考：</p>
+<p>2 、应用层方面：</p>
+<p>数据交换主要通过 http 协议， http 协议是无状态协议，这里可以谈一谈 post 、 get 的区别以及 RESTFul 接口设计，然后可以讲服务器 server 模型 epoll 、 select 等，接着可以根据实际经验讲下 server 处理流程，比如我： server 这边 Nginx 拿到请求，进行一些验证，比如黑名单拦截之类的，然后 Nginx 直接处理静态资源请求，其他请求 Nginx 转发给后端服务器，这里我用 uWSGI, 他们之间通过 uwsgi 协议通讯， uWSGI 拿到请求，可以进行一些逻辑， 验证黑名单、判断爬虫等，根据 wsgi 标准，把拿到的 environs 参数扔给 Django ， Django 根据 wsgi 标准接收请求和 env ， 然后开始 start_response ，先跑 Django 相关后台逻辑， Django 拿到请求执行 request middleware 内的相关逻辑，然后路由到相应 view 执行逻辑，出错执行 exception middleware 相关逻辑，接着 response 前执行 response middleware 逻辑，最后通过 wsgi 标准构造 response ， 拿到需要返回的东西，设置一些 headers ，或者 cookies 之类的，最后 finish_response 返回，再通过 uWSGI 给 Nginx ， Nginx 返回给浏览器。</p>
+<p>谈完后 CTO 根据我说的一些细节提出了一些问题，最后当时就谈了 offer ， CTO 说不走 hr 那边了直接和我谈，比较意外的是 offer 给的比我自己要的还高 5k 。对于第一次找工作的我来说当时满心激动。</p>
+<p>最后大概说说环境：公司在五道口一栋写字楼内容，规模还算比较大，听 CTO 谈做的事情也比较有意思，有机器学习、大数据等等 （ 主要是处理各种初高中学科的题目，涉及到文字识别深度学习等等，当然我如果进去肯定要从业务写起 ），包午餐、下午茶之类的其他我就不太清楚了，因为下午就走了，不过公司好像是每周六天班。公司发展感觉还是比较高速，感兴趣的同学可以去试试。</p>
+<ol start="2">
+<li>学堂在线<br>公司也在五道口，清华科技园里， Google 前中国办公室对面的楼里 （ 好像现在搬到 Google 那里了 ）</li>
+</ol>
+<p>一面<br>一面面试官应该是个后端研发工程师，感觉有些羞涩，全程一直不看我，主要聊了一些简历里的项目经验，系统设计，然后问了几个简单的算法题和一些 Python 的基本知识，然后就去叫二面面试官了。</p>
+<p>二面<br>二面面试官是部门主管，嗯，这次总算看着我跟我聊了，哈哈，感觉目光交流也很重要，同样问了一些系统设计的问题和经验问题，因为博主 Django 相关的经验还算比较丰富，感觉他们也主要是找业务研发，所以没什么意外就过了。</p>
+<p>三面<br>hr 面，主要问了一些薪资期望，发展规划之类的，主要是聊天，然后就发了 offer 。</p>
+<p>学堂在线主要是做慕课平台，并且是和国内各大高校合作，福利方面因为最后没有去所以不是特别了解，公司环境还是不错的。</p>
+<p>3.果壳<br>果壳在国贸百朗园里，在园区最里面，不是很好找，一进去先发了一套面试题和一张登记表，登记表连父母家庭资料都要，不是很理解要面试者这些信息干什么，又不一定去你家，等入职再填不行吗？所以除了本人信息，其他我没填。（ 面了这么多家就果壳要填这个，还要填特别详细的信息，不能懂 ）</p>
+<p>一面<br>面试题难度适中，不过涉及到的面比较多，还要写数据库查询语句等等，博主非科班，只大概自学过数据库，然后一直在用 orm ，毕业后就没怎么写过原生 SQL ，相关题目只能凭借记忆大概写了下，还有一道题是 用 O(1) 的复杂度实现一个 栈 的出栈入栈和返回 max 、 min 值的操作，其他就是一些 Python 基础和表设计题。</p>
+<p>这里说下这道设计栈的题：</p>
+<p>出入栈函数 O(1) 没什么问题，主要是 max 、 min 操作（ 博主找工作时没看过面试题目，只是刷了一些 LeetCode ，后来发现这道题很经典，网上很多答案）当时没遇到过这种需求，但是可以肯定想要时间复杂度下降，肯定是要用空间去换时间，所以当时有设计了额外的数据结构存 max min ，但当时设计的还是有问题，后面又和面试官讨论了一下，还是没有得出最好的方案，最后回去网上搜了下发现其实很简单，当时只差最后一步，感兴趣的同学可以看下：栈在 O(1) 时间内求 min</p>
+<p>二面<br>面试官一上来就直接拿着笔试题开始一道一道问，嗯，连我叫什么都没让介绍，更别说介绍项目什么的，感觉有点懵逼，全程没一句废话，全是纯技术问题和算法，然后自己擅长的面试官感觉不太感兴趣，我不太熟悉的他很愿意追问，嗯，二脸懵逼，之后又问道 tcp 流量控制，当时直接说错给说了拥塞控制，面试官表示我 tcp 掌握的不好（ 确实是我的问题，回去之后又整个看了一遍 tcp ）。</p>
+<p>最后又问了很多数据库底层的东西，博主完全没接触过，所以面试官表示下一轮面试官有事 （ 哈哈哈 ），接着问我有什么想问的，我问了两个问题面试官表示自己还有事。。。好吧，那就不聊了。</p>
+<p>总结：数据库知识很重要，即使你投的是研发不是 dba ，你也一定要懂数据库底层的基本原理，至少要知道 索引原理、 MySQL 数据引擎等等，因为之后凡是博主挂的面试都有数据库的锅。</p>
+<p>果壳环境看上去有些乱，但比较温馨，但实在不敢恭维面试的方式，所以挂了博主也没惋惜。其他方面就不太了解啦，因为根本没拿到 offer 。</p>
+<p>4.Veeva<br>公司也在国贸附近，是一家给生物科技企业（ 药厂 ）做 crm 的外企 ( 不过国内的好像和国外母公司没什么关系，就是个单独的子公司 )，不算是互联网公司，但是薪资很给力。</p>
+<p>一面<br>首先是 phone interview ， hr 大概问了问跳槽的原因，项目经验，发展规划等，然后发来 homework ，做完后提交；</p>
+<p>二面<br>homework 比较简单，就是一个判断是否润年的函数，不过这里是有坑的，当题目很简单时，人家考验的就不是智商了，而是看你的编码能力，工程化能力及面向对象抽象能力，所以果断完整的写了个工程，加上完整的测试，然后提交之。</p>
+<p>三面<br>hr 说技术同事看了 homework 感觉还是比较 ok 的，所以约面试，首先来的面试官好像就是个 leader ，问了很多 Python 和 Django 相关的基础知识和算法题，现场有个白版，直接在上面她出题，我写，然后她 review ，基本上就是 LeetCode easy 难度的题，没有太大问题。</p>
+<p>四面<br>应该是个技术大牛，问了问经验开始系统设计，我记得当时是让设计一个短网址生成方案，有一些额外要求，比如不能按照字符顺序生成短网址，而是要随机生成，如何避免碰撞，如何最大效率利用所有空间。</p>
+<p>具体方案可以看知乎，上面有人讨论过： 短链接是如何设计的</p>
+<p>然后面试结束。</p>
+<p>面试完后接到 hr 电话说技术同事感觉不错，问我有没有意向入职，但当时考虑还是想去互联网公司所以就拒掉了。不过 veeva 的薪资很给力，感兴趣的同学可以去看看。</p>
+<p>5.知乎<br>博主的 dream company ，哈哈，去面试的时候特紧张。知乎在 768 创意园，环境很棒。</p>
+<p>一面<br>一面面试官问了项目经历及一些个人信息后开始考基础，主要是面试官出题，然后我在纸上写代码，难度适中，因为面试的比较久了，记不太清楚全部题目，记得让手写了快排，然后 Python 相关基础知识，一些 LeetCode 题， tcp 相关知识， epoll 服务模型、 tornado 的一些原理 （ 可以看博主之前文章 tornado ioloop 分析 ）数据库知识 （ 坦白掌握不多 ）末尾问了下二分查找，一面就过了。</p>
+<p>二面<br>面试官好像是商业化后台的主管？问了项目经验，问了经历，对我大学期间创业经历表示赞扬，但毕业后又创业一年表示不满意（ 不是很明白为什么 ），之后开始问一些系统设计相关题目，印象比较深的是设计微信抢红包的构架，嗯，当时根据自己的见解说了一套系统和注意的点以及分配红包的算法，感觉面试官应该不太满意。回去后看了看网上，还真有写，果断研读了一发： 微信红包构架设计.</p>
+<p>后面又聊了一些系统设计相关的内容，然后让我等等。</p>
+<p>三面<br>等了半个小时，期间看到前两面面试官一直在和 hr 讨论，应该是要不要我的问题，半个小时后 hr 来跟我聊了聊规划和项目以及为何来知乎，然后就回去周五前给回复。</p>
+<p>到此大概确定应该要我的可能性不大，应该是当做备胎了。 这里自己的问题主要是系统设计方面当时并没有准备，另一方面数据库这块明明果壳问到了但是没有重视起来。最后，年底出去找工作还是要谨慎，很多大点公司没什么招聘需求，除非特别优秀。</p>
+<p>最后，周五没有收到消息，基本确定挂了，果然在下周周一的时候收到了拒信，这点要赞一下，至少有明确的拒信，不像一些其他公司，嗯，就不明说了。</p>
+<p>知乎氛围觉得还是挺赞的， 福利也很好，包三餐，不加班，嗯，不多说了，都是泪。 最近知乎开始大量招人了，大家可以去试试哦，替我完成我的 dc 梦，哈哈哈。</p>
+<p>6.春雨医生<br>春雨医生在知乎隔壁，真的是紧隔壁，环境也不错~</p>
+<p>一面<br>照例进行自我介绍，然后问项目经验，开始纸上写代码，不过这里要赞一下春雨，面试题都非常接地气，全是根据实际项目里的问题进行编码，比如有个给医生和病人聊天记录分组提醒的题目，都是类似的实际场景题目，完全没有那种纯算法题目，之后又聊了一些 Python Django 基础相关的东西，顺利进入二面。</p>
+<p>二面<br>问了一些项目信息，然后开始系统设计，没记错的话应该是设计一个类似 QQ 的聊天工具，要求有群，并且可以发送图片、语音等各类消息，群管理员可以进行群管理等等。后面又问道数据库，直言数据库基础掌握的比较少，面试官也没有为难我。</p>
+<p>三面<br>三面的时候到晚上饭点了， hr 姐姐超级好，带我去外面中餐馆点菜吃饭，回来后 CTO 面试， 考了阿凡题 CTO 问过的问题： 浏览器的一个请求从发送到返回都经历了什么</p>
+<p>于是本人又根据上面那个流程讲了一遍，接着又问了问自己的发展规划和期望，然后我问了问春雨相关的一些问题，面试结束。</p>
+<p>隔天收到了 offer ， 请我吃饭的小姐姐发给我的，哈哈，但是由于年前无法到岗，只能拒掉了。</p>
+<p>总体讲，春雨环境也很不错，但其他福利我也没有问，所以其他不太清楚咯，有兴趣的同学可以去试试。</p>
+<ol start="7">
+<li>360<br>360 在酒仙桥，最不靠谱的面试。。。</li>
+</ol>
+<p>直接通过拉钩邀请第二天早上面试，当时已经下午五点。完全没打电话发短信，接到邮件的我一脸懵逼，于是主动打电话过去确认，得到肯定后第二天做两个多小时车赶往望京。 （ 我住在八宝山这块 ）</p>
+<p>一面<br>前台不让进，让通知面试的人来接，等了会儿面试官来接我，然后七绕八绕不知道绕道哪去给了我一份笔试题，让我做，着重强调不要看手机 （ 本来就没打算看好嘛，我坐的头顶有个摄像头，你让我怎么看，哈哈哈 ）写完让我打他电话，然后他就闪了。</p>
+<p>我一看题目，除了前三道是 Python 之后全是 Linux 基础题，当时心里想：不亏是做安全的啊，要求就是不一样，然而博主半吊子 Linux 水平只会一些常用的命令，笔试题里的高端用法实在是臣妾不会做啊，于是本着诚实的原则做完会做的打了电话。</p>
+<p>二面<br>面试官来没有让自我介绍，直接对着题目开始问 （ 我的内心已经产生了抵触感，和果壳一样 ）。第一题是个 Python 改错题，面试官问为何这样改，我大概讲了下，然后是讲了下 lambda 表达式并提供编程例子，面试官看完也没说什么，接着是一个用两个队列模拟栈，写实现代码，也没有太大问题，只是面试官也没有看代码，就是问了我怎么实现。</p>
+<p>接着到了 Linux 部分，基本都不会，会的也只能写出简单的命令，面试官直言：你这个笔试题做的不好啊。怎么都不会 （ 确实有我的问题， Linux 基础不好，但是直接否定了前面其他部分有点冤啊 ）</p>
+<p>接着问了一些项目经验，看到我的开源项目 djanog-simple-serializer 问这是干嘛的，然后我说了下是序列化解决方案，面试官说：序列化不是很简单嘛？（ 我也没说难啊大兄弟，只是其他的没有好用的自己写了个嘛 ）接着面试官问了我一句让我十脸懵逼的话，作为一个不懂 Python 的人，你能给我简单讲讲 Django 和你做的东西吗？当时我的内心全是黑人问号脸， wtf ？不懂 Python ？那你招 Python ？ 怎么面试啊大兄弟，虽然我知道其他语言用的 6 写 Python 也没问题，但是招进来就要写业务你怎么也得找个有相关经验的面试吧，这下我明白为啥之前 Python 部分面试官不怎么看了。 此刻我只想赶紧离开了，于是就说感觉招聘需要和我不太一致，就不耽误时间了。</p>
+<p>好吧，应该我算是遇到个例，请大家不要对 360 产生偏见。</p>
+<ol start="8">
+<li>今日头条<br>今日头条在中航广场，人民大学旁边，不得不说，是我面试过离我最近的公司，头条大楼很霸气。发展也很迅速。</li>
+</ol>
+<p>一面<br>面试前一天晚上莫名失眠，真的是一宿没睡，睁眼到天亮，然后一脸懵逼的去面试，到了头条前台我勒个去，从没见过这么多人来面试，大厅做不下了，当时心里想：完蛋，这么多人，竞争得多激烈，昨晚还失眠，血崩。</p>
+<p>在前台签到，领了候选人的牌子，等了一会儿就叫到了我，由于面试的人实在太多，我实在 -1 楼食堂进行的面试，一面面试官是广告投放部门的工程师，先自我介绍，谈创业经历，问了 redis 用法及原理 （ 前面几次问到数据库的前车之鉴，博主特意狠狠看了下各种数据库的基本原理 ），然后根据我说使用 hash table 的经验，提了一个分布式 redis 使用 hash 的潜在问题，当时没有想出来，面试官提醒了下大概说到了点子上，主要是分布式机器 hash 后可能存在储存分配不均匀问题。然后 hash 表又问了冲突解决方案，主要是拉链法和进位法，之后聊了 tcp ，没什么问题。 问了排序算法的最小时间复杂度及原因。接着出了一道费那波数列的题，要求在常数时间复杂度内计算任意 fib(n) 当时可能没听清，估计没睡的原因，听成了常数时间复杂度，向面试官确认是常数时间复杂度 （ 面试官可能没听清我说的，以为我说的空间复杂度 ）于是苦思冥想无果，面试官提示动态规划，于是开始推导转移方程，最后面试官说没那么复杂，这时一对才发现我们理解岔了。其实很简单：</p>
+<p>def fib(n):<br>    a, b = 0, 1<br>    for x in xrange(n):<br>        a, b = b, a + b<br>    return b<br>一面问题结束，在我写题的时候面试官看了我的博客和 GitHub ，表示满意 （ 有点惊讶，第一次有面试官看我博客和 GitHub ，虽然简历上有，但从没有人说看过 ），然后又带我把一面所有问题过了一遍，我不清楚的地方都完整的给出了答案，没见过这么好的面试官！！不知道他们给我多少分，我给他们满分！</p>
+<p>二面<br>二面面试官是头条广告后台组主管，对我的创业经历很感兴趣，问了很多相关问题，然后看到我的开源项目又问了一些问题，然后提了一个很有意思的题目，在极端情况下，系统缓存全部失效，该如何防止流量全部打到数据库上，当时从很多方面考虑但是感觉面试官没有非常满意，不过也算是答到了点子上，也就算过了。回去后特意看了看，缓存失效的解决方案，感兴趣的同学自行搜索 “缓存重建”。</p>
+<p>然后问了问一些项目相关的经验和解决方案，出了一道单链表逆置的题目 （ 和面试官透露非科班，没有出很难的题目 ），然而当时大脑基本处于停转状态，太困了，最后写出来有个 bug ，其实题目很简单，回去稍微想了下就写了出来：</p>
+<p>def revese(node):<br>    p = node<br>    cur = node.next<br>    p.next = None<br>    while cur:<br>        tmp = cur.next<br>        cur.next = p<br>        p = cur<br>        cur = tmp<br>    return p<br>面试官表示 coding 能力需要加强，当时也不好说自己没睡觉，就直接说确实能力需要加强。面试关说让我等等去找下一轮面试官，等了一会儿告诉我下个面试官不在，当时觉得我是挂了 （ 结果是面试官真的不在 ），面试官好像看出了我的想法，重复了一句面试官真的不在。让我回去，稍后 hr 约下次面试时间。</p>
+<p>三面<br>三面是一周后的下午 6 点，这次终于来到了面试室，里面有一块白版，三面面试官是广告大组的 leader ，进来没有再考基础题，问过经历后出了五道系统设计题，于是开始在白板上写，大概记得有多端登录管理、二维码登录等等一些设计，要求设计出系统结构，相关数据库和表，博主设计完后给面试官讲了一遍，感觉面试官比较满意，也没再问其他的，直接去叫下一轮面试官了。</p>
+<p>四面<br>四面面试官是头条 data 部门的 vp ，感觉人超级和善，进来直接跟我说一起去吃饭吧，刚好体验下头条食堂，然后，第四轮面试是在饭桌上进行的，主要谈了谈我的项目经验和发展方向以及为何来头条，最后吃完饭面试官说本来这一轮也会考技术，但是感觉聊得不错，就不聊技术了，让我回去等 hr 电话。（ 头条食堂真的不错呀，只是当时没好意思多打，哈哈 ）</p>
+<p>五面<br>hr 电话聊了聊个人发展及规划，然后确定了薪资，就发了 offer ~~</p>
+<p>头条环境非常不错，包三餐，自助食堂，无限水果零食还有下午茶，晚上 10 点后打车报销，入职发 mac ， 住公司周围房补，大小周加班有加班费等等，总之福利非常多 （ 为何我知道的这么多 ）还是推荐大家来哦。</p>
+<p>总结<br>最后，博主选择了头条的 offer 。（ 已经找到当初面试我的大神们，哈哈，开心 ）</p>
+<p>从去年底找工作找到今年节后，终于找到一个满意的 offer ，曾经也纠结过，感觉自己高不成低不就，有段时间甚至拒绝出去找工作。</p>
+<p>很多大公司社招都是三年经验起，所以像博主这种毕业一年的人在没有内推的情况下参加社招非常尴尬，在这里奉劝各位学弟学妹，一定要抓住校招的机会啊！！社招跟你竞争的可不光是你们同级的人。</p>
+<p>找到工作后偶然发现一本神书 《剑指 offer 》我面试过基本所有问题上面都有，推荐大家一定过一遍（ 要是早点看到就好了，哈哈 ）</p>
+<p>这里还有博主当时刷过的 LeetCode <a target="_blank" rel="noopener" href="https://github.com/bluedazzle/leetcode_python">https://github.com/bluedazzle/leetcode_python</a> ，可以参考一下，之后有时间博主也打算一直刷下去。</p>
+<p>平时一定要注意多积累，有条件的情况下尽量自己多写一些自己的项目，这样面试会有很大的加分，比如博主之前写过的小程序：式神猎手 ( <a target="_blank" rel="noopener" href="https://www.rapospectre.com/blog/create-an-onmyoji-weapp-in-24-hours">https://www.rapospectre.com/blog/create-an-onmyoji-weapp-in-24-hours</a> ) 在面试中就很有益处。</p>
+<p>还没完<br>说到抓住校招，今日头条春招刚刚开始，学弟学妹抓紧机会，本人可以内推哦：</p>
+<p>今日头条春季校园招聘火热进行中！ [面向对象] ： 2017 年应届毕业生和 2018 年应届暑期实习生 [职位方向] ：研发、产品、运营、销售、投资、 HR 等 [春季招聘 - 2017 届] ： <a target="_blank" rel="noopener" href="https://job.toutiao.com/campus/spring">https://job.toutiao.com/campus/spring</a> [暑期实习 - 2018 届] ： <a target="_blank" rel="noopener" href="https://job.toutiao.com/campus/summer">https://job.toutiao.com/campus/summer</a> [投递时间] ： 3 月 9 日 - 4 月 30 日 [头条邀请码] ： iUGUiF （不区分大小写）</p>
+<p>登录相关网址输入我的头条邀请码即可成功内推哟，快到碗里来！！</p>
+<p>社招的同学也别灰心，只要你找得到我的邮箱（ 应该挺好找的 ），简历发给我，帮你内推~</p>
+<p>当然，对于以上其他家公司，只要我拿到 offer 的公司我都可以帮大家推哟。</p>
+<p>面试过程中还去过几家创业公司聊过，发展也很好，比如 青橙科技、视频帮等等，如果大家感兴趣，我都可以帮大家直推 CTO 。</p>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://www.rapospectre.com/blog/2017-backend-interview-share">https://www.rapospectre.com/blog/2017-backend-interview-share</a></p>
+<p>作者：rapospectre</p>
+<p>第 1 条附言  ·  2017-03-20 12:27:24 +08:00<br>fib 数列那里是常数空间复杂度哈，文中写错了。 感谢 @razrlele 指正<br> 面试 Python 博主 官170 条回复  •  2020-10-01 21:47:50 +08:00<br>1  2<br>1<br>❮    ❯<br>everhythm            1<br>everhythm      2017-03-20 11:45:21 +08:00<br>郫县群众握爪，同在帝都<br>metrue            2<br>metrue      2017-03-20 11:50:12 +08:00 via iPhone<br>很详细，可是不知道这样泄漏面试内容是否不妥。<br>ljcarsenal            3<br>ljcarsenal      2017-03-20 11:53:02 +08:00<br>真厉害<br>razrlele            4<br>razrlele      2017-03-20 11:58:30 +08:00 via iPhone<br>你写的那个 fib 应该是 O(n)时间复杂度吧，常数时间复杂度应该是套公式法吧？<br>rapospectre            5<br>rapospectre<br>OP<br>   2017-03-20 12:06:51 +08:00<br>@razrlele 是的，面试要求的是要常数空间复杂度，不是时间复杂度哈。<br>rapospectre            6<br>rapospectre<br>OP<br>   2017-03-20 12:07:53 +08:00<br>@metrue 已经省略了很多关键细节，很多题都没写，都直接拿 LeetCode 代替了，只是写了几个比较有意思的题目。<br>rapospectre            7<br>rapospectre<br>OP<br>   2017-03-20 12:08:28 +08:00<br>@everhythm 哈哈，想念豆瓣不<br>rapospectre            8<br>rapospectre<br>OP<br>   2017-03-20 12:08:47 +08:00<br>@ljcarsenal 客气啦<br>xiahei            9<br>xiahei      2017-03-20 12:25:09 +08:00<br>邀请码已用，简历已投，谢谢楼主！！<br>lichao0x7cc            10<br>lichao0x7cc      2017-03-20 12:43:21 +08:00<br>非常感谢楼主的分享。<br>iloveyou            11<br>iloveyou      2017-03-20 12:57:04 +08:00<br>请问能大概透漏下薪资不，本人最近也打算去帝都发展<br>guoer            12<br>guoer      2017-03-20 13:02:01 +08:00 via iPhone<br>写得很好<br>byebyejude            13<br>byebyejude      2017-03-20 13:03:11 +08:00 via Android<br>又是你电道友。。<br>zhihhh            14<br>zhihhh      2017-03-20 13:08:35 +08:00<br>哈哈 楼主的头像果然在哪儿都一样，超高辨识度。。<br>WangYanjie            15<br>WangYanjie      2017-03-20 13:09:51 +08:00<br>“浏览器的一个请求从发送到返回都经历了什么，讲的越详细越好”<br>另一种思路： Client-&gt;DNS-&gt;Load Balancer-&gt;Web Server<br>Amayadream            16<br>Amayadream      2017-03-20 13:13:45 +08:00 via iPhone<br>写的好详细，楼主也好厉害<br>whiler            17<br>whiler      2017-03-20 13:18:54 +08:00<br>看来博主很少逛河畔，握爪<br>HLT            18<br>HLT      2017-03-20 13:26:23 +08:00<br>看完了</p>
+<p>超赞</p>
+<p>满满的干货</p>
+<p>言语诙谐</p>
+<p>祝一直好运<br>cxyfreedom            19<br>cxyfreedom      2017-03-20 13:31:21 +08:00<br>最早是看 tornado 搜到楼主的，真心不错<br>iloveyou            20<br>iloveyou      2017-03-20 13:40:22 +08:00<br>请问楼主是在哪个平台找的工作？智联还是其他？<br>welkinzh            21<br>welkinzh      2017-03-20 13:41:33 +08:00 via Android<br>学习了 谢谢楼主<br>rapospectre            22<br>rapospectre<br>OP<br>   2017-03-20 13:49:36 +08:00<br>@xiahei 不客气！<br>rapospectre            23<br>rapospectre<br>OP<br>   2017-03-20 13:50:14 +08:00<br>@lichao0x7cc 客气啦<br>lxy            24<br>lxy      2017-03-20 13:51:53 +08:00<br>前段时间找 Django 序列化方案看过楼主的项目，可惜不支持 Python3 ……<br>我一直奇怪应该经常用到的功能怎么在 Django 中就这么麻烦。找了一圈感觉貌似 SqlAlchemy 不错，然而 Django 换 ORM 很麻烦，项目做了一半又不能换 Flask 。最后只能用 Django 内建序列化然后自己手动过滤解决，就是代码丑了点。<br>pathbox            25<br>pathbox      2017-03-20 13:54:07 +08:00 via Android<br>lz 面的是 Python 后端<br>Yc1992            26<br>Yc1992      2017-03-20 13:54:39 +08:00<br>楼主透露下拿到的几个 offer 都有多少呗，说个区间也行呀。<br>rapospectre            27<br>rapospectre<br>OP<br>   2017-03-20 13:54:49 +08:00<br>@iloveyou 就是招聘网站上的薪资差不多哈，具体不便透露。<br>rieuse            28<br>rieuse      2017-03-20 13:55:03 +08:00 via Android<br>看完了，必须点个赞！有帮助<br>rapospectre            29<br>rapospectre<br>OP<br>   2017-03-20 13:55:21 +08:00<br>@guoer 谢谢夸奖<br>rapospectre            30<br>rapospectre<br>OP<br>   2017-03-20 13:55:50 +08:00<br>@byebyejude 道友好<br>rapospectre            31<br>rapospectre<br>OP<br>   2017-03-20 13:56:48 +08:00<br>@zhihhh 哈哈哈哈，我是这只绿狗的米弟<br>rapospectre            32<br>rapospectre<br>OP<br>   2017-03-20 13:57:34 +08:00<br>@WangYanjie 是的，其实把这一套说明白面试官就会很满意了<br>rapospectre            33<br>rapospectre<br>OP<br>   2017-03-20 13:57:48 +08:00<br>@Amayadream 谢谢啦<br>rapospectre            34<br>rapospectre<br>OP<br>   2017-03-20 13:58:15 +08:00<br>@HLT 谢谢祝福！！<br>rapospectre            35<br>rapospectre<br>OP<br>   2017-03-20 13:58:48 +08:00<br>@cxyfreedom 之后还会继续写，谢谢支持！<br>rapospectre            36<br>rapospectre<br>OP<br>   2017-03-20 13:59:26 +08:00<br>@iloveyou 拉钩 boss 指聘以及自己去官网投<br>rapospectre            37<br>rapospectre<br>OP<br>   2017-03-20 13:59:47 +08:00<br>@welkinzh 客气啦<br>jppxhz01            38<br>jppxhz01      2017-03-20 14:00:41 +08:00<br>学长好～<br>rapospectre            39<br>rapospectre<br>OP<br>   2017-03-20 14:00:53 +08:00<br>@lxy 我也很诧异，所以自己写了一套，你需要 py3 支持是嘛？ 好的，最近我更新一下，做好 @ 你哈。<br>fancy20            40<br>fancy20      2017-03-20 14:07:48 +08:00<br>斐波那契数列那个估计期望你能用矩阵快速幂，时间复杂度是 O(logn)<br>iamzhuyi            41<br>iamzhuyi      2017-03-20 14:09:48 +08:00<br>不错 收藏了<br>ansheng            42<br>ansheng      2017-03-20 14:14:34 +08:00<br>被露珠面过<br>AdamChrist            43<br>AdamChrist      2017-03-20 14:19:21 +08:00<br>工作好几年了..楼主说的一些问题我好像都不懂…好惭愧…<br>例如 http 里面具体是怎么样的流程…楼主平时有用到这些知识?<br>imink            44<br>imink      2017-03-20 14:22:53 +08:00<br>和楼主经历差不多，也是本来校招的时候，错过了，然后创业（不过我就创业 3 个月，老板不靠谱，就做不下去了，但是自己积累了技术积淀，而且 leetcode 刷题总体上没断）。开始认真找工作的时候就很尴尬了，对于我这去年九月份毕业的人来说，只能硬着头皮投社招，或者一些校招的补招。恭喜楼主找到工作！我也继续加油！<br>imink            45<br>imink      2017-03-20 14:23:33 +08:00<br>好奇楼主为什么没有投递 bat 大厂的社招？<br>robinlovemaggie            46<br>robinlovemaggie      2017-03-20 14:24:55 +08:00<br>想到当年高考一考定终身，再看现在的社会招聘一面二面…… N 面，还是一样的”理论+答题实践“，我们永远都是那个必须能给出正确答案的人，不知为何心生一种隐隐的悲哀……<br>starryin            47<br>starryin      2017-03-20 14:30:12 +08:00<br>果壳还是一如既往之烂啊，当年被果壳从外地约到北京面试，连一家外企报销机票+住宿面试的机会都没等，提前跑到北京，结果约定面试时间到后面试官迟到 20 分钟，面试刚开始就被人叫去开会，然后对通知的人说给我 20 分钟我把这个人面完，结束后还告诉我回去补做一套果壳的笔试题<br>fxxkgw            48<br>fxxkgw      2017-03-20 14:32:33 +08:00<br>建议 LZ 少说点<br>记得知乎上有个大牛拿到暴雪的 offer 然后洋洋洒洒写一堆最后 offer 会收回了。。<br>quxiangxuanqxx            49<br>quxiangxuanqxx      2017-03-20 14:58:37 +08:00<br>@fxxkgw 那个是真的透露太多了，基本上就差一个监控录像和自己的旁白介绍了。。。。炫耀太过了。。。<br>misaka19000            50<br>misaka19000      2017-03-20 15:04:17 +08:00<br>@fxxkgw 哈哈，暴雪那哥们，也是惨<br>rapospectre            51<br>rapospectre<br>OP<br>   2017-03-20 15:23:18 +08:00<br>@pathbox 恩恩，是哒<br>rapospectre            52<br>rapospectre<br>OP<br>   2017-03-20 15:25:20 +08:00<br>@Yc1992 就是网站上的 15-30 呀<br>rapospectre            53<br>rapospectre<br>OP<br>   2017-03-20 15:26:08 +08:00<br>@rieuse 谢谢支持<br>rapospectre            54<br>rapospectre<br>OP<br>   2017-03-20 15:26:36 +08:00<br>@jppxhz01 学弟好，快到碗里来~<br>rapospectre            55<br>rapospectre<br>OP<br>   2017-03-20 15:27:40 +08:00<br>@fancy20 这个高端了，面试的时候能写出来估计面试官会很满意的<br>rapospectre            56<br>rapospectre<br>OP<br>   2017-03-20 15:28:01 +08:00<br>@iamzhuyi 谢谢呀<br>rapospectre            57<br>rapospectre<br>OP<br>   2017-03-20 15:28:45 +08:00<br>@ansheng 你也加油呀~<br>rapospectre            58<br>rapospectre<br>OP<br>   2017-03-20 15:29:34 +08:00<br>@AdamChrist 会用到，看一些框架源码的时候，需要了解底层的处理逻辑哈<br>rapospectre            59<br>rapospectre<br>OP<br>   2017-03-20 15:30:49 +08:00<br>@imink BAT 社招 三年经验起，要么有人能内推你，要么简历造假。头条发展很迅速呀，对于我现在的发展来讲可能更合适一些<br>rapospectre            60<br>rapospectre<br>OP<br>   2017-03-20 15:31:43 +08:00<br>@robinlovemaggie 哎，没办法，竞争压力过大时只能采取这种相对公平的方式进行角逐了<br>repus911            61<br>repus911      2017-03-20 15:32:18 +08:00<br>小公司躺枪。。。发给面你的人看看去<br>rapospectre            62<br>rapospectre<br>OP<br>   2017-03-20 15:32:18 +08:00<br>@starryin 这个确实有点坑<br>congeec            63<br>congeec      2017-03-20 15:33:04 +08:00 via iPhone<br>@misaka19000 不能更惨了<br>rapospectre            64<br>rapospectre<br>OP<br>   2017-03-20 15:34:08 +08:00<br>@fxxkgw 谢谢大兄弟提醒呀，关于新东家的面试信息你有没有发现除了那两道简单的编程题，我都只说了问题没说答案，哈哈哈。<br>rapospectre            65<br>rapospectre<br>OP<br>   2017-03-20 15:36:02 +08:00<br>@repus911 小公司也有小公司的好啊，把握机会。你认识面我的人，厉害。<br>johnny23            66<br>johnny23      2017-03-20 15:39:20 +08:00 via iPhone<br>清水河小师弟<br>yuzhiquan            67<br>yuzhiquan      2017-03-20 15:44:09 +08:00<br>爆炸了，工作三年的人表示很多不会的啊<br>dreamwar            68<br>dreamwar      2017-03-20 15:45:38 +08:00<br>这帖子强<br>Antidictator            69<br>Antidictator      2017-03-20 15:46:57 +08:00<br>Q ：为什么来知乎？</p>
+<p>A ：因为上班可以刷啊。<br>artandlol            70<br>artandlol      2017-03-20 15:47:21 +08:00 via Android<br>k12 就那几家 让猜猜看<br>jz361            71<br>jz361      2017-03-20 15:56:11 +08:00<br>非常感谢楼主，已经收藏了<br>a87150            72<br>a87150      2017-03-20 15:58:13 +08:00<br>难得的好文<br>Michaelssss            73<br>Michaelssss      2017-03-20 16:03:45 +08:00<br>郫县电子竞技高中的校友好~<br>v2orz            74<br>v2orz      2017-03-20 16:27:59 +08:00<br>有帮助，感谢楼主<br>话说一年经验问这么多，我等偏远地方根本没人可用了……苦<br>缓存失效那一块我得再深入研究一下<br>MushishiXian            75<br>MushishiXian      2017-03-20 16:46:43 +08:00<br>很赞的体会分享,谢谢楼主<br>init            76<br>init      2017-03-20 17:24:27 +08:00<br>楼主你好 我最近也在找工作 前一段时间一直在面试现在处于不想找工作的状态很烦，主要是不想干通讯这一行业了想回到互联网公司，悲催的是手头上的项目更多的是偏底层的，导致找工作颇为坎坷，现在都不知道怎么办了<br>KIDJourney            77<br>KIDJourney      2017-03-20 17:32:16 +08:00<br>讲道理。。我刷题比你多， github 和你差不多，之前在饿厂和美团实习，独立搞服务，竞赛也有成绩，而且我今年才毕业。</p>
+<p>但 我 连 头 条 的 面 试 资 格 都 没 有。</p>
+<p>悲伤的故事。<br>留个联系方式，让我们在寒冷的北京面个基。。。<br>rapospectre            78<br>rapospectre<br>OP<br>   2017-03-20 17:39:03 +08:00<br>@johnny23 学长好~<br>rapospectre            79<br>rapospectre<br>OP<br>   2017-03-20 17:39:29 +08:00<br>@yuzhiquan 我也是临时抱佛脚哈<br>rapospectre            80<br>rapospectre<br>OP<br>   2017-03-20 17:39:43 +08:00<br>@dreamwar 谢谢支持<br>rapospectre            81<br>rapospectre<br>OP<br>   2017-03-20 17:40:09 +08:00<br>@Antidictator 哈哈，那在头条不也可以刷<br>2owe            82<br>2owe      2017-03-20 17:54:04 +08:00<br>赞，细节和原理并重。<br>rapospectre            83<br>rapospectre<br>OP<br>   2017-03-20 17:59:45 +08:00<br>@artandlol 已经写了公司名了哟<br>daozhihun            84<br>daozhihun      2017-03-20 17:59:55 +08:00 via Android<br>赞一个，谢谢楼主分享。顺便问下头条招 Java 么？<br>rapospectre            85<br>rapospectre<br>OP<br>   2017-03-20 18:00:06 +08:00<br>@jz361 感谢支持<br>rapospectre            86<br>rapospectre<br>OP<br>   2017-03-20 18:00:19 +08:00<br>@a87150 谢谢夸奖~<br>rapospectre            87<br>rapospectre<br>OP<br>   2017-03-20 18:01:15 +08:00<br>@Michaelssss 道友好<br>rapospectre            88<br>rapospectre<br>OP<br>   2017-03-20 18:01:58 +08:00<br>@v2orz 面试都不是让你造火箭这种类型嘛，啥都要问，我也很方<br>rapospectre            89<br>rapospectre<br>OP<br>   2017-03-20 18:02:16 +08:00<br>@MushishiXian 谢谢支持<br>stanfordwang            90<br>stanfordwang      2017-03-20 18:03:04 +08:00 via Android<br>谢谢分享<br>rapospectre            91<br>rapospectre<br>OP<br>   2017-03-20 18:03:15 +08:00<br>@init 偏底层试试 C++ 的职位？ 我也不是很了解哈，建议你看看我推荐的书和一些知识，找工作还是挺有帮助的<br>rapospectre            92<br>rapospectre<br>OP<br>   2017-03-20 18:04:28 +08:00<br>@KIDJourney 这么厉害！我可以帮你内推啊，投简历这事还得看运气，好啊，我微信就是 rapospectre<br>rapospectre            93<br>rapospectre<br>OP<br>   2017-03-20 18:04:44 +08:00<br>@2owe 感谢支持!<br>KIDJourney            94<br>KIDJourney      2017-03-20 18:07:33 +08:00<br>@rapospectre 内推了很多次了，每次都是 hr 把我简历刷了。。。。服辣<br>Antidictator            95<br>Antidictator      2017-03-20 18:13:44 +08:00 via Android<br>@rapospectre 头条我只刷开发者<br>Allianzcortex            96<br>Allianzcortex      2017-03-20 18:26:58 +08:00 via iPhone<br>很厉害啊:-D<br>a87150            97<br>a87150      2017-03-20 18:32:22 +08:00<br>@rapospectre 发现一个问题，斐波那契数列 打错成 费那波数列<br>jesson            98<br>jesson      2017-03-20 19:46:01 +08:00<br>好多系统设计题啊？难道创业公司或者 Python 的都喜欢问这些？楼主平时是怎么准备这类题目的？<br>onyourroad            99<br>onyourroad      2017-03-20 19:50:37 +08:00<br>985 不是白给的啊。<br>rapospectre            100<br>rapospectre<br>OP<br>   2017-03-20 19:53:40 +08:00<br>@daozhihun 招，不过进来后应该是要写 Python 或者 golang ，头条面试不考语言本身的，你看我面试的时候一点 Python 知识都没考<br>1  2<br>1<br>❮    ❯<br>万维广告联盟<br>V2EX专享😍对象存储cos硬核福利，官方放价1元/年！ 新老用户多重好礼<br>万维广告<br>关于   ·   帮助文档   ·   API   ·   FAQ   ·   我们的愿景   ·   广告投放   ·   感谢   ·   实用小工具   ·   4641 人在线   最高记录 5497   ·      Select Language<br>创意工作者们的社区<br>World is powered by solitude<br>VERSION: 3.9.8.5 · 46ms · UTC 02:20 · PVG 10:20 · LAX 18:20 · JFK 21:20<br>Developed with CodeLauncher<br>♥ Do have faith in what you’re doing.</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/" title="tkinter快速入门" target="_blank" rel="external">http://shizhonggan.github.io/2022/02/21/Python/pywebbakdevtest1/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/02/25/Python/concurrentprogramming/" title="python 并发编程"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/01/30/Django/djangodeployerror/" title="Docker 部署 Django-Mysql常见错误"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2024 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

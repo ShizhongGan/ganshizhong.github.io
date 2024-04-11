@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>AWS | 甘士忠个人博客</title>
+  <meta name="description" content="AWS KMSAWS KMS 是一项托管式服务，让您能够轻松地创建和控制用于加密操作的密钥。该服务为您提供可用性高的密钥生成、存储、管理和审计解决方案，让您可以在自己的应用程序内加密您的数据或以数字方式对数据签名，并在 AWS 服务之间对数据的加密进行控制。 https:&#x2F;&#x2F;aws.amazon.com&#x2F;cn&#x2F;kms&#x2F;faqs&#x2F; Amazon CognitoAmazon Cognito 为您的 W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS">
+<meta property="og:url" content="http://shizhonggan.github.io/2021/09/07/Note/AWS/index.html">
+<meta property="og:site_name" content="钟声">
+<meta property="og:description" content="AWS KMSAWS KMS 是一项托管式服务，让您能够轻松地创建和控制用于加密操作的密钥。该服务为您提供可用性高的密钥生成、存储、管理和审计解决方案，让您可以在自己的应用程序内加密您的数据或以数字方式对数据签名，并在 AWS 服务之间对数据的加密进行控制。 https:&#x2F;&#x2F;aws.amazon.com&#x2F;cn&#x2F;kms&#x2F;faqs&#x2F; Amazon CognitoAmazon Cognito 为您的 W">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-07T08:36:04.000Z">
+<meta property="article:modified_time" content="2022-10-13T02:46:43.009Z">
+<meta property="article:author" content="甘士忠">
+<meta property="article:tag" content="AWS">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://shizhonggan.github.io/2021/09/07/Note/AWS/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="钟声" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+
+  
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">甘士忠</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Sharing is meaningful.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      
+        <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+
+        
+          <li class="menu-item menu-item-home">
+            <a href="/.">
+              
+              <i class="icon icon-home-fill"></i>
+              
+              <span class="menu-title">首页</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives">
+              
+              <i class="icon icon-archives-fill"></i>
+              
+              <span class="menu-title">归档</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-categories">
+            <a href="/categories">
+              
+              <i class="icon icon-folder"></i>
+              
+              <span class="menu-title">分类</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-tags">
+            <a href="/tags">
+              
+              <i class="icon icon-tags"></i>
+              
+              <span class="menu-title">标签</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about">
+              
+              <i class="icon icon-cup-fill"></i>
+              
+              <span class="menu-title">关于</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li> -->
+        
+        
+
+        
+          <li class="menu-item menu-item-cv" style="display:none;">
+            <a href="/cv">
+              
+              <i class="icon icon-file"></i>
+              
+              <span class="menu-title">简历</span>
+            </a>
+          </li>
+        
+
+        <!-- <li class="menu-item menu-item-cv">
+          <a href="/cv">
+            
+            <i class="icon icon-file"></i>
+            
+            <span class="menu-title">简历</span>
+          </a>
+        </li> -->
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+  
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!QQ号：1358206080</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/Spark/">Spark</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ELK/">ELK</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kubernetes/">Kubernetes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mininet/">Mininet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Networking/">Networking</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nvidia/">Nvidia</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDN/">SDN</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API/" style="font-size: 13px;">API</a> <a href="/tags/AWS/" style="font-size: 13.29px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 13.14px;">Ansible</a> <a href="/tags/Ansilbe/" style="font-size: 13px;">Ansilbe</a> <a href="/tags/Centos/" style="font-size: 13px;">Centos</a> <a href="/tags/DNS-server/" style="font-size: 13px;">DNS server</a> <a href="/tags/DevOps/" style="font-size: 13.86px;">DevOps</a> <a href="/tags/Django/" style="font-size: 13.43px;">Django</a> <a href="/tags/Docker/" style="font-size: 13.71px;">Docker</a> <a href="/tags/ELK/" style="font-size: 13.71px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 13.14px;">Elasticsearch</a> <a href="/tags/Few-shot-Learning/" style="font-size: 13px;">Few-shot Learning</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/Floodlight/" style="font-size: 13px;">Floodlight</a> <a href="/tags/Gitee/" style="font-size: 13px;">Gitee</a> <a href="/tags/Hexo/" style="font-size: 13.14px;">Hexo</a> <a href="/tags/JumpServer/" style="font-size: 13px;">JumpServer</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Kubernetes/" style="font-size: 13px;">Kubernetes</a> <a href="/tags/Logstash/" style="font-size: 13px;">Logstash</a> <a href="/tags/Mysql/" style="font-size: 13.14px;">Mysql</a> <a href="/tags/Nagios/" style="font-size: 13.29px;">Nagios</a> <a href="/tags/Netperf/" style="font-size: 13px;">Netperf</a> <a href="/tags/Networking/" style="font-size: 13px;">Networking</a> <a href="/tags/Nginx/" style="font-size: 13.29px;">Nginx</a> <a href="/tags/Nvidia/" style="font-size: 13px;">Nvidia</a> <a href="/tags/OOP/" style="font-size: 13px;">OOP</a> <a href="/tags/OVS/" style="font-size: 13.57px;">OVS</a> <a href="/tags/OpenDaylight/" style="font-size: 13.14px;">OpenDaylight</a> <a href="/tags/Postman/" style="font-size: 13px;">Postman</a> <a href="/tags/PyQt5/" style="font-size: 13px;">PyQt5</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RESTful-API/" style="font-size: 13px;">RESTful API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/SDN/" style="font-size: 13.71px;">SDN</a> <a href="/tags/Scapy/" style="font-size: 13px;">Scapy</a> <a href="/tags/Semi-Supervised-Learning/" style="font-size: 13px;">Semi-Supervised Learning</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Shell-commands/" style="font-size: 13px;">Shell commands</a> <a href="/tags/Spark/" style="font-size: 13.14px;">Spark</a> <a href="/tags/Spinnaker/" style="font-size: 13px;">Spinnaker</a> <a href="/tags/YARN/" style="font-size: 13px;">YARN</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/bind-chroot/" style="font-size: 13px;">bind chroot</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ci-cd/" style="font-size: 13px;">ci/cd</a> <a href="/tags/classmethod/" style="font-size: 13px;">classmethod</a> <a href="/tags/coroutine/" style="font-size: 13px;">coroutine</a> <a href="/tags/devops/" style="font-size: 13.14px;">devops</a> <a href="/tags/django/" style="font-size: 13.14px;">django</a> <a href="/tags/docker/" style="font-size: 13.29px;">docker</a> <a href="/tags/epoll/" style="font-size: 13px;">epoll</a> <a href="/tags/gitalk/" style="font-size: 13.14px;">gitalk</a> <a href="/tags/gitlab/" style="font-size: 13.14px;">gitlab</a> <a href="/tags/gunicorn/" style="font-size: 13px;">gunicorn</a> <a href="/tags/hexo/" style="font-size: 13.14px;">hexo</a> <a href="/tags/iPerf/" style="font-size: 13px;">iPerf</a> <a href="/tags/io-multiplexing/" style="font-size: 13px;">io multiplexing</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/paramiko/" style="font-size: 13.14px;">paramiko</a> <a href="/tags/poll/" style="font-size: 13px;">poll</a> <a href="/tags/process/" style="font-size: 13px;">process</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/python3/" style="font-size: 13.14px;">python3</a> <a href="/tags/select/" style="font-size: 13px;">select</a> <a href="/tags/thread/" style="font-size: 13px;">thread</a> <a href="/tags/tkinter/" style="font-size: 13px;">tkinter</a> <a href="/tags/vs-code%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">vs code插件</a> <a href="/tags/zabbix/" style="font-size: 13.43px;">zabbix</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.14px;">前端</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13px;">后端</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.14px;">性能测试</a> <a href="/tags/%E6%B8%B8%E6%A0%87/" style="font-size: 13px;">游标</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.14px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" style="font-size: 13.43px;">网络架构</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.14px;">运维</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E5%9D%91/" style="font-size: 13px;">那些坑</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/Python/Jupyter/" class="title">Jupyter 远程服务器部署与使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:43.040Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/10/13/DevOps/demo/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-10-13T02:46:42.893Z" itemprop="datePublished">2022-10-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/26/Linux/IO_multiplexing/" class="title">Linux IO Multiplexing, Select vs Poll vs Epoll</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-26T07:39:04.000Z" itemprop="datePublished">2022-09-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/React/">React</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/22/NetworkSecurityPrj/react_admin/" class="title">基于React 后台系统开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-22T06:22:12.000Z" itemprop="datePublished">2022-09-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/30/Python/advance_tip/" class="title">python进阶知识点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-30T05:39:04.000Z" itemprop="datePublished">2022-08-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Note/AWS" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AWS
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/09/07/Note/AWS/" class="article-date">
+	  <time datetime="2021-09-07T08:36:04.000Z" itemprop="datePublished">2021-09-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/AWS/">AWS</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/AWS/" rel="tag">AWS</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/07/Note/AWS/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="AWS-KMS"><a href="#AWS-KMS" class="headerlink" title="AWS KMS"></a>AWS KMS</h3><p>AWS KMS 是一项托管式服务，让您能够轻松地创建和控制用于加密操作的密钥。该服务为您提供可用性高的密钥生成、存储、管理和审计解决方案，让您可以在自己的应用程序内加密您的数据或以数字方式对数据签名，并在 AWS 服务之间对数据的加密进行控制。</p>
+<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/kms/faqs/">https://aws.amazon.com/cn/kms/faqs/</a></p>
+<h3 id="Amazon-Cognito"><a href="#Amazon-Cognito" class="headerlink" title="Amazon Cognito"></a>Amazon Cognito</h3><p>Amazon Cognito 为您的 Web 和移动应用程序提供身份验证、授权和用户管理。您的用户可使用用户名和密码直接登录，也可以通过第三方（例如 Facebook、Amazon、Google 或 Apple）登录。</p>
+<p>Amazon Cognito 的两个主要组件是用户池和身份池。用户池是为您的应用程序提供注册和登录选项的用户目录。使用身份池，您可以授予用户访问其他 AWS 服务的权限。您可以单独或配合使用身份池和用户池。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/cognito/latest/developerguide/what-is-amazon-cognito.html">https://docs.aws.amazon.com/zh_cn/cognito/latest/developerguide/what-is-amazon-cognito.html</a></p>
+<h3 id="AWS-Lambda"><a href="#AWS-Lambda" class="headerlink" title="AWS Lambda"></a>AWS Lambda</h3><p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/lambda/latest/dg/welcome.html">https://docs.aws.amazon.com/zh_cn/lambda/latest/dg/welcome.html</a></p>
+<h3 id="AWS-Kinesis"><a href="#AWS-Kinesis" class="headerlink" title="AWS Kinesis"></a>AWS Kinesis</h3><p>Amazon Kinesis 可让您轻松收集、处理和分析实时流数据，以便您及时获得见解并对新信息快速做出响应。Amazon Kinesis 提供多种核心功能，可以经济高效地处理任意规模的流数据，同时具有很高的灵活性，让您可以选择最符合应用程序需求的工具。借助 Amazon Kinesis，您可以获取视频、音频、应用程序日志和网站点击流等实时数据，也可以获取用于机器学习、分析和其他应用程序的 IoT 遥测数据。借助 Amazon Kinesis，您可以即刻对收到的数据进行处理和分析并做出响应，无需等到收集完全部数据后才开始进行处理。</p>
+<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/kinesis/">https://aws.amazon.com/cn/kinesis/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Trigl/article/details/80475966#">https://blog.csdn.net/Trigl/article/details/80475966#</a></p>
+<p>T401: <a target="_blank" rel="noopener" href="https://docs.databricks.com/administration-guide/cloud-configurations/aws/iam-kinesis.html">https://docs.databricks.com/administration-guide/cloud-configurations/aws/iam-kinesis.html</a></p>
+<p>Kinesis 是 AWS 的一项用于收集实时流数据的云服务，类似于 Kafka。Kinesis 收集到的数据可以用于多个方面，例如存到 S3，发到 EMR 作进一步数据分析等等。</p>
+<h3 id="AWS-CloudFormation"><a href="#AWS-CloudFormation" class="headerlink" title="AWS CloudFormation"></a>AWS CloudFormation</h3><p>AWS CloudFormation 是一项服务，可帮助您对 AWS 资源进行建模和设置，以便能花较少的时间管理这些资源，而将更多的时间花在运行于 AWS 中的应用程序上。您创建一个描述您所需的所有 AWS 资源（如 Amazon EC2 实例或 Amazon RDS 数据库实例）的模板，并且 CloudFormation 将负责为您设置和配置这些资源。您无需单独创建和配置 AWS 资源并了解 what; CloudFormation 句柄处理该工作时所依赖的内容</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/AWSCloudFormation/latest/UserGuide/Welcome.html">https://docs.aws.amazon.com/zh_cn/AWSCloudFormation/latest/UserGuide/Welcome.html</a></p>
+<h3 id="AWS-X-Ray"><a href="#AWS-X-Ray" class="headerlink" title="AWS X-Ray"></a>AWS X-Ray</h3><p>AWS X-Ray是一项服务，用来收集您应用程序所服务的请求的相关数据，并提供用于查看、筛选和获取数据洞察力的工具，以确定问题和发现优化机会。对于任何被跟踪的对您应用程序的请求，您不仅可以查看请求和响应的详细信息，还可以查看您的应用程序对下游进行的调用的详细信息。AWS资源、微服务、数据库和 Web API。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/xray/latest/devguide/aws-xray.html">https://docs.aws.amazon.com/zh_cn/xray/latest/devguide/aws-xray.html</a></p>
+<h3 id="AWS-CloudFront-Web"><a href="#AWS-CloudFront-Web" class="headerlink" title="AWS CloudFront Web"></a>AWS CloudFront Web</h3><p>Amazon CloudFront 是一项加快将静态和动态 Web 内容（例如 .html、.css、.js 和图像文件）分发给用户的速度的 Web 服务。CloudFront 通过全球数据中心（称作边缘站点）网络传输内容。当用户请求您用 CloudFront 提供的内容时，请求被路由到提供最低延迟（时间延迟）的边缘站点，从而以尽可能最佳的性能传送内容。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/AmazonCloudFront/latest/DeveloperGuide/Introduction.html">https://docs.aws.amazon.com/zh_cn/AmazonCloudFront/latest/DeveloperGuide/Introduction.html</a></p>
+<h3 id="AWS-Elastic-Beanstalk"><a href="#AWS-Elastic-Beanstalk" class="headerlink" title="AWS Elastic Beanstalk"></a>AWS Elastic Beanstalk</h3><p>借助 Elastic Beanstalk，您可以在AWS云中快速部署和管理应用程序，而不必了解运行这些应用程序的基础设施。Elastic Beanstalk 可降低管理的复杂性，但不会影响选择或控制。您只需上传应用程序，Elastic Beanstalk 将自动处理有关容量预配置、负载均衡、扩展和应用程序运行状况监控的部署细节。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/elasticbeanstalk/latest/dg/Welcome.html">https://docs.aws.amazon.com/zh_cn/elasticbeanstalk/latest/dg/Welcome.html</a></p>
+<h3 id="AWS-CodeArtifact"><a href="#AWS-CodeArtifact" class="headerlink" title="AWS CodeArtifact"></a>AWS CodeArtifact</h3><p>CodeArtifact 是一项完全托管的工件存储库服务，使组织可以轻松安全地存储和共享用于应用程序开发的软件包。</p>
+<h3 id="Amazon-EventBridge"><a href="#Amazon-EventBridge" class="headerlink" title="Amazon EventBridge"></a>Amazon EventBridge</h3><p>亚马逊 EventBridge 是一种无服务器事件总线服务，让您可以轻松地将应用程序与来自多种来源的数据相连接。 EventBridge 从应用程序、软件即服务 (SaaS) 应用程序传输实时数据流，以及AWS对目标的服务，例如AWS Lambda函数、使用 API 目标的 HTTP 调用终端节点或其他AWS账户。</p>
+<p>AWS serverless 服务： <a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/serverless/?nc=sn&amp;loc=0">https://aws.amazon.com/cn/serverless/?nc=sn&amp;loc=0</a></p>
+<ul>
+<li>计算<ul>
+<li>AWS Lambda 是一项事件驱动、随用随付的计算服务，无需预置或管理服务器即可运行代码</li>
+<li>AWS Fargate 是一种无服务器计算引擎，可与Amazon Elastic Container Service(ECS)和Amazon Elastic Kubernetes Service(EKS)一起使用</li>
+</ul>
+</li>
+<li>应用程序集成<ul>
+<li>Amazon EventBridge 是一种无服务事件总线，可跨AWS和现有大规模构建事件驱动的应用程序</li>
+<li>AWS Step Functions 是一种直观的工作流编排工具，可轻松将多个AWS服务按顺序安排到业务关键型应用程序中</li>
+<li>Amazon Simple Queue Service(SQS) 是一种消息队列服务，可分离和扩展微服务、分布式系统和无服务器应用程序</li>
+<li>Amazon Simple Notification Service(SNS) 是一项用于应用与应用之间的(A2A)以及应用与人之间(A2P)通信的完全托管式消息收发服务</li>
+<li>Amazon API Gateway 是一种完全托管式服务，可以轻松创建、发布任意规模的API</li>
+<li>AWS AppSync 是一项完全托管式服务，可通过可扩展的GraphQL API加速应用程序开发</li>
+</ul>
+</li>
+<li>数据存储<ul>
+<li>Amazon Simple Strorage Service(Amazon S3) 是一项对象存储服务，旨在存储和保护任意量的数据</li>
+<li>Amazon DynamoDB 是一个键/值和文档数据库，可以在任何规模的环境中提供个位数的毫秒级性能</li>
+<li>Amazon RDS Proxy是Amazon Relational Database Service(RDS)的托管式数据库代理，可提高应用程序的可扩展性和安全性</li>
+<li>Amazon Aurora Serverless 是一种兼容MySQL和PostgreSQL的关系数据库，可根据应用程序自动扩展容量</li>
+</ul>
+</li>
+</ul>
+<p>无服务器服务：<a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/serverless/getting-started/?serverless.sort-by=item.additionalFields.createdDate&amp;serverless.sort-order=desc">https://aws.amazon.com/cn/serverless/getting-started/?serverless.sort-by=item.additionalFields.createdDate&amp;serverless.sort-order=desc</a></p>
+<ul>
+<li>Amazon API Gateway 是一种完全托管的服务，可以帮助开发人员轻松创建、发布、维护、监控和保护任意规模的 API。 </li>
+<li>Amazon EventBridge 是一种无服务器事件总线，支持您使用自己的应用程序、软件即服务 (SaaS) 应用程序和 AWS 服务的数据轻松将应用程序连接到一起。</li>
+<li>Amazon Simple Notification Service (Amazon SNS) ，Amazon SNS 是一种高度可用、持久、安全且完全托管的发布/订阅消息收发服务，可以让您轻松解耦微服务、分布式系统和无服务器应用程序。</li>
+<li>Amazon Simple Queue Service (Amazon SQS), Amazon SQS 是一种完全托管的消息队列服务，让您可以解耦和扩展微服务、分布式系统和无服务器应用程序。  </li>
+<li>AWS Fargate 是一种适用于 Amazon ECS 的计算引擎，让您无需管理服务器或集群即可运行容器。 </li>
+<li>AWS Lambda 使您几乎可以为任何类型的应用程序或后端服务运行代码，而且完全无需管理。 </li>
+<li>AWS Serverless Application Model (AWS SAM), 是一种使用简洁语法、用于构建无服务器应用程序的开源框架。</li>
+<li>AWS Serverless Application Repository (AWS SAR), 使团队、组织和各个开发人员能够存储和共享可重用的应用程序，并轻松组装和部署无服务器架构。</li>
+<li>AWS Step Functions 让您将多个 AWS 服务协调为无服务器工作流，以便您可以快速构建和更新应用程序。 </li>
+</ul>
+<p>从可简化无服务器应用程序开发和部署的各种 AWS 框架、开源框架以及第三方 Web 框架中进行选择。这些常用<strong>框架</strong>支持多种语言。</p>
+<ul>
+<li>AWS Serverless Application Model (AWS SAM) 是一种用于构建无服务器应用程序的开源框架。它提供了表示函数、API、数据库和事件源映射的简写语法。</li>
+<li>AWS Cloud Development Kit (AWS CDK) 是一种开源软件开发框架，可让您使用熟悉的编程语言来定义云应用程序资源。</li>
+<li>无服务器框架 - 无服务器框架由一个开源 CLI 和一个托管控制面板组成。它们一起为您提供了完整的无服务器应用程序生命周期管理。</li>
+<li>Chalice是在 Python 中编写无服务器应用程序的一种框架。通过它，您可以快速创建和部署使用 AWS Lambda 的应用程序。</li>
+<li>Arc.codes 提供了构建大规模可扩展无服务器应用所需的一切，具有低代码、清晰简洁的配置和零仪式。</li>
+<li>Claudia.js 可用于轻松将 Node.js 项目部署到 AWS Lambda 和 API Gateway。</li>
+</ul>
+<p>您可以使用 AWS 开发人员工具和第三方工具为您的无服务器应用程序构建<strong>持续集成和持续部署(CI/CD)</strong> 流程。</p>
+<ul>
+<li>AWS CodeCommit 是一项安全、高度可扩展的托管式源代码控制服务，可用于托管私有 Git 存储库。</li>
+<li>AWS CodePipeline 是一种完全托管的持续交付服务，可以帮助您实现发布管道的自动化，从而实现快速而可靠的应用程序和基础设施更新。</li>
+<li>AWS CodeBuild 是一项完全托管的持续集成服务，可编译源代码、运行测试以及生成可供部署的软件包。</li>
+<li>AWS CodeDeploy 是一项完全托管的部署服务，它可以将软件自动部署到各种计算服务，如 Amazon EC2、AWS Fargate、AWS Lambda 和本地服务器。</li>
+<li>AWS CodeArtifact 是一项完全托管式构件存储库服务，借助它，各种规模的组织都可以轻松安全地存储、发布和分享其软件开发过程中所使用的软件程序包。</li>
+<li>Stackery 是一个无服务器平台，可用于设计、开发和交付现代化应用程序。</li>
+</ul>
+<p><strong>监控、日志记录和诊断</strong>您可以使用 AWS 服务和第三方工具监控无服务器应用程序和 AWS Lambda 函数的性能，并对其进行故障排除。</p>
+<ul>
+<li>AWS X-Ray 可以帮助开发人员分析与调试分布式生产应用程序，例如使用微服务架构构建的应用程序。</li>
+<li>Amazon CloudWatch 是一种面向开发运维工程师、开发人员、站点可靠性工程师 (SRE) 和 IT 经理的监控和可观测性服务。</li>
+<li>AppDynamics - AWS Lambda 监控扩展从 Amazon CloudWatch 中捕获 Lambda 统计数据，并将其显示在 AppDynamics 指标浏览器中。</li>
+<li>Dashbird - AWS Lambda 应用程序的端到端可观察性和实时错误跟踪。</li>
+<li>DataDog - 检测和解决您的无服务器应用程序中的性能问题。</li>
+<li>Epsagon 在您最复杂的无服务器环境中提供自动分布式跟踪，为服务和基础设施组件提供单一窗格，很少或不需要进行代码更改。</li>
+<li>Lumigo - 无服务器和微服务的监控和调试平台。</li>
+<li>New Relic - 使用 New Relic 无服务器对 AWS Lambda 函数进行监控、可视化、问题排查和提醒。</li>
+<li>Splunk - 在一个平台中对您的整个堆栈进行监控、探索和问题排查。</li>
+<li>Thundra - 调试、测试、交付和监控 AWS 云上的现代微服务。</li>
+</ul>
+<p><strong>编写和开发</strong>您可以使用 IDE 插件在您现有的集成开发环境 (IDE) 中撰写 AWS Lambda 函数代码。</p>
+<ul>
+<li>IDE 工具包 - 在 AWS 上使用您选择的编程语言轻松开发应用程序。</li>
+<li>AWS SAM CLI 提供一个类似于 Lambda 的执行环境，允许您在本地构建、测试、调试和部署 SAM 模板定义的应用程序。</li>
+<li>AWS Cloud9 是一种基于云的集成开发环境 (IDE)，您只需要一个浏览器，即可编写、运行和调试代码。它包括一个代码编辑器、调试程序和终端。</li>
+<li>PowerShell 工具使开发人员和管理人员可以在 PowerShell 脚本环境中管理他们的 AWS 服务和资源。</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://shizhonggan.github.io/2021/09/07/Note/AWS/" title="AWS" target="_blank" rel="external">http://shizhonggan.github.io/2021/09/07/Note/AWS/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/me.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">甘士忠</span><small class="ml-1x">Sharing is meaningful.</small></a></h3>
+        <div>Long life and long code.</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/09/12/DevOps/Spinnaker/spinnaker/" title="Spinnaker入门笔记(1)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/09/07/Note/aws_example/" title="AWS 学习（2）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button> -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="https://ganshizhong.gitee.io/blogimages/HexoSource/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/shizhonggan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://gitee.com/ganshizhong" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+
+    	
+        &copy; 2024 甘士忠
+        
+        <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+        <!-- <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/shizhonggan" target="_blank"> 甘士忠 </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
